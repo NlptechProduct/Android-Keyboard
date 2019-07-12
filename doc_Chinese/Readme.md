@@ -20,11 +20,11 @@ Zengine SDK提供了完整的输入相关功能，支持100多种语言，为80�
 集成SDK之前，您首先需要联系zengine@nlptech.com，获得appkey及使用授权。
 
 ## 集成教程
-1. [新的Keyboard项目构建](https://github.com/evilstreak/markdown-js)
-2. [从基于AOSP的项目迁移到Zengine](https://github.com/evilstreak/markdown-js)
-3. [定制键盘功能](https://github.com/evilstreak/markdown-js)
+1. [新的Keyboard项目构建](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E6%96%B0%E7%9A%84%E8%BE%93%E5%85%A5%E6%B3%95%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA%20.md)
+2. [从基于AOSP的项目迁移到Zengine](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E4%BB%8E%E5%9F%BA%E4%BA%8EAOSP%E7%9A%84%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Zengine.md)
+3. [定制键盘功能](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%AE%9A%E5%88%B6%E9%94%AE%E7%9B%98%E5%8A%9F%E8%83%BD.md)
 
 ## 其他资源
 1. [语言列表](https://github.com/evilstreak/markdown-js)
-2. [API说明](https://github.com/evilstreak/markdown-js)
-3. [FAQ](https://github.com/evilstreak/markdown-js)
+2. [API说明](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/Reference.md)
+3. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)
