@@ -1,0 +1,24 @@
+{
+  "buildFiles": [
+    "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/src/main/cpp/CMakeLists.txt",
+    "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/src/main/cpp/src/CMakeLists.txt",
+    "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/src/main/cpp/jniapi/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/willywu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86_64 --target clean"
+  ],
+  "libraries": {
+    "jni_latinime-Debug-x86_64": {
+      "artifactName": "jni_latinime",
+      "buildCommand": "/Users/willywu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86_64 --target jni_latinime",
+      "abi": "x86_64",
+      "output": "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/build/intermediates/cmake/debug/obj/x86_64/libjni_latinime.so"
+    },
+    "latinime_core-Debug-x86_64": {
+      "artifactName": "latinime_core",
+      "buildCommand": "/Users/willywu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86_64 --target latinime_core",
+      "abi": "x86_64",
+      "output": "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86_64/src/liblatinime_core.a"
+    }
+  }
+}

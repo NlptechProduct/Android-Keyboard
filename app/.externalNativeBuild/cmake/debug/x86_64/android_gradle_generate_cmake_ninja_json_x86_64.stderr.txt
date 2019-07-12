@@ -1,0 +1,10 @@
+CMake Error at src/CMakeLists.txt:96 (add_library):
+  Cannot find source file:
+
+    suggest/core/dicnode/gesture/dic_nodes_cache_for_gesture.cpp
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .m .M .mm .h .hh .h++ .hm .hpp
+  .hxx .in .txx
+
+
+CMake Error: CMake can not determine linker language for target: latinime_core

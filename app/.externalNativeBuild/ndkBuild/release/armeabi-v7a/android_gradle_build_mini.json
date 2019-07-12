@@ -1,0 +1,23 @@
+{
+  "buildFiles": [
+    "/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Android.mk",
+    "/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Application.mk"
+  ],
+  "cleanCommands": [
+    "/Users/willywu/Library/Android/sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Android.mk NDK_APPLICATION_MK\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-19 NDK_OUT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/lib clean"
+  ],
+  "libraries": {
+    "jni_latinime-release-armeabi-v7a": {
+      "artifactName": "jni_latinime",
+      "buildCommand": "/Users/willywu/Library/Android/sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Android.mk NDK_APPLICATION_MK\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-19 NDK_OUT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/lib /Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libjni_latinime.so",
+      "abi": "armeabi-v7a",
+      "output": "/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libjni_latinime.so"
+    },
+    "jni_latinime_common_static-release-armeabi-v7a": {
+      "artifactName": "jni_latinime_common_static",
+      "buildCommand": "/Users/willywu/Library/Android/sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Android.mk NDK_APPLICATION_MK\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/native/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-19 NDK_OUT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/lib /Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libjni_latinime_common_static.a",
+      "abi": "armeabi-v7a",
+      "output": "/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libjni_latinime_common_static.a"
+    }
+  }
+}

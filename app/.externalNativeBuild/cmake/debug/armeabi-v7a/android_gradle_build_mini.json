@@ -1,0 +1,24 @@
+{
+  "buildFiles": [
+    "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/src/main/cpp/CMakeLists.txt",
+    "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/src/main/cpp/src/CMakeLists.txt",
+    "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/src/main/cpp/jniapi/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/willywu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/armeabi-v7a --target clean"
+  ],
+  "libraries": {
+    "latinime_core-Debug-armeabi-v7a": {
+      "artifactName": "latinime_core",
+      "buildCommand": "/Users/willywu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/armeabi-v7a --target latinime_core",
+      "abi": "armeabi-v7a",
+      "output": "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/armeabi-v7a/src/liblatinime_core.a"
+    },
+    "jni_latinime-Debug-armeabi-v7a": {
+      "artifactName": "jni_latinime",
+      "buildCommand": "/Users/willywu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/armeabi-v7a --target jni_latinime",
+      "abi": "armeabi-v7a",
+      "output": "/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libjni_latinime.so"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/edit_cache.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/rebuild_cache.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/src/CMakeFiles/edit_cache.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/src/CMakeFiles/rebuild_cache.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/src/CMakeFiles/latinime_core.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/jniapi/CMakeFiles/edit_cache.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/jniapi/CMakeFiles/rebuild_cache.dir
+/Users/willywu/Work/Projects/GoogleLatinIME/latinime/app/.externalNativeBuild/cmake/debug/x86/jniapi/CMakeFiles/jni_latinime.dir
