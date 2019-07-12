@@ -1,7 +1,8 @@
-#FAQ
+# FAQ
 
-##1. Which files need to be deleted from the project?
-####Classes to be deleted:
+## 1. Which files need to be deleted from the project?
+
+#### Classes to be deleted:
 
 <table >
    <tr>
@@ -518,7 +519,7 @@
       <th bgcolor="#9FB6CD">
       
       com.android.inputmethod.latin.permissions
-      <br>(3 Classes)</td>
+      <br> (3 Classes) </td>
    </tr>
    <tr>
       <td>DecoderSpecificConstants</td>

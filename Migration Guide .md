@@ -1,15 +1,19 @@
-#Migrating to Zengine from an AOSP-based software keyboard
+# Migrating to Zengine from an AOSP-based software keyboard
+
 Please read this migration guide if your product is derived from AOSP’s built-in keyboard.
 
-#Prerequisites
-##1. AndroidX
+# Prerequisites
+
+## 1. AndroidX
+
 Zengine SDK depends on AndroidX. If you are not yet migrated to AndroidX, please do the following in Android Studio: 
 1. Android Studio → Refactor → Migrate to AndroidX  
 2. Press “Do Refactor” in “Refactoring Preview” panel 
 
 Or reference the official document:：[here](https://developer.android.com/jetpack/androidx/migrate)
 
-##2. APILevel and Java version
+## 2. APILevel and Java version
+
 Zengine SDK supports APILevel 19 (Android 4.4) or above, plus Java 1.8. Make sure relevant options are added to build.gradle:  
 **app/build.gradle:**
 
@@ -32,8 +36,10 @@ Zengine SDK supports APILevel 19 (Android 4.4) or above, plus Java 1.8. Make sur
         … … … … 
 ~~~
 
-#Integration
-##1. Importing Zengine SDK into project
+# Integration
+
+## 1. Importing Zengine SDK into project
+
 Add our Maven repo in build.gradle like below:  
 **build.gradle:**
 
@@ -57,8 +63,10 @@ dependencies {
 }
 ~~~
 
-##2. AndroidManifest.xml
-###2.1 Add appkey
+## 2. AndroidManifest.xml
+
+### 2.1 Add appkey
+
 Add Zengine appkey into AndroidManifest.xml:  
 **AndroidManifest.xml:**
 
@@ -74,7 +82,9 @@ Add Zengine appkey into AndroidManifest.xml:
        … … … … …
 ~~~
 Please contact zengine@nlptech.com to get appkey and license if you don’t have one yet.
-###2.2 Permission
+
+### 2.2 Permission
+
 **AndroidManifest.xml:**
 
 ~~~
@@ -87,7 +97,8 @@ Please contact zengine@nlptech.com to get appkey and license if you don’t have
  <uses-permission android:name="android.permission.VIBRATE" />
  <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
 ~~~
-###2.3 PermissionsActivity
+### 2.3 PermissionsActivity
+
 **AndroidManifest.xml:**
 
 ~~~
@@ -100,7 +111,8 @@ android:name="com.nlptech.inputmethod.latin.permissions.PermissionsActivity"
 </activity>
 ~~~
 
-##3. method.xml
+## 3. method.xml
+
 Please modify the content in method.xml as follows (remove all subtypes):
 **method.xml:**
 
@@ -110,7 +122,8 @@ Please modify the content in method.xml as follows (remove all subtypes):
        android:supportsSwitchingToNextInputMethod="false">
 </input-method>
 ~~~
-##4. Remove duplicated classes and resources
+## 4. Remove duplicated classes and resources
+
 You can remove duplicated Java sources and resources by bundled zengineScript.jar. It scans the source tree and try to remove duplicated ones, and patching import statements automatically.
 
 **If the tool detected that the file is modified by you (compared to vanilla AOSP), a message will be printed and no file is deleted. Please manually review those files.**
@@ -121,14 +134,18 @@ You can remove duplicated Java sources and resources by bundled zengineScript.ja
 ~~~
 If the tool does not work well for you, please see FAQ to manually do the cleanup
 
-##5. Native JNI library
+## 5. Native JNI library
+
 Remove unneeded JNI library:  **libjni_latinime.so**
 
-##6. Customize AOSP
-###6.1 Open Auto Import on the fly
+## 6. Customize AOSP
+
+### 6.1 Open Auto Import on the fly
+
 We suggest turn on Auto Import on the fly:
 Android Studio → Editor → General → Auto Import → Java
-###6.2 Update code
+### 6.2 Update code
+
 **LatinIME.java:**
 
 ```java
@@ -372,8 +389,10 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 
 ~~~
 
-##7. Import Code
-###7.1 Import Agent
+## 7. Import Code
+
+### 7.1 Import Agent
+
 Initialize agent in Application.onCreate().  
 **ExampleApplication.java:**
 
@@ -505,7 +524,8 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
     … … … … …
 ~~~
 
-###7.2 Integrating KeyboardView
+### 7.2 Integrating KeyboardView
+
 Developer only needs to call:
 
 ~~~
@@ -549,17 +569,19 @@ Layour example:
    … … … … 
 </RelativeLayout>
 ~~~
-###7.3 Language Management
+### 7.3 Language Management
+
 Through **Agent.getInstance().getAvailableIMELanguageList()** one can get supported language list of Zengine. Use **Agent.getInstance().addIMELanguage()** and **Agent.getInstance().removeIMELanguage()** to add/remove enabled languages, and use **Agent.getInstance().getAddedIMELanguageList()** to get a list of enabled languages. Only dictionaries of enabled languages are downloaded.
 
-###7.4 Dictionary Management
+### 7.4 Dictionary Management
+
 Initiate dictionary download through calling **Agent.getInstance().downloadDictionary()**. Downloading progress can be observed by registering a listener through **Agent.getInstance().registerDictionaryDownloadListener()**. By default, downloading is enabled even on cellular network, if you want to turn this off, please call **Agent.getInstance().enableMobileDictionaryDownload(false)**.
 
-###7.5 Other Settings
+### 7.5 Other Settings
 Please try to keep detailed input-related settings, for example, sliding input or auto-correction, untouched.
 
 
-##8. Proguard settings
+## 8. Proguard settings
 
 ~~~
 # all ppl want this...
@@ -590,7 +612,8 @@ Please try to keep detailed input-related settings, for example, sliding input o
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
 ~~~
 
-##9. Resolve remaining import issues
+## 9. Resolve remaining import issues
+
 After build (By “Android Studio → Build → Make Project”), find erroronus sources and use “Show Intentin Actions → Import Class” or “Auto Import on the fly” to fix issues quickly. But some issues still need manual config.  
 
 For example:  

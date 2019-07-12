@@ -21,10 +21,9 @@ With Zengine SDK, software keyboard developers can focus on business logic inste
 Before starting, please contact zengine@nlptech.com to get an appkey and license.
 
 ## Tutorials
-1. [Building a new software keyboard](https://github.com/NlptechProduct/Zengine/blob/master/README.md)
-2. [Migrating to Zengine from an AOSP-based software keyboard project](https://github.com/NlptechProduct/Zengine/blob/master/README.md)
-3. [Customization](https://github.com/NlptechProduct/Zengine/blob/master/README.md)
+1. [Building a new software keyboard](https://github.com/NlptechProduct/Zengine/blob/master/Build%20a%20New%20Virtual%20Keyboard%20Project%20.md)
+2. [Migrating to Zengine from an AOSP-based software keyboard project](https://github.com/NlptechProduct/Zengine/blob/master/Migration%20Guide%20.md)
+3. [Customization](https://github.com/NlptechProduct/Zengine/blob/master/Customized%20Keyboard%20Features.md)
 
 ## Other resources
-1. [API reference](https://github.com/NlptechProduct/Zengine/blob/master/README.md)
-2. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
+1. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
