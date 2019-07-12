@@ -41,7 +41,7 @@ Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8
 allprojects {
     repositories {
        … … … … …
-       maven { url 'http://54.255.220.135:38081/repository/maven-releases/' }
+       maven { url 'https://repo.nlpte.ch/repository/maven-releases/' }
        … … … … …
     }
 }
