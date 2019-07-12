@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.nlptech.zengine.sample"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        externalNativeBuild {
+//            cmake {
+//                targets "jni_latinime"
+//                arguments "-DANDROID_STL=c++_static"
+//                cppFlags "-std=c++11"
+//            }
+//        }
+//
+//        ndk {
+//            // Specifies the ABI configurations of your native
+//            // libraries Gradle should build and package with your APK.
+//            abiFilters 'armeabi-v7a', 'arm64-v8a'
+//        }
+    }
+//    externalNativeBuild {
+//        cmake {
+//            path file('src/main/cpp/CMakeLists.txt')
+//        }
+//    }
+    signingConfigs {
+        release {
+            storeFile file('zengine.sign')
+            keyAlias 'zengine'
+            keyPassword '123123'
+            storePassword '123123'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets']
+//            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+    //For language test
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+    implementation "com.nlptech.zengine:keyboardkernel:1.0.0"
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+}
+
