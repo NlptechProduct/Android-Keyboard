@@ -25,6 +25,5 @@ Zengine SDK提供了完整的输入相关功能，支持100多种语言，为80�
 3. [定制键盘功能](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%AE%9A%E5%88%B6%E9%94%AE%E7%9B%98%E5%8A%9F%E8%83%BD.md)
 
 ## 其他资源
-1. [语言列表](https://github.com/evilstreak/markdown-js)
-2. [API说明](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/Reference.md)
-3. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)
+1. [API说明](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/Reference.md)
+2. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)
