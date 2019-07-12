@@ -1,4 +1,5 @@
-##1.  Add built-in Dictionary
+## 1.  Add built-in Dictionary
+
 1.Add built-in dictionary and configuration file under the category of assets. Please contact zengine@nlptech.com for dictionary and configuration files.   
 2.Add build.gradle in project, see as follows:  
 **build.gradle**
@@ -8,7 +9,8 @@ aaptOptions{
            noCompress 'xz'
 }
 ~~~
-##2. Set the Theme
+## 2. Set the Theme
+
 To Add Theme **Agent.getInstance().addExternalThemes(context, infos)**  
 To Delete **Agent.getInstance().deleteExternalThemes(context, infos)**  
 To Get New Theme **Agent.getInstance().getExternalThemes(context)**  
@@ -58,9 +60,11 @@ public class ExampleApplication extends Application {
     }
 … … … … …
 ~~~
-##3. Set EmojiView
+## 3. Set EmojiView
+
 If the developers would like to customize the display of emojis rather than using the EmojiView integrated in KeyboardView, the developers may implant it through customized EmojiView in onDisplayEmojiKeyboard() and return true at the same time. 
-##4.  AOSP SuggestionStripView
+## 4.  AOSP SuggestionStripView
+
 SuggestionStripView in AOSP provides the prediction bar on the keyboard. SuggestionStripView in Zengine is temporarily unavailable. Please set it as follows:
 **input_view.xml:**
 
@@ -106,7 +110,8 @@ SuggestionStripView in AOSP provides the prediction bar on the keyboard. Suggest
  }
 ~~~
 
-##5.  Setting Input Event Callback
+## 5.  Setting Input Event Callback
+
 **LatinIME.java:**
 
 ~~~
