@@ -447,14 +447,14 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       					// if (mSuggestionStripView != null) {
       					// mSuggestionStripView.setVisibility(View.VISIBLE);
       					// }
-       			break;
+       					break;
    					case IKeyboardActionCallback.EMOJI_KEYBOARD:
       					// if (mSuggestionStripView!= null) {
       					// mSuggestionStripView.setVisibility(View.GONE);
       					// }
-       			break;
+       					break;
    					case IKeyboardActionCallback.SYMBOL_KEYBOARD:
-       			break;
+       					break;
 			}
 		});
       	… … … … ...
