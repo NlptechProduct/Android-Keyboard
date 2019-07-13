@@ -134,7 +134,7 @@ zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的�
  java -jar zengineScript.jar 应用项目资料夹根路径
  // 示例 : java -jar zengineScript.jar /MyApp
 ~~~
-如果您不希望通用此脚本自动删除文件，可参考FAQ所列出的文件列表手动删除
+如果您不希望通用此脚本自动删除文件，可参考[常见问题](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)所列出的文件列表手动删除
 
 ## 5. 删除so文件
 
@@ -202,7 +202,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	}
   	… … … … …
   	@Override
-  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean 			restarting) {
+  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
          … … … … …
          mRichImm.refreshSubtypeCaches();
          final IKeyboardSwitcher switcher = mKeyboardSwitcher;
@@ -273,7 +273,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
       	… … … … …
         // 拿掉参数keyboard
-      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),                mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
+      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
    	}
   … … … … …
@@ -315,7 +315,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
 
 ~~~
  public class AndroidSpellCheckerService extends SpellCheckerService... {
-     … … … … ...
+     … … … … …
      public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
          @Nonnull final Keyboard keyboard) {
          	… … … …
@@ -389,7 +389,7 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 		super.onPause();
 		// KeyboardTheme.saveKeyboardThemeId(mSelectedThemeId,   
 		// getSharedPreferences());改用
-		KeyboardThemeManager.getInstance() .saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
+		KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
 	}
   … … … … 
 
@@ -509,7 +509,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
         … … … … ... 
         if (isInputViewShown()
                 && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
-                                                 newSelStart, newSelEnd,  settingsValues)) {
+                                                 newSelStart, newSelEnd,settingsValues)) {
           KeyboardSwitcher.getInstance()
                              .requestUpdatingShiftState(getCurrentAutoCapsState(),
                                                         getCurrentRecapitalizeState());
