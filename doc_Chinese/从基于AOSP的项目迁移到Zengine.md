@@ -259,7 +259,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	@Override
   	public void setNeutralSuggestionStrip() {
 		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
-        // 把currentSettings换成mInputLogic
+        	// 把currentSettings换成mInputLogic
   		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
        … … … … …
   	}
@@ -296,19 +296,20 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
 
 ~~~
 	public class LatinIME extends InputMethodService{
-   	    … … … … …
-        //UIHandler implements ImeUiHandlerInterface
-        public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> implements ImeUiHandlerInterface {
-          	… … … … …
- 			// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
-          	… … … … …
-          	@Override
-          	public void handleMessage(final Message msg) {
-          		… … … … …
-          		final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
-          		… … … … …
-          	}
-        }
+   	    	… … … … …
+		//UIHandler implements ImeUiHandlerInterface
+		public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
+			implements ImeUiHandlerInterface {
+			… … … … …
+				// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
+			… … … … …
+			@Override
+			public void handleMessage(final Message msg) {
+				… … … … …
+				final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
+				… … … … …
+			}
+		}
 	}
 ~~~
 **AndroidSpellCheckerService.java:**
@@ -415,7 +416,7 @@ public class ExampleApplication extends Application {
 **LatinIME.java:**
 
 ~~~
-… … … … ...
+… … … …
 public class LatinIME extends InputMethodService implements 
 KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       … … … … …
@@ -457,46 +458,46 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
        					break;
 			}
 		});
-      	… … … … ...
+      	… … … …
       }
 
       @Override
       public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
           Agent.getInstance().onStartInput(editorInfo, restarting);
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
           Agent.getInstance().onStartInputView(editorInfo, restarting);
           mHandler.onStartInputView(editorInfo, restarting);
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onFinishInputView(final boolean finishingInput) {
           Agent.getInstance().onFinishInputView(finishingInput);
           StatsUtils.onFinishInputView();
-          … … … … ... 
+          … … … … 
       }
       @Override
       public void onFinishInput() {
           Agent.getInstance().onFinishInput();
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onWindowShown() {
           super.onWindowShown();
           Agent.getInstance().onWindowShown();
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onWindowHidden() {
           super.onWindowHidden();
           Agent.getInstance().onWindowHidden();
-          … … … … ...
+          … … … …
      }    
 
      @Override
@@ -506,7 +507,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
                  composingSpanStart, composingSpanEnd);
         Agent.getInstance().onUpdateSelection(newSelStart, newSelEnd);
-        … … … … ... 
+        … … … …
         if (isInputViewShown()
                 && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
                                                  newSelStart, newSelEnd,settingsValues)) {
@@ -517,13 +518,13 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
           KeyboardSwitcher.getInstance()
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
-        … … … … ... 
+        … … … … 
      }
 
      @Override
      public void onDestroy() {
          Agent.getInstance().onDestroy();
-         … … … … ...
+         … … … …
          super.onDestroy();
      }
     … … … … …
