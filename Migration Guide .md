@@ -132,7 +132,7 @@ You can remove duplicated Java sources and resources by bundled zengineScript.ja
  java -jar zengineScript.jar <your project folder>
  // e.g : java -jar zengineScript.jar /MyApp
 ~~~
-If the tool does not work well for you, please see FAQ to manually do the cleanup
+If the tool does not work well for you, please see [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md) to manually do the cleanup
 
 ## 5. Native JNI library
 
@@ -199,7 +199,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	}
   	… … … … …
   	@Override
-  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean 			restarting) {
+  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
          … … … … …
          mRichImm.refreshSubtypeCaches();
          final IKeyboardSwitcher switcher = mKeyboardSwitcher;
@@ -269,7 +269,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
       	… … … … …
         // remove argument  keyboard
-      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),                mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
+      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
    	}
   … … … … …
