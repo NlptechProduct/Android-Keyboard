@@ -1,15 +1,19 @@
-#从基于AOSP的项目迁移到Zengine
+# 从基于AOSP的项目迁移到Zengine
+
 如果您已经基于AOSP构建了自己的输入法项目，或者您的项目中已经基于AOSP集成了输入法的功能，您可以参考这份文档从AOSP迁移到Zengine来获得更强大的功能和更好的用户体验。
 
-#集成要求
-##1. AndroidX
+# 集成要求
+
+## 1. AndroidX
+
 Zengine SDK需要依赖AndroidX库。如果您的项目尚未迁移到AndroidX，请在Android Studio中执行以下操作：  
 1. Android Studio → Refactor → Migrate to AndroidX  
 2. 在下方Refactoring Preview框中，按下Do Refactor.  
 
 亦可参考官方文档：[here](https://developer.android.com/jetpack/androidx/migrate)
 
-##2. 最低SDK版本、Java编译选项
+## 2. 最低SDK版本、Java编译选项
+
 Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8或以上版本进行编译。将如下代码添加设定至build.gradle (app)：  
 **app/build.gradle:**
 
@@ -32,8 +36,10 @@ Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8
         … … … … 
 ~~~
 
-#开始集成
-##1. 安裝Zengine SDK
+# 开始集成
+
+## 1. 安裝Zengine SDK
+
 在工程build.gradle配置脚本中allprojects代码段中添加Zengine SDK Maven仓库地址。如下:  
 **build.gradle:**
 
@@ -57,8 +63,10 @@ dependencies {
 }
 ~~~
 
-##2. 修改AndroidManifest.xml
-###2.1 添加appkey
+## 2. 修改AndroidManifest.xml
+
+### 2.1 添加appkey
+
 将appkey添加到AndroidManifest.xml中  
 **AndroidManifest.xml:**
 
@@ -74,7 +82,9 @@ dependencies {
        … … … … …
 ~~~
 如果您还没有appkey，请联系zengine@nlptech.com申请appkey和使用授权。
-###2.2 权限
+
+### 2.2 权限
+
 **AndroidManifest.xml:**
 
 ~~~
@@ -87,7 +97,9 @@ dependencies {
  <uses-permission android:name="android.permission.VIBRATE" />
  <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
 ~~~
-###2.3 修改PermissionsActivity
+
+### 2.3 修改PermissionsActivity
+
 **AndroidManifest.xml:**
 
 ~~~
@@ -101,7 +113,8 @@ dependencies {
 </activity>
 ~~~
 
-##3. 更改method.xml
+## 3. 更改method.xml
+
 请更改method.xml中的内容如下 (删除所有subtype)：
 **method.xml:**
 
@@ -111,7 +124,8 @@ dependencies {
        android:supportsSwitchingToNextInputMethod="false">
 </input-method>
 ~~~
-##4. 使用脚本zengineScript.jar删除特定類和资源文件
+## 4. 使用脚本zengineScript.jar删除特定類和资源文件
+
 zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的冗余类文件和资源文件，并将其删除。zengineScript.jar还会自动修改项目中类的引用变更。
 
 **该脚本不会删除有过改动的AOSP文件，并会将所有未删除成功的文件列出，需要您手动检查逻辑并且删除。**
@@ -122,14 +136,19 @@ zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的�
 ~~~
 如果您不希望通用此脚本自动删除文件，可参考FAQ所列出的文件列表手动删除
 
-##5. 删除so文件
+## 5. 删除so文件
+
 删除项目创建的so文件:  **libjni_latinime.so**
 
-##6. 修改原有AOSP内容
-###6.1 开启Auto Import on the fly的功能
+## 6. 修改原有AOSP内容
+
+### 6.1 开启Auto Import on the fly的功能
+
 为了加速修改过程，建议开启Auto Import on the fly功能：  
 Android Studio → Editor → General → Auto Import → Java
-###6.2 修改代码
+
+### 6.2 修改代码
+
 **LatinIME.java:**
 
 ```java
@@ -376,8 +395,10 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 
 ~~~
 
-##7. 代码引入
-###7.1 Agent引入
+## 7. 代码引入
+
+### 7.1 Agent引入
+
 初始化，需在Application的onCreate()中调用,示例：
 **ExampleApplication.java:**
 
@@ -508,7 +529,8 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
     … … … … …
 ~~~
 
-###7.2 View集成
+### 7.2 View集成
+
 Zengine SDK中提供的KeyboardView已经整合了默认的EmojiView,开发者只需在InputMethodService.onCreateInputView()中，调用：
 
 ~~~
@@ -555,13 +577,16 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 ###7.3 语言管理
 可通过**Agent.getInstance().getAvailableIMELanguageList()**方法获取Zengine支持的语言列表，使用**Agent.getInstance().addIMELanguage()**和**Agent.getInstance().removeIMELanguage()**方法对语言进行添加和删除的操作。词典基于已添加语言进行下载，可通过**Agent.getInstance().getAddedIMELanguageList()**查看已添加语言列表。
 
-###7.4 词典管理
+### 7.4 词典管理
+
 通过调用**Agent.getInstance().downloadDictionary()**方法进行词典下载，该方法基于当前已添加语言进行批量词典下载和更新。可通过调用**Agent.getInstance().registerDictionaryDownloadListener()**注册listener监听下载状态。词典默认会在wifi和非wifi状态进行下载，如希望关闭非wifi网络状态的下载，可调用**Agent.getInstance().enableMobileDictionaryDownload(false)**进行设置。
 
-###7.5 其他设定
+### 7.5 其他设定
+
 输入相关的设定(如是否打开滑行输入，自动纠错等保持AOSP项目原有设置，请勿做相关改动。
 
-###7.6 数据收集开关统计
+### 7.6 数据收集开关统计
+
 通过调用**Agent.getInstance().setInputDataCollectionEnabled(value)**设置是否打开Zengine的数据收集功能。请在您所使用的埋点平台统计**setInputDataCollectionEnabled(value)**方法调用的次数与对应值。
 以Firebase平台为例，可调用下述代码上报：
 
@@ -573,7 +598,7 @@ public void dataColectionEvent(boolean value){
 }
 ~~~
 
-##8. 添加proguard内容
+## 8. 添加proguard内容
 
 ~~~
 # 基本设定
@@ -604,7 +629,8 @@ public void dataColectionEvent(boolean value){
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
 ~~~
 
-##9. 新增或修改引用
+## 9. 新增或修改引用
+
 透过Android Studio → Build → Make Project，得知还有哪些档案有error后，将他们打开并使用Show Intentin Actions → Import Class或触发Auto Import on the fly的方式，快速帮你插入缺少的引用，但少部分引用还是需要手动修改。
 
 需要新增或修改 Zengine相关类的引用，示例：  
