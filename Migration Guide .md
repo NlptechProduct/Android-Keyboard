@@ -149,7 +149,7 @@ Android Studio → Editor → General → Auto Import → Java
 **LatinIME.java:**
 
 ```java
-        // The KeyboardSwitcherListener interface has the same signature with 			AOSP one.
+        // The KeyboardSwitcherListener interface has the same signature with AOSP one.
         // ImsInterface interface needs getIME()
         public class LatinIME extends InputMethodService implements 
 KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
@@ -167,7 +167,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
     public final UIHandler mHandler = new UIHandler(this);
     // Move creation of InputLogic after creating UIHandler
     // and modify signature of InputLogic constructor
-    final InputLogic mInputLogic = new InputLogic(this, mHandler, KeyboardSwitcher.getInstance() ,mDictionaryFacilitator);
+    final InputLogic mInputLogic = new InputLogic(this,mHandler,KeyboardSwitcher.getInstance(),mDictionaryFacilitator);
     … … … … …
     @Override
     public void onCreate() {
@@ -255,7 +255,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	@Override
   	public void setNeutralSuggestionStrip() {
 		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
-        // currentSettings-->mInputLogic
+        	// currentSettings-->mInputLogic
   		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
        … … … … …
   	}
@@ -293,7 +293,8 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
 	public class LatinIME extends InputMethodService{
    	    … … … … …
         //UIHandler implements ImeUiHandlerInterface
-        public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> implements ImeUiHandlerInterface {
+        public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
+		implements ImeUiHandlerInterface {
           	… … … … …
  			// Functions in ImeUiHandlerInterface work the same in LatinIME.UIHandler
           	… … … … …
@@ -442,56 +443,56 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       					// if (mSuggestionStripView != null) {
       					// mSuggestionStripView.setVisibility(View.VISIBLE);
       					// }
-       			break;
+       					break;
    					case IKeyboardActionCallback.EMOJI_KEYBOARD:
       					// if (mSuggestionStripView!= null) {
       					// mSuggestionStripView.setVisibility(View.GONE);
       					// }
-       			break;
+       					break;
    					case IKeyboardActionCallback.SYMBOL_KEYBOARD:
-       			break;
+       					break;
 			}
 		});
-      	… … … … ...
+      	… … … … …
       }
 
       @Override
       public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
           Agent.getInstance().onStartInput(editorInfo, restarting);
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
           Agent.getInstance().onStartInputView(editorInfo, restarting);
           mHandler.onStartInputView(editorInfo, restarting);
-          … … … … ...
+          … … … … 
       }
 
       @Override
       public void onFinishInputView(final boolean finishingInput) {
           Agent.getInstance().onFinishInputView(finishingInput);
           StatsUtils.onFinishInputView();
-          … … … … ... 
+          … … … …  
       }
       @Override
       public void onFinishInput() {
           Agent.getInstance().onFinishInput();
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onWindowShown() {
           super.onWindowShown();
           Agent.getInstance().onWindowShown();
-          … … … … ...
+          … … … … 
       }
 
       @Override
       public void onWindowHidden() {
           super.onWindowHidden();
           Agent.getInstance().onWindowHidden();
-          … … … … ...
+          … … … … 
      }    
 
      @Override
