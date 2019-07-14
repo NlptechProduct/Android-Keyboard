@@ -134,7 +134,7 @@ zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的�
  java -jar zengineScript.jar 应用项目资料夹根路径
  // 示例 : java -jar zengineScript.jar /MyApp
 ~~~
-如果您不希望通用此脚本自动删除文件，可参考FAQ所列出的文件列表手动删除
+如果您不希望通用此脚本自动删除文件，可参考[常见问题](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)所列出的文件列表手动删除
 
 ## 5. 删除so文件
 
@@ -202,7 +202,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	}
   	… … … … …
   	@Override
-  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean 			restarting) {
+  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
          … … … … …
          mRichImm.refreshSubtypeCaches();
          final IKeyboardSwitcher switcher = mKeyboardSwitcher;
@@ -259,7 +259,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	@Override
   	public void setNeutralSuggestionStrip() {
 		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
-        // 把currentSettings换成mInputLogic
+        	// 把currentSettings换成mInputLogic
   		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
        … … … … …
   	}
@@ -273,7 +273,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
   	public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
       	… … … … …
         // 拿掉参数keyboard
-      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),                mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
+      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
    	}
   … … … … …
@@ -296,26 +296,27 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
 
 ~~~
 	public class LatinIME extends InputMethodService{
-   	    … … … … …
-        //UIHandler implements ImeUiHandlerInterface
-        public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> implements ImeUiHandlerInterface {
-          	… … … … …
- 			// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
-          	… … … … …
-          	@Override
-          	public void handleMessage(final Message msg) {
-          		… … … … …
-          		final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
-          		… … … … …
-          	}
-        }
+   	    	… … … … …
+		//UIHandler implements ImeUiHandlerInterface
+		public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
+			implements ImeUiHandlerInterface {
+			… … … … …
+				// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
+			… … … … …
+			@Override
+			public void handleMessage(final Message msg) {
+				… … … … …
+				final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
+				… … … … …
+			}
+		}
 	}
 ~~~
 **AndroidSpellCheckerService.java:**
 
 ~~~
  public class AndroidSpellCheckerService extends SpellCheckerService... {
-     … … … … ...
+     … … … … …
      public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
          @Nonnull final Keyboard keyboard) {
          	… … … …
@@ -389,7 +390,7 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 		super.onPause();
 		// KeyboardTheme.saveKeyboardThemeId(mSelectedThemeId,   
 		// getSharedPreferences());改用
-		KeyboardThemeManager.getInstance() .saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
+		KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
 	}
   … … … … 
 
@@ -415,7 +416,7 @@ public class ExampleApplication extends Application {
 **LatinIME.java:**
 
 ~~~
-… … … … ...
+… … … …
 public class LatinIME extends InputMethodService implements 
 KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       … … … … …
@@ -447,56 +448,56 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       					// if (mSuggestionStripView != null) {
       					// mSuggestionStripView.setVisibility(View.VISIBLE);
       					// }
-       			break;
+       					break;
    					case IKeyboardActionCallback.EMOJI_KEYBOARD:
       					// if (mSuggestionStripView!= null) {
       					// mSuggestionStripView.setVisibility(View.GONE);
       					// }
-       			break;
+       					break;
    					case IKeyboardActionCallback.SYMBOL_KEYBOARD:
-       			break;
+       					break;
 			}
 		});
-      	… … … … ...
+      	… … … …
       }
 
       @Override
       public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
           Agent.getInstance().onStartInput(editorInfo, restarting);
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
           Agent.getInstance().onStartInputView(editorInfo, restarting);
           mHandler.onStartInputView(editorInfo, restarting);
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onFinishInputView(final boolean finishingInput) {
           Agent.getInstance().onFinishInputView(finishingInput);
           StatsUtils.onFinishInputView();
-          … … … … ... 
+          … … … … 
       }
       @Override
       public void onFinishInput() {
           Agent.getInstance().onFinishInput();
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onWindowShown() {
           super.onWindowShown();
           Agent.getInstance().onWindowShown();
-          … … … … ...
+          … … … …
       }
 
       @Override
       public void onWindowHidden() {
           super.onWindowHidden();
           Agent.getInstance().onWindowHidden();
-          … … … … ...
+          … … … …
      }    
 
      @Override
@@ -506,10 +507,10 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
                  composingSpanStart, composingSpanEnd);
         Agent.getInstance().onUpdateSelection(newSelStart, newSelEnd);
-        … … … … ... 
+        … … … …
         if (isInputViewShown()
                 && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
-                                                 newSelStart, newSelEnd,  settingsValues)) {
+                                                 newSelStart, newSelEnd,settingsValues)) {
           KeyboardSwitcher.getInstance()
                              .requestUpdatingShiftState(getCurrentAutoCapsState(),
                                                         getCurrentRecapitalizeState());
@@ -517,13 +518,13 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
           KeyboardSwitcher.getInstance()
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
-        … … … … ... 
+        … … … … 
      }
 
      @Override
      public void onDestroy() {
          Agent.getInstance().onDestroy();
-         … … … … ...
+         … … … …
          super.onDestroy();
      }
     … … … … …
