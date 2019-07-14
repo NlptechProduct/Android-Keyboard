@@ -1,1 +1,0 @@
-make: `/Users/willywu/Work/Projects/LatinIME_SDK3_Demo/latinime/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libjni_latinime.so' is up to date.
