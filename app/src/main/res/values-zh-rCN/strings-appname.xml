@@ -20,8 +20,8 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="english_ime_name" msgid="5940510615957428904">"Android 键盘 (AOSP)"</string>
-    <string name="spell_checker_service_name" msgid="1254221805440242662">"Android 拼写检查工具 (AOSP)"</string>
-    <string name="english_ime_settings" msgid="5760361067176802794">"Android 键盘设置 (AOSP)"</string>
-    <string name="android_spell_checker_settings" msgid="6123949487832861885">"Android 拼写检查工具设置 (AOSP)"</string>
+    <string name="english_ime_name" msgid="5940510615957428904">"Android 键盘 (Zengine)"</string>
+    <string name="spell_checker_service_name" msgid="1254221805440242662">"Android 拼写检查工具 (Zengine)"</string>
+    <string name="english_ime_settings" msgid="5760361067176802794">"Android 键盘设置 (Zengine)"</string>
+    <string name="android_spell_checker_settings" msgid="6123949487832861885">"Android 拼写检查工具设置 (Zengine)"</string>
 </resources>
