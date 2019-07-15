@@ -2,11 +2,35 @@
 
 <br/>
 
-## 1. Agent类
+## 目录
+* [Agent类](#1)
+    * [初始化](#1.1)
+    * [生命周期调用](#1.2)
+    * [语言管理](#1.3)
+    * [词典管理](#1.4)
+    * [Theme设定](#1.5)
+    * [其他回调设定](#1.6)
+    
+* [回调类](#2)
+    * [LanguageCallback](#2.1)
+    * [IKeyboardActionCallback](#2.2)
+    * [KeyboardSwitcherListener](#2.3)
+    * [ImeUiHandlerInterface](#2.4)
+    * [ImsInterface](#2.5)
+    * [IUserInputCallback](#2.6)
+    
+* [Builder类](#3)
+    * [ExternalThemeInfo](#3.1)
 
 <br/>
 
-### 1.1 初始化
+<br/>
+
+<h2 id="1">Agent类</h2>
+
+<br/>
+
+<h3 id="1.1">初始化</h3>
 
 #### init
 ```Java
@@ -20,7 +44,7 @@ context | 应用启动时呼叫 使得SDK可以获得应用Context资讯
 
 <br/>
 
-### 1.2 生命周期调用
+<h3 id="1.2">生命周期调用</h3>
 
 #### onCreate
 ```
@@ -114,7 +138,7 @@ public void onDestroy ()
 
 <br/>
 
-### 1.3 语言管理
+<h3 id="1.3">语言管理</h3>
 
 #### getAvailableIMELanguageList
 ```Java
@@ -206,7 +230,7 @@ DictionaryFacilitator.FuelGetter |  |
 
 <br/>
 
-### 1.4 词典管理
+<h3 id="1.4">词典管理</h3>
 
 #### downloadDictionary
 ```Java
@@ -266,7 +290,7 @@ public void unregisterDictionaryDownloadListener ()
 
 <br/>
 
-### 1.5 Theme设定
+<h3 id="1.5">Theme设定</h3>
 
 #### addExternalThemes
 ```Java
@@ -317,7 +341,7 @@ externalId | 创建theme的id
 
 <br/>
 
-### 1.6 其他回调设定
+<h3 id="1.6">其他回调设定</h3>
 
 #### setKeyboardActionCallback
 ```Java
@@ -339,11 +363,11 @@ public void setKeyboardSpecificEventCallback (IKeyboardSpecificEventCallback key
 -----|:--------
 keyboardSpecificEventCallback | IKeyboardSpecificEventCallback实现
 
-## 2. 回调类
+<h2 id="2">回调类</h2>
 
 <br/>
 
-### 2.1 LanguageCallback
+<h3 id="2.1">LanguageCallback</h3>
 用途 : 语言切换
 
 #### onIMELanguageChanged
@@ -358,7 +382,7 @@ subtype | 需切换的语言
 
 <br/>
 
-### IKeyboardActionCallback
+<h3 id="2.2">IKeyboardActionCallback</h3>
 用途 : 键盘事件回调
 
 #### onDisplayEmojiKeyboard
@@ -383,8 +407,8 @@ keyboardType | 键盘的种类: <br/> 1. IKeyboardActionCallback.ALPHA_KEYBOARD 
 
 <br/>
 
-### 2.2 KeyboardSwitcherListener
- 用途：用于键盘切换回调
+<h3 id="2.3">KeyboardSwitcherListener</h3>
+用途：用于键盘切换回调
 
 #### stopShowingInputView
 ```Java
@@ -410,7 +434,7 @@ boolean | 是否显示语言切换按钮
 
 <br/>
 
-### 2.3 ImeUiHandlerInterface
+<h3 id="2.4">ImeUiHandlerInterface</h3>
 用途：用于與AOSP LatinIME.UIHhandler交互
 
 #### showGesturePreviewAndSuggestionStrip
@@ -514,7 +538,7 @@ suggestedWords | 与AOSP LatinIME.UIHhandler内相同名称方法内, 参数相�
 
 <br/>
 
-### 2.4 ImsInterface
+<h3 id="2.5">ImsInterface</h3>
 用途：用于與AOSP LatinIME部分功能交互
 
 #### getIME
@@ -581,7 +605,7 @@ suggestedWords | 与AOSP LatinIME.UIHhandler内相同名称方法内, 参数相�
 
 <br/>
 
-### 2.5 IUserInputCallback
+<h3 id="2.6">IUserInputCallback</h3>
 用途：用于用户输入回调
 
 #### onUserTyping
@@ -612,11 +636,11 @@ public void onTextChanged ()
 
 <br/>
 
-## 3. Builder类
+<h2 id="3">Builder类</h2>
 
 <br/>
 
-### 3.1 ExternalThemeInfo
+<h3 id="3.1">ExternalThemeInfo</h3>
 用途 : 新增主题时需要的数据结构
 
 #### Builder
