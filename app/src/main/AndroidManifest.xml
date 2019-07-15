@@ -127,6 +127,12 @@
             android:label="@string/english_ime_settings">
         </activity>
 
+        <activity
+            android:name="com.nlptech.function.main.MainActivity"
+            android:theme="@style/AppTheme"
+            android:launchMode="singleTask"
+            android:label="@string/english_ime_settings" />
+
         <activity android:name="com.nlptech.inputmethod.latin.permissions.PermissionsActivity"
             android:theme="@style/AppTheme"
             android:launchMode="singleTask"
