@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.inputmethod.latin.R;
-import com.nlptech.common.utils.SystemUtils;
 
 public class CustomPreference extends Preference {
 
-    private Context mContext;
+    protected Context mContext;
+    protected TextView mTitle;
+    protected TextView mSubTitle;
 
     public CustomPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -29,8 +30,13 @@ public class CustomPreference extends Preference {
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        TextView textView = view.findViewById(R.id.custom_item_name);
-        textView.setText("guid : " + SystemUtils.getGuid(mContext.getApplicationContext()));
+        mTitle = view.findViewById(R.id.custom_title);
+        mSubTitle = view.findViewById(R.id.custom_subtitle);
+        view.setOnClickListener(v -> onItemClick());
+    }
+
+    protected void onItemClick() {
+
     }
 
 }
