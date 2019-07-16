@@ -36,7 +36,7 @@ import android.widget.VideoView;
 import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.settings.SettingsActivity;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
-import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
+import com.nlptech.function.main.MainActivity;
 import com.nlptech.inputmethod.compat.TextViewCompatUtils;
 import com.nlptech.inputmethod.compat.ViewCompatUtils;
 import com.nlptech.inputmethod.latin.utils.UncachedInputMethodManagerUtils;
@@ -261,9 +261,8 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mNeedsToAdjustStepNumberToSystemState = true;
     }
 
-    private void invokeSettingsOfThisIme() {
-        final Intent intent = new Intent();
-        intent.setClass(this, SettingsActivity.class);
+    private void invokeMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(SettingsActivity.EXTRA_ENTRY_KEY,
@@ -356,8 +355,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         if (mStepNumber == STEP_LAUNCHING_IME_SETTINGS) {
             // Prevent white screen flashing while launching settings activity.
             mSetupWizard.setVisibility(View.INVISIBLE);
-//            invokeSettingsOfThisIme();
-            invokeLanguageActivity();
+            invokeMainActivity();
             mStepNumber = STEP_BACK_FROM_IME_SETTINGS;
             return;
         }
@@ -366,11 +364,6 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             return;
         }
         updateSetupStepView();
-    }
-
-    private  void invokeLanguageActivity(){
-        Intent intent = new Intent(this, LanguageAddedActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -436,7 +429,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mActionFinish.setVisibility((mStepNumber == STEP_3) ? View.VISIBLE : View.GONE);
         if (mStepNumber == STEP_3) {
             finish();
-            invokeLanguageActivity();
+            invokeMainActivity();
         }
     }
 

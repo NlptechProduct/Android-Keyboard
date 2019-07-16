@@ -20,6 +20,9 @@ allprojects {
         maven {
             url 'https://repo.nlpte.ch/repository/maven-releases/'
         }
+        maven {
+            url 'https://repo.nlpte.ch/repository/maven-snapshots/'
+        }
     }
 }
 
