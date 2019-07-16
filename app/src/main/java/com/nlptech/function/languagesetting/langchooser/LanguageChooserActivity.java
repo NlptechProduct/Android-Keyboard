@@ -102,8 +102,8 @@ public class LanguageChooserActivity extends AppCompatActivity implements Langua
     }
 
     @Override
-    public void onDownloadFail() {
-        Toast.makeText(this,"onDownloadDictionaryFail()",Toast.LENGTH_LONG).show();
+    public void onDownloadFail(int errorCode) {
+        Toast.makeText(this,"onDownloadDictionaryFail() errorCode="+errorCode,Toast.LENGTH_LONG).show();
         if (adapter == null) {
             return;
         }
