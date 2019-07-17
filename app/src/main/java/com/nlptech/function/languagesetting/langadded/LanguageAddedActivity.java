@@ -26,6 +26,7 @@ import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
 import com.nlptech.language.VertexInputMethodManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.nlptech.language.VertexInputMethodManager.PREF_CHARSET_TO_LAYOUT_PREFIX;
@@ -94,33 +95,34 @@ public class LanguageAddedActivity extends AppCompatActivity implements Language
     }
 
     @Override
-    public void onClickChangeLayoutSet(String charset) {
-        String[] layoutSets = CharsetTable.getInstance().obtainLayoutSetFromCharset(charset);
-        if (layoutSets == null) {
+    public void onClickChangeLayoutSet(IMELanguage imeLanguage) {
+        if(imeLanguage == null){
+            return;
+        }
+        List<String> layoutSets = Agent.getInstance().obtainLayoutList(imeLanguage);
+        if (layoutSets == null || layoutSets.size() <= 0) {
             return;
         }
 
-        String currentLayoutSet = PrefUtil.getString(this, PREF_CHARSET_TO_LAYOUT_PREFIX + charset, "");
-        if (TextUtils.isEmpty(currentLayoutSet)) {
-            return;
-        }
+        String currentLayoutSet = imeLanguage.getLayout();
 
-        showSelectLayoutSetDialogFragment(charset, currentLayoutSet, layoutSets);
+        showSelectLayoutSetDialogFragment(imeLanguage,imeLanguage.getCharset(), currentLayoutSet, layoutSets);
     }
 
-    private void showSelectLayoutSetDialogFragment(String charset, String currentLayoutSet, String[] layoutSets) {
+    private void showSelectLayoutSetDialogFragment(IMELanguage imeLanguage,String charset, String currentLayoutSet, List<String> layoutSets) {
         SelectLayoutSetDialogFragment f = SelectLayoutSetDialogFragment.newInstance();
         f.setCharset(charset);
         f.setCurrentLayoutSet(currentLayoutSet);
         f.setLayoutSets(layoutSets);
         f.setSelectLayoutSetListener(this);
+        f.setIMELanguage(imeLanguage);
         f.show(getSupportFragmentManager(), SelectLayoutSetDialogFragment.DIALOG_FRAGMENT);
     }
 
 
     @Override
-    public void onLayoutSetChanged(String charset, String newLayout) {
-        VertexInputMethodManager.getInstance().onLayoutChangedAndUpdate(charset, newLayout);
+    public void onLayoutSetChanged(IMELanguage imeLanguage, String newLayout) {
+        Agent.getInstance().onLayoutChanged(imeLanguage,newLayout);
         viewModel.obtainList();
     }
 
