@@ -46,7 +46,7 @@ public class AddedMultiViewHolder extends LangBaseViewHolder<IMELanguageWrapper>
         });
 
         binding.layoutSetName.setOnClickListener(v -> {
-            languageListener.onClickChangeLayoutSet(entity.getMultiIMELanguage().getSubtypeIMEList().get(0).getCharset());
+            languageListener.onClickChangeLayoutSet(entity.getMultiIMELanguage().getSubtypeIMEList().get(0));
         });
     }
 }

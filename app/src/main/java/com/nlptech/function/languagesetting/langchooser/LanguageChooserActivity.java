@@ -18,6 +18,7 @@ import com.nlptech.function.dictionary.DictionaryListener;
 import com.nlptech.function.languagesetting.LanguageListener;
 import com.nlptech.function.languagesetting.LanguageSettingAdapter;
 import com.nlptech.function.languagesetting.LanguageSettingViewModel;
+import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
 
 import java.util.List;
@@ -89,7 +90,7 @@ public class LanguageChooserActivity extends AppCompatActivity implements Langua
     }
 
     @Override
-    public void onClickChangeLayoutSet(String charset) {
+    public void onClickChangeLayoutSet(IMELanguage imeLanguage) {
 
     }
 

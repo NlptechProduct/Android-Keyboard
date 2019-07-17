@@ -1,5 +1,6 @@
 package com.nlptech.function.languagesetting;
 
+import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
 
 public interface LanguageListener {
@@ -9,5 +10,5 @@ public interface LanguageListener {
 
     void onLanguagePositionChanged(int from, int to);
 
-    void onClickChangeLayoutSet(String charset);
+    void onClickChangeLayoutSet(IMELanguage imeLanguage);
 }
