@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.android.inputmethod.latin.R;
+import com.nlptech.language.IMELanguage;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class SelectLayoutSetDialogFragment extends DialogFragment {
     public static final String DIALOG_FRAGMENT = "select_layoutset_dialog_fragment";
@@ -24,13 +27,14 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
     protected AlertDialog mDialog;
 
     private String mCharset;
-    private String[] mLayoutSets;
+    private List<String> mLayoutSets;
     private String mCurrentLayoutSet;
+    private IMELanguage imeLanguage;
 
     private Adapter mAdapter;
 
     public interface SelectLayoutSetListener {
-        void onLayoutSetChanged(String charset, String newLayout);
+        void onLayoutSetChanged(IMELanguage imeLanguage, String newLayout);
     }
     private SelectLayoutSetListener mSelectLayoutSetListener;
 
@@ -46,12 +50,16 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
         mCharset = charset;
     }
 
-    public void setLayoutSets(String[] layoutSets) {
+    public void setLayoutSets(List<String> layoutSets) {
         this.mLayoutSets = layoutSets;
     }
 
     public void setCurrentLayoutSet(String currentLayoutSet) {
         mCurrentLayoutSet = currentLayoutSet;
+    }
+
+    public void setIMELanguage(IMELanguage imeLanguage) {
+        this.imeLanguage = imeLanguage;
     }
 
     @Override
@@ -69,7 +77,7 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
             mCurrentLayoutSet = layoutSet;
             mAdapter.setCurrentLayoutSet(layoutSet);
 
-            if (mSelectLayoutSetListener != null) mSelectLayoutSetListener.onLayoutSetChanged(mCharset, mCurrentLayoutSet);
+            if (mSelectLayoutSetListener != null) mSelectLayoutSetListener.onLayoutSetChanged(imeLanguage, mCurrentLayoutSet);
 
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity,RecyclerView.VERTICAL,false);
@@ -81,11 +89,11 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
 
     private class Adapter extends RecyclerView.Adapter<LayoutSetViewHolder> {
 
-        String[] layoutSets;
+        List<String> layoutSets;
         String currentLayoutSet;
         LayoutSetViewHolderListener layoutSetViewHolderListener;
 
-        private Adapter(String[] layoutSets, String currentLayoutSet, LayoutSetViewHolderListener listener) {
+        private Adapter(List<String> layoutSets, String currentLayoutSet, LayoutSetViewHolderListener listener) {
             this.layoutSets = layoutSets;
             this.currentLayoutSet = currentLayoutSet;
             this.layoutSetViewHolderListener = listener;
@@ -105,12 +113,12 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull LayoutSetViewHolder viewHolder, int i) {
-            viewHolder.bind(layoutSets[i]);
+            viewHolder.bind(layoutSets.get(i));
         }
 
         @Override
         public int getItemCount() {
-            return layoutSets == null ? 0 : layoutSets.length;
+            return layoutSets == null ? 0 : layoutSets.size();
         }
     }
 
