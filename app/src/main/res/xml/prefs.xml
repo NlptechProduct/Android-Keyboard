@@ -43,7 +43,10 @@
         android:title="@string/settings_screen_advanced"
         android:key="screen_advanced" />
 
-    <com.android.inputmethod.latin.settings.CustomPreference
+    <com.android.inputmethod.latin.settings.PrivacyPolicyPreference
+        android:layout="@layout/custom_preference" />
+
+    <com.android.inputmethod.latin.settings.ZengineIDPreference
         android:layout="@layout/custom_preference" />
 
 </PreferenceScreen>

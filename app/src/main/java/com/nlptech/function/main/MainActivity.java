@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.settings.SettingsActivity;
+import com.nlptech.Agent;
 import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
 
 import java.util.ArrayList;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         });
         mRecyclerView.setAdapter(adapter);
         adapter.setDataSet(ITEM_LIST);
+
+        Agent.getInstance().downloadDictionary();
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {

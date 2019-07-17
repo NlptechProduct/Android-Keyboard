@@ -1,0 +1,17 @@
+{
+  "fuel_list": [
+    {
+      "id": 273,
+      "engine": 2,
+      "category": 4,
+      "version": 1,
+      "size": 442601,
+      "md5": "d7fd519621d0d00abf5d8d635c4000d1",
+      "locale_list": [
+        "hi!latin-devanagari"
+      ],
+      "target_engine_version": 1,
+      "download_url": "https://d2tzg434lapcgk.cloudfront.net/language_model/online/ai/hinglish-hindi-20190708.xz"
+    }
+  ]
+}
