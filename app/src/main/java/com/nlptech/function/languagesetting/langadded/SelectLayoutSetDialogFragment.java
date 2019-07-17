@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 
 import com.android.inputmethod.latin.R;
 import com.nlptech.language.IMELanguage;
+import com.nlptech.language.LayoutDisplayTable;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -139,7 +140,7 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
 
         void bind(final String layoutSet) {
             radioButton.setChecked(mCurrentLayoutSet.equals(layoutSet));
-            radioButton.setText(layoutSet);
+            radioButton.setText(LayoutDisplayTable.getInstance().obtainDisplayLayout(layoutSet));
             radioButton.setOnClickListener(v -> layoutSetViewHolderListener.onClick(layoutSet));
         }
     }
