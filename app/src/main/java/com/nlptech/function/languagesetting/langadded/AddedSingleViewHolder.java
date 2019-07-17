@@ -34,8 +34,8 @@ public class AddedSingleViewHolder extends LangBaseViewHolder<IMELanguageWrapper
             }
             languageListener.onClickRemove(entity);
         });
-        binding.layoutSetName.setOnClickListener(v -> {
-            languageListener.onClickChangeLayoutSet(entity.getIMELanguage().getCharset());
+        itemView.setOnClickListener(v -> {
+            languageListener.onClickChangeLayoutSet(entity.getIMELanguage());
         });
     }
 }
