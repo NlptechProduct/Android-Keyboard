@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
         adapter.setDataSet(ITEM_LIST);
 
-        Agent.getInstance().downloadDictionary();
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
