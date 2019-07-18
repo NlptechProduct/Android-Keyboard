@@ -58,7 +58,7 @@ allprojects {
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.0.3'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.1.0'
      … … … … …
 }
 ~~~
@@ -581,23 +581,16 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 ### 7.4 词典管理
 
 通过调用**Agent.getInstance().downloadDictionary()**方法进行词典下载，该方法基于当前已添加语言进行批量词典下载和更新。可通过调用**Agent.getInstance().registerDictionaryDownloadListener()**注册listener监听下载状态。词典默认会在wifi和非wifi状态进行下载，如希望关闭非wifi网络状态的下载，可调用**Agent.getInstance().enableMobileDictionaryDownload(false)**进行设置。
+词典下载会在下述情况被自动触发：添加键盘，添加/删除了一种语言，键盘落下并且与上次成功的词典请求时间的间隔超过8小时。如果希望关闭词典自动下载功能，可通过调用**Agent.getInstance().enableDictionaryAutoDownload(false)**关闭。
 
 ### 7.5 其他设定
 
 输入相关的设定(如是否打开滑行输入，自动纠错等保持AOSP项目原有设置，请勿做相关改动。
 
-### 7.6 数据收集开关统计
+### 7.6 语言Layout切换
 
-通过调用**Agent.getInstance().setInputDataCollectionEnabled(value)**设置是否打开Zengine的数据收集功能。请在您所使用的埋点平台统计**setInputDataCollectionEnabled(value)**方法调用的次数与对应值。
-以Firebase平台为例，可调用下述代码上报：
+可通过调用**Agent.getInstance().onLayoutChanged(IMELanguage imeLanguage,String newLayout)**方法切换对应语言的layout。通过调用**Agent.getInstance().obtainLayoutList(IMELanguage imeLanguage)**方法获取对应语言的所有layout列表。
 
-~~~
-public void dataColectionEvent(boolean value){
-   Bundle bundle = new Bundle();
-   bundle.putBoolean("zengine_dc_switch",value);
-   mFirebaseAnalytics.logEvent("zengine_data_collection",bundle);
-}
-~~~
 
 ## 8. 添加proguard内容
 
