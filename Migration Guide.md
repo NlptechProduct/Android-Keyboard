@@ -58,7 +58,7 @@ Add dependencies:
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.0.3'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.1.0'
      … … … … …
 }
 ~~~
@@ -577,10 +577,15 @@ Through **Agent.getInstance().getAvailableIMELanguageList()** one can get suppor
 ### 7.4 Dictionary Management
 
 Initiate dictionary download through calling **Agent.getInstance().downloadDictionary()**. Downloading progress can be observed by registering a listener through **Agent.getInstance().registerDictionaryDownloadListener()**. By default, downloading is enabled even on cellular network, if you want to turn this off, please call **Agent.getInstance().enableMobileDictionaryDownload(false)**.
+dictionaries downloading will be activated under these circumstances:First, add keyboard. Second, add/delete one language. Third, there is an eight-hour gap or above between the time keyboard was downloaded last time and this time while the keyboard is hidden. If would like to turn off auto-download dictionary, call **Agent.getInstance().enableDictionaryAutoDownload(false)**.
 
 ### 7.5 Other Settings
+
 Please try to keep detailed input-related settings, for example, sliding input or auto-correction, untouched.
 
+### 7.6 Change layout of language 语言Layout切换
+
+If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELanguage imeLanguage,String newLayout)**. If would like to fetch the list of layouts under one language, call **Agent.getInstance().obtainLayoutList(IMELanguage imeLanguage)**.
 
 ## 8. Proguard settings
 

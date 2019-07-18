@@ -286,6 +286,41 @@ public void unregisterDictionaryDownloadListener ()
 ```
 注销下载状态监听接口。
 
+#### onLayoutChanged
+```Java
+public void onLayoutChanged (IMELanguage imeLanguage,String newLayout)
+```
+切换该语言的layout。
+
+参数 | 参数说明
+-----|:--------
+imeLanguage | 需切换layout的语言
+newLayout | 需切换到的layout
+
+#### obtainLayoutList
+```Java
+public List<String> obtainLayoutList (IMELanguage imeLanguage)
+```
+获取该语言所支持的layout。
+
+参数 | 参数说明
+-----|:--------
+imeLanguage | 需获取layout列表的语言
+
+返回 | 返回说明 | 
+-----|:--------
+List<String> | layout列表
+
+#### enableDictionaryAutoDownload
+```Java
+public void enableDictionaryAutoDownload (boolean enableAutoDownload)
+```
+词典自动下载触发开关控制。
+
+参数 | 参数说明
+-----|:--------
+enableAutoDownload | 是否打开自动词典下载，false为关闭自动下载，true为打开自动下载
+
 <br/>
 
 <h3 id="1.5">Theme设定</h3>
