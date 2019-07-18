@@ -68,6 +68,7 @@ import com.nlptech.common.utils.BuildCompatUtils;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
 import com.nlptech.function.callback.IKeyboardActionCallback;
 import com.nlptech.function.callback.IKeyboardSpecificEventCallback;
+import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
 import com.nlptech.inputlogic.ImeUiHandlerInterface;
 import com.nlptech.inputlogic.ImsInterface;
 import com.nlptech.inputmethod.compat.EditorInfoCompatUtils;
@@ -1918,12 +1919,14 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 di.dismiss();
                 switch (position) {
                 case 0:
-                    final Intent intent = IntentUtils.getInputLanguageSelectionIntent(
-                            imeId,
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-                                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(Intent.EXTRA_TITLE, languageSelectionTitle);
+//                    final Intent intent = IntentUtils.getInputLanguageSelectionIntent(
+//                            imeId,
+//                            Intent.FLAG_ACTIVITY_NEW_TASK
+//                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+//                                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent.putExtra(Intent.EXTRA_TITLE, languageSelectionTitle);
+//                    startActivity(intent);
+                    final Intent intent = new Intent(LatinIME.this, LanguageAddedActivity.class);
                     startActivity(intent);
                     break;
                 case 1:
