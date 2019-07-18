@@ -67,7 +67,6 @@ public class LanguageChooserActivity extends AppCompatActivity implements Langua
     @Override
     public void onClickAdd(IMELanguageWrapper item) {
         viewModel.addSubtype(item.getIMELanguage());
-        Agent.getInstance().downloadDictionary();
         if (adapter == null) {
             return;
         }
@@ -77,7 +76,6 @@ public class LanguageChooserActivity extends AppCompatActivity implements Langua
     @Override
     public void onClickRemove(IMELanguageWrapper item) {
         viewModel.removeSubtype(item);
-        Agent.getInstance().downloadDictionary();
         if (adapter == null) {
             return;
         }

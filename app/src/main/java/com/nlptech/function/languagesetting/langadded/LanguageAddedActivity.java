@@ -64,7 +64,6 @@ public class LanguageAddedActivity extends AppCompatActivity implements Language
             startActivity(intent);
         });
 
-        Agent.getInstance().downloadDictionary();
     }
 
     @Override
@@ -80,13 +79,11 @@ public class LanguageAddedActivity extends AppCompatActivity implements Language
     @Override
     public void onClickAdd(IMELanguageWrapper item) {
         viewModel.addSubtype(item.getIMELanguage());
-        Agent.getInstance().downloadDictionary();
     }
 
     @Override
     public void onClickRemove(IMELanguageWrapper item) {
         viewModel.removeSubtype(item);
-        Agent.getInstance().downloadDictionary();
     }
 
     @Override
@@ -129,6 +126,5 @@ public class LanguageAddedActivity extends AppCompatActivity implements Language
     @Override
     public void onLocaleRemoved(IMELanguage subtypeIME) {
         viewModel.removeSubtype(subtypeIME);
-        Agent.getInstance().downloadDictionary();
     }
 }
