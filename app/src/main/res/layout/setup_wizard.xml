@@ -18,19 +18,86 @@
 */
 -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/setup_wizard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/setup_background"
-    android:paddingLeft="@dimen/setup_horizontal_padding"
-    android:paddingRight="@dimen/setup_horizontal_padding"
-    android:paddingTop="@dimen/setup_vertical_padding"
-    android:paddingBottom="@dimen/setup_vertical_padding">
-    <include
-        android:id="@+id/setup_welcome_screen"
-        layout="@layout/setup_welcome_screen" />
-    <include
-        android:id="@+id/setup_steps_screen"
-        layout="@layout/setup_steps_screen" />
-</FrameLayout>
+    android:background="#f6f6f6"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/setup_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/setup_wizard_default_logo"/>
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#41424f"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/app_name_sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#41424f"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/enable_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/select_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/setup_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="49dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:textColor="@android:color/white"
+        android:textAllCaps="true"
+        android:text="@string/setup_wizard_go_action"
+        android:background="@drawable/setup_wizard_button_bg"/>
+
+
+</LinearLayout>
