@@ -577,4 +577,9 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
          This resource is copied from packages/apps/Settings/res/values/strings.xml -->
     <!-- This resource is corresponding to msgid="5433275485499039199" -->
     <string name="user_dict_fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+
+    <string name="setup_wizard_enable_keyboard">Enable %s</string>
+    <string name="setup_wizard_select_keyboard">Select %s</string>
+    <string name="setup_wizard_go_action">Go</string>
 </resources>
