@@ -583,7 +583,7 @@ dictionaries downloading will be activated under these circumstances:First, add 
 
 Please try to keep detailed input-related settings, for example, sliding input or auto-correction, untouched.
 
-### 7.6 Change layout of language 语言Layout切换
+### 7.6 Change layout of language
 
 If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELanguage imeLanguage,String newLayout)**. If would like to fetch the list of layouts under one language, call **Agent.getInstance().obtainLayoutList(IMELanguage imeLanguage)**.
 
