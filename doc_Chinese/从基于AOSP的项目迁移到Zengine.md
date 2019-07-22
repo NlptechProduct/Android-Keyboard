@@ -260,13 +260,13 @@ KeyboardActionListener,.... {
 **LatinIME$UIHandler.java:**
 
 ~~~
-	public class LatinIME extends InputMethodService{
+	public class LatinIME extends ZengineInputMethodService{
    	    	… … … … …
 		//UIHandler implements ImeUiHandlerInterface
 		public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
 			implements ImeUiHandlerInterface {
 			… … … … …
-				// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
+			// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
 			… … … … …
 			@Override
 			public void handleMessage(final Message msg) {
