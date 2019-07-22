@@ -62,6 +62,7 @@ import com.android.inputmethod.latin.suggestions.SuggestionStripViewAccessor;
 import com.android.inputmethod.latin.touchinputconsumer.GestureConsumer;
 import com.nlptech.Agent;
 import com.nlptech.IUserInputCallback;
+import com.nlptech.ZengineInputMethodService;
 import com.nlptech.common.constant.Constants;
 import com.nlptech.common.utils.ApplicationUtils;
 import com.nlptech.common.utils.BuildCompatUtils;
@@ -130,7 +131,7 @@ import static com.nlptech.common.constant.Constants.ImeOption.NO_MICROPHONE_COMP
 /**
  * Input method implementation for Qwerty'ish keyboard.
  */
-public class LatinIME extends InputMethodService implements KeyboardActionListener,
+public class LatinIME extends ZengineInputMethodService implements KeyboardActionListener,
         KeyboardSwitcherListener,
         SuggestionStripView.Listener, SuggestionStripViewAccessor,
         DictionaryFacilitator.DictionaryInitializationListener, ImsInterface,
@@ -802,7 +803,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onDestroy() {
-        Agent.getInstance().onDestroy();
         mDictionaryFacilitator.closeDictionaries();
         mSettings.onDestroy();
         unregisterReceiver(mHideSoftInputReceiver);
@@ -884,20 +884,19 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
-        Agent.getInstance().onStartInput(editorInfo,restarting);
         mHandler.onStartInput(editorInfo, restarting);
     }
 
     @Override
     public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
-        Agent.getInstance().onStartInputView(editorInfo,restarting);
+        super.onStartInputView(editorInfo,restarting);
         mHandler.onStartInputView(editorInfo, restarting);
         mStatsUtilsManager.onStartInputView();
     }
 
     @Override
     public void onFinishInputView(final boolean finishingInput) {
-        Agent.getInstance().onFinishInputView(finishingInput);
+        super.onFinishInputView(finishingInput);
         StatsUtils.onFinishInputView();
         mHandler.onFinishInputView(finishingInput);
         mStatsUtilsManager.onFinishInputView();
@@ -906,7 +905,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onFinishInput() {
-        Agent.getInstance().onFinishInput();
         mHandler.onFinishInput();
     }
 
@@ -1119,14 +1117,12 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onWindowShown() {
         super.onWindowShown();
-        Agent.getInstance().onWindowShown();
         setNavigationBarVisibility(isInputViewShown());
     }
 
     @Override
     public void onWindowHidden() {
         super.onWindowHidden();
-        Agent.getInstance().onWindowHidden();
         final MainKeyboardView mainKeyboardView = KeyboardSwitcher.getInstance().getMainKeyboardView();
         if (mainKeyboardView != null) {
             mainKeyboardView.closing();
@@ -1166,7 +1162,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             final int composingSpanStart, final int composingSpanEnd) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
                 composingSpanStart, composingSpanEnd);
-        Agent.getInstance().onUpdateSelection(newSelStart,newSelEnd);
         if (DebugFlags.DEBUG_ENABLED) {
             Log.i(TAG, "onUpdateSelection: oss=" + oldSelStart + ", ose=" + oldSelEnd
                     + ", nss=" + newSelStart + ", nse=" + newSelEnd
