@@ -22,8 +22,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.inputmethod.latin.R;
@@ -42,6 +48,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
     private View mSetupWizard;
     private TextView mActionGo;
+    private ImageView mGoImg;
     private TextView mEnableKeyboard;
     private TextView mSelectKeyboard;
     private static final String STATE_STEP = "step";
@@ -55,10 +62,13 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
     private SettingsPoolingHandler mHandler;
 
+    private Animation animationGo,animationGoImg,alpahAnimation;
+
     private static final class SettingsPoolingHandler
             extends LeakGuardHandlerWrapper<SetupWizardActivity> {
         private static final int MSG_POLLING_IME_SETTINGS = 0;
         private static final long IME_SETTINGS_POLLING_INTERVAL = 200;
+        private static final int TRIGGER_ANIMATION = 1;
 
         private final InputMethodManager mImmInHandler;
 
@@ -83,6 +93,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
                 }
                 startPollingImeSettings();
                 break;
+            case TRIGGER_ANIMATION:
+                setupWizardActivity.startAnimation();
+                break;
             }
         }
 
@@ -93,6 +106,15 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
         public void cancelPollingImeSettings() {
             removeMessages(MSG_POLLING_IME_SETTINGS);
+        }
+
+        public void triggerAnimation(){
+            sendMessageDelayed(obtainMessage(TRIGGER_ANIMATION),
+                    800);
+        }
+
+        public void cancelAnimation() {
+            removeMessages(TRIGGER_ANIMATION);
         }
     }
 
@@ -132,6 +154,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mSelectKeyboard.setText(getString(R.string.setup_wizard_select_keyboard, applicationName));
         mActionGo = findViewById(R.id.setup_go);
         mActionGo.setOnClickListener(this);
+        mGoImg = findViewById(R.id.setup_go_img);
+
+        initAnimation();
     }
 
     @Override
@@ -238,7 +263,14 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             finish();
             return;
         }
+        startAnimation();
         updateSetupStep();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        stopAnimation();
     }
 
     @Override
@@ -281,5 +313,72 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
                 getResources().getDrawable(iconRes), null, null, null);
         tv.setTextColor(textColor);
 
+    }
+
+    private void initAnimation(){
+        animationGo = new ScaleAnimation(1.0f, 0.8f, 1.0f, 0.8f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        animationGo.setDuration(500);//动画时间
+        animationGo.setRepeatCount(0);//动画的重复次数
+        animationGo.setFillAfter(false);
+        animationGo.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mGoImg.setVisibility(View.VISIBLE);
+                AnimationSet set = new AnimationSet(true);
+                set.addAnimation(animationGoImg);
+                set.addAnimation(alpahAnimation);
+                mGoImg.startAnimation(set);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        animationGoImg = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        animationGoImg.setDuration(1000);//动画时间
+        animationGoImg.setRepeatCount(0);//动画的重复次数
+        animationGoImg.setFillAfter(false);
+        animationGoImg.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mGoImg.setVisibility(View.INVISIBLE);
+                mHandler.triggerAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        alpahAnimation = new AlphaAnimation(1.0f,0.5f);
+        alpahAnimation.setDuration(1000);
+        alpahAnimation.setRepeatCount(0);
+        alpahAnimation.setFillAfter(false);
+    }
+
+    private void startAnimation(){
+        stopAnimation();
+        mActionGo.startAnimation(animationGo);
+        mGoImg.setVisibility(View.INVISIBLE);
+    }
+
+    private void stopAnimation(){
+        animationGo.cancel();
+        animationGoImg.cancel();
+        alpahAnimation.cancel();
+        mHandler.cancelAnimation();
     }
 }
