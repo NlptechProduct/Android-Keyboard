@@ -85,19 +85,31 @@
         android:textSize="14sp"
         android:textColor="@android:color/white"/>
 
-    <TextView
-        android:id="@+id/setup_go"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="49dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="35sp"
-        android:textColor="@android:color/white"
-        android:textAllCaps="true"
-        android:text="@string/setup_wizard_go_action"
-        android:background="@drawable/setup_wizard_button_bg"/>
+        android:background="@drawable/setup_wizard_button_bg">
+        <TextView
+            android:id="@+id/setup_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textSize="35sp"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            android:text="@string/setup_wizard_go_action" />
 
+        <ImageView
+            android:id="@+id/setup_go_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:src="@drawable/setup_wizard_go_img"/>
+    </RelativeLayout>
 
 </LinearLayout>
