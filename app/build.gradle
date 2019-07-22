@@ -10,26 +10,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-//        externalNativeBuild {
-//            cmake {
-//                targets "jni_latinime"
-//                arguments "-DANDROID_STL=c++_static"
-//                cppFlags "-std=c++11"
-//            }
-//        }
-//
-//        ndk {
-//            // Specifies the ABI configurations of your native
-//            // libraries Gradle should build and package with your APK.
-//            abiFilters 'armeabi-v7a', 'arm64-v8a'
-//        }
     }
-//    externalNativeBuild {
-//        cmake {
-//            path file('src/main/cpp/CMakeLists.txt')
-//        }
-//    }
     signingConfigs {
         release {
             storeFile file('zengine.sign')
@@ -74,7 +55,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
-    implementation "com.nlptech.zengine:keyboardkernel:0.1.7-SNAPSHOT"
+    implementation "com.nlptech.zengine:keyboardkernel:0.1.16-SNAPSHOT"
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
