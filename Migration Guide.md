@@ -249,7 +249,7 @@ KeyboardActionListener,.... {
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
       if (inputTransaction.requiresUpdateSuggestions()) {
       … … … … …
-      }
+    }
 ```
 **LatinIME$UIHandler.java:**
 
@@ -452,13 +452,6 @@ KeyboardActionListener,.... {
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
         … … … … ... 
-     }
-
-     @Override
-     public void onDestroy() {
-         Agent.getInstance().onDestroy();
-         … … … … ...
-         super.onDestroy();
      }
     … … … … …
 ~~~
