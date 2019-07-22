@@ -64,6 +64,8 @@ public class LanguageAddedActivity extends AppCompatActivity implements Language
             startActivity(intent);
         });
 
+        Agent.getInstance().downloadDictionary();
+
     }
 
     @Override
