@@ -132,9 +132,8 @@ import static com.nlptech.common.constant.Constants.ImeOption.NO_MICROPHONE_COMP
  * Input method implementation for Qwerty'ish keyboard.
  */
 public class LatinIME extends ZengineInputMethodService implements KeyboardActionListener,
-        KeyboardSwitcherListener,
         SuggestionStripView.Listener, SuggestionStripViewAccessor,
-        DictionaryFacilitator.DictionaryInitializationListener, ImsInterface,
+        DictionaryFacilitator.DictionaryInitializationListener,
         PermissionsManager.PermissionsResultCallback {
     static final String TAG = LatinIME.class.getSimpleName();
     private static final boolean TRACE = false;
@@ -1723,11 +1722,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             KeyboardSwitcher.getInstance().loadKeyboard(getCurrentInputEditorInfo(), mSettings.getCurrent(),
                     getCurrentAutoCapsState(), getCurrentRecapitalizeState());
         }
-    }
-
-    @Override
-    public InputMethodService getIME() {
-        return LatinIME.this;
     }
 
     /**

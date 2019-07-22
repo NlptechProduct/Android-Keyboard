@@ -83,33 +83,6 @@ Add Zengine appkey into AndroidManifest.xml:
 ~~~
 Please contact zengine@nlptech.com to get appkey and license if you don’t have one yet.
 
-### 2.2 Permission
-
-**AndroidManifest.xml:**
-
-~~~
- <uses-permission android:name="android.permission.INTERNET" />
- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
- <uses-permission android:name="android.permission.READ_CONTACTS" />
- <uses-permission android:name="android.permission.READ_PROFILE" />
- <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
- <uses-permission android:name="android.permission.READ_PHONE_STATE" />
- <uses-permission android:name="android.permission.VIBRATE" />
- <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
-~~~
-### 2.3 PermissionsActivity
-
-**AndroidManifest.xml:**
-
-~~~
- <!--Replace ".permissions.PermissionsActivity" with 
-"com.nlptech.inputmethod.latin.permissions.PermissionsActivity"-->
-android:name="com.nlptech.inputmethod.latin.permissions.PermissionsActivity"
-	android:theme="@android:style/Theme.Translucent.NoTitleBar"
-	android:exported="false"
-	android:taskAffinity="" >
-</activity>
-~~~
 
 ## 3. method.xml
 
@@ -151,15 +124,10 @@ Android Studio → Editor → General → Auto Import → Java
 ```java
         // The KeyboardSwitcherListener interface has the same signature with AOSP one.
         // ImsInterface interface needs getIME()
-        public class LatinIME extends InputMethodService implements 
-KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
+        // Please extends ZengineInputMethodService
+        public class LatinIME extends ZengineInputMethodService implements 
+KeyboardActionListener,....{
 
-    … … … … …    
-    // Implement ImsInterface
-    @Override
-    public InputMethodService getIME() {
-        return LatinIME.this;
-    }
     … … … … …
     // KeyboardSwitcher-->IKeyboardSwitcher
     @UsedForTesting final IKeyboardSwitcher mKeyboardSwitcher;
@@ -412,7 +380,7 @@ For example:
 
 ~~~
 … … … … ...
-public class LatinIME extends InputMethodService implements 
+public class LatinIME extends ZengineInputMethodService implements 
 KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       … … … … …
       public void onCreate() {
@@ -457,43 +425,18 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       }
 
       @Override
-      public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
-          Agent.getInstance().onStartInput(editorInfo, restarting);
-          … … … …
-      }
-
-      @Override
       public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
-          Agent.getInstance().onStartInputView(editorInfo, restarting);
-          mHandler.onStartInputView(editorInfo, restarting);
+          // Please call super.onStartInputView(editorInfo,restarting)
+          super.onStartInputView(editorInfo,restarting);
           … … … … 
       }
 
       @Override
       public void onFinishInputView(final boolean finishingInput) {
-          Agent.getInstance().onFinishInputView(finishingInput);
-          StatsUtils.onFinishInputView();
+          // Please call super.onFinishInputView(finishingInput)
+          super.onFinishInputView(finishingInput);
           … … … …  
       }
-      @Override
-      public void onFinishInput() {
-          Agent.getInstance().onFinishInput();
-          … … … …
-      }
-
-      @Override
-      public void onWindowShown() {
-          super.onWindowShown();
-          Agent.getInstance().onWindowShown();
-          … … … … 
-      }
-
-      @Override
-      public void onWindowHidden() {
-          super.onWindowHidden();
-          Agent.getInstance().onWindowHidden();
-          … … … … 
-     }    
 
      @Override
      public void onUpdateSelection(final int oldSelStart, final int oldSelEnd,
@@ -501,8 +444,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
                              final int composingSpanStart, final int composingSpanEnd) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
                  composingSpanStart, composingSpanEnd);
-        Agent.getInstance().onUpdateSelection(newSelStart, newSelEnd);
-        … … … … ... 
+        … … … …
         // Add code down below
         if (isInputViewShown()
                 && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
@@ -513,16 +455,8 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
           KeyboardSwitcher.getInstance()
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
-        … … … … ... 
+        … … … …
      }
-
-     @Override
-     public void onDestroy() {
-         Agent.getInstance().onDestroy();
-         … … … … ...
-         super.onDestroy();
-     }
-    … … … … …
 ~~~
 
 ### 7.2 Integrating KeyboardView
