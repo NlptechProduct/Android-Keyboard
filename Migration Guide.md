@@ -258,7 +258,7 @@ KeyboardActionListener,....{
 **LatinIME$UIHandler.java:**
 
 ~~~
-	public class LatinIME extends InputMethodService{
+	public class LatinIME extends ZengineInputMethodService{
    	    … … … … …
         //UIHandler implements ImeUiHandlerInterface
         public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
