@@ -65,7 +65,7 @@ dependencies {
 
 ## 2. 修改AndroidManifest.xml
 
-### 2.1 添加appkey
+### 添加appkey
 
 将appkey添加到AndroidManifest.xml中  
 **AndroidManifest.xml:**
@@ -82,36 +82,6 @@ dependencies {
        … … … … …
 ~~~
 如果您还没有appkey，请联系zengine@nlptech.com申请appkey和使用授权。
-
-### 2.2 权限
-
-**AndroidManifest.xml:**
-
-~~~
- <uses-permission android:name="android.permission.INTERNET" />
- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
- <uses-permission android:name="android.permission.READ_CONTACTS" />
- <uses-permission android:name="android.permission.READ_PROFILE" />
- <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
- <uses-permission android:name="android.permission.READ_PHONE_STATE" />
- <uses-permission android:name="android.permission.VIBRATE" />
- <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
-~~~
-
-### 2.3 修改PermissionsActivity
-
-**AndroidManifest.xml:**
-
-~~~
-<activity 
-	<!--用"com.nlptech.inputmethod.latin.permissions.PermissionsActivity
-                   "取代".permissions.PermissionsActivity" -->
-	android:name="com.nlptech.inputmethod.latin.permissions.PermissionsActivity"
-	android:theme="@android:style/Theme.Translucent.NoTitleBar"
-	android:exported="false"
-	android:taskAffinity="" >
-</activity>
-~~~
 
 ## 3. 更改method.xml
 
@@ -152,17 +122,10 @@ Android Studio → Editor → General → Auto Import → Java
 **LatinIME.java:**
 
 ```java
-        // 需实现的KeyboardSwitcherListener接口皆與AOSP LatinIME原生接口相同
-        // ImsInterface接口需实现getIME()方法
-        public class LatinIME extends InputMethodService implements 
-KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
+	// 需集成ZengineInputMethodService
+        public class LatinIME extends ZengineInputMethodService implements 
+KeyboardActionListener,.... {
 
-    … … … … …    
-    // 实现ImsInterface的方法
-    @Override
-    public InputMethodService getIME() {
-        return LatinIME.this;
-    }
     … … … … …
     // KeyboardSwitcher更改為IKeyboardSwitcher
     @UsedForTesting final IKeyboardSwitcher mKeyboardSwitcher;
@@ -195,14 +158,14 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
        … … … … 
     }
 
-  	// 修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
-  	@Override
-  	public boolean shouldShowLanguageSwitchKey() {
+    // 修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
+    @Override
+    public boolean shouldShowLanguageSwitchKey() {
       	return mRichImm.hasMultipleEnabledIMEsOrSubtypes(false);
-  	}
+    }
   	… … … … …
-  	@Override
-  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
+    @Override
+    void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
          … … … … …
          mRichImm.refreshSubtypeCaches();
          final IKeyboardSwitcher switcher = mKeyboardSwitcher;
@@ -219,10 +182,10 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
          // otherwise it will clear the suggestion strip.
          setNeutralSuggestionStrip();
          … … … … …
-  	}
+    }
   	… … … … …
-  	// 需增加mDictionaryFacilitator.resetDictionaries()中的参数
-  	void resetSuggestMainDict() {
+    // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
+    void resetSuggestMainDict() {
         final SettingsValues settingsValues = mSettings.getCurrent();
         mDictionaryFacilitator.resetDictionaries(this /* context */,
         mDictionaryFacilitator.getLocale(), settingsValues.mUseContactsDict,
@@ -231,7 +194,7 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
                 settingsValues.mAccount, "" /* dictNamePrefix */,
                 this /* DictionaryInitializationListener */,
                 Agent.getInstance().obtainDictionaryGetter());
-  	}
+    }
     … … … … …
     private void resetDictionaryFacilitator(final Locale locale) {
         … … … … …
@@ -256,8 +219,8 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
      }
      … … … … …
      
-  	@Override
-  	public void setNeutralSuggestionStrip() {
+    @Override
+    public void setNeutralSuggestionStrip() {
 		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
         	// 把currentSettings换成mInputLogic
   		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
@@ -270,15 +233,15 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
        mSettings.loadSettings(this, locale, inputAttributes, mInputLogic);
     }
         … … … … …
-  	public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
+    public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
       	… … … … …
-        // 拿掉参数keyboard
-      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
+    // 拿掉参数keyboard
+    mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
-   	}
+    }
   … … … … …
-  	// 将updateStateAfterInputTransaction改为public
-  	public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
+    // 将updateStateAfterInputTransaction改为public
+    public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
       … … … … …
       if (inputTransaction.mEvent.mKeyCode !=  
                                        CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
@@ -290,12 +253,12 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
       if (inputTransaction.requiresUpdateSuggestions()) {
       … … … … …
-  	}
+    }
 ```
 **LatinIME$UIHandler.java:**
 
 ~~~
-	public class LatinIME extends InputMethodService{
+	public class LatinIME extends ZengineInputMethodService{
    	    	… … … … …
 		//UIHandler implements ImeUiHandlerInterface
 		public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
@@ -417,8 +380,8 @@ public class ExampleApplication extends Application {
 
 ~~~
 … … … …
-public class LatinIME extends InputMethodService implements 
-KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
+public class LatinIME extends ZengineInputMethodService implements 
+KeyboardActionListener,....{
       … … … … …
       public void onCreate() {
           DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
@@ -462,43 +425,18 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       }
 
       @Override
-      public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
-          Agent.getInstance().onStartInput(editorInfo, restarting);
-          … … … …
-      }
-
-      @Override
       public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
-          Agent.getInstance().onStartInputView(editorInfo, restarting);
-          mHandler.onStartInputView(editorInfo, restarting);
+          //请添加对父类onStartInputView的调用
+          super.onStartInputView(editorInfo,restarting);
           … … … …
       }
 
       @Override
       public void onFinishInputView(final boolean finishingInput) {
-          Agent.getInstance().onFinishInputView(finishingInput);
-          StatsUtils.onFinishInputView();
+	  //请添加对父类onFinishInputView的调用
+          super.onFinishInputView(finishingInput);
           … … … … 
       }
-      @Override
-      public void onFinishInput() {
-          Agent.getInstance().onFinishInput();
-          … … … …
-      }
-
-      @Override
-      public void onWindowShown() {
-          super.onWindowShown();
-          Agent.getInstance().onWindowShown();
-          … … … …
-      }
-
-      @Override
-      public void onWindowHidden() {
-          super.onWindowHidden();
-          Agent.getInstance().onWindowHidden();
-          … … … …
-     }    
 
      @Override
      public void onUpdateSelection(final int oldSelStart, final int oldSelEnd,
@@ -506,7 +444,6 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
                              final int composingSpanStart, final int composingSpanEnd) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
                  composingSpanStart, composingSpanEnd);
-        Agent.getInstance().onUpdateSelection(newSelStart, newSelEnd);
         … … … …
         if (isInputViewShown()
                 && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
@@ -519,13 +456,6 @@ KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
         … … … … 
-     }
-
-     @Override
-     public void onDestroy() {
-         Agent.getInstance().onDestroy();
-         … … … …
-         super.onDestroy();
      }
     … … … … …
 ~~~
