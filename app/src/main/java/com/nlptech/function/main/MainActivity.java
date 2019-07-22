@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         private View itemView;
         private TextView textview;
+        private ImageView img;
 
         ViewHolder(@NonNull View itemView, ViewHolderClickListener listener) {
             super(itemView);
@@ -109,10 +111,16 @@ public class MainActivity extends AppCompatActivity {
 
             this.itemView = itemView;
             this.textview = itemView.findViewById(R.id.textview);
+            this.img = itemView.findViewById(R.id.img);
         }
 
         public void bind(int index, String s) {
             textview.setText(s);
+            if(index == 0){
+                img.setImageResource(R.drawable.ic_keyboard_menu_language);
+            }else{
+                img.setImageResource(R.drawable.ic_keyboard_menu_settings);
+            }
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onClick(index);

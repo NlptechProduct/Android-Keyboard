@@ -5,10 +5,18 @@
     android:layout_width="match_parent"
     android:paddingLeft="5dp"
     android:layout_height="60dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/img"
+        android:layout_marginLeft="10dp"/>
+
     <TextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_toRightOf="@id/img"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:textColor="@android:color/black" />
