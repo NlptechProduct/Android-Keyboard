@@ -30,6 +30,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.inputmethod.latin.R;
@@ -63,6 +64,8 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private SettingsPoolingHandler mHandler;
 
     private Animation animationGo,animationGoImg,alpahAnimation;
+
+    private RelativeLayout mGoLayout;
 
     private static final class SettingsPoolingHandler
             extends LeakGuardHandlerWrapper<SetupWizardActivity> {
@@ -152,8 +155,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mEnableKeyboard.setText(getString(R.string.setup_wizard_enable_keyboard, applicationName));
         mSelectKeyboard = findViewById(R.id.select_keyboard);
         mSelectKeyboard.setText(getString(R.string.setup_wizard_select_keyboard, applicationName));
+        mGoLayout = findViewById(R.id.setup_go_layout);
+        mGoLayout.setOnClickListener(this);
         mActionGo = findViewById(R.id.setup_go);
-        mActionGo.setOnClickListener(this);
         mGoImg = findViewById(R.id.setup_go_img);
 
         initAnimation();
