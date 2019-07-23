@@ -26,4 +26,5 @@ Before starting, please contact zengine@nlptech.com to get an appkey and license
 3. [Customization](https://github.com/NlptechProduct/Zengine/blob/master/Customized%20Keyboard%20Features.md)
 
 ## Other resources
-1. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
+1. [Language list](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Language%20List.md)
+2. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
