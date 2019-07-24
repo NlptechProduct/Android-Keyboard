@@ -368,7 +368,7 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 初始化，需在Application的onCreate()中调用,示例：
 **ExampleApplication.java:**
 
-~~~
+~~~java
 public class ExampleApplication extends Application {
 	@Override
 	public void onCreate() {
@@ -380,7 +380,7 @@ public class ExampleApplication extends Application {
 需在LatinIME生命周期调用,示例：
 **LatinIME.java:**
 
-~~~
+~~~java
 … … … …
 public class LatinIME extends ZengineInputMethodService implements 
 KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
@@ -471,7 +471,7 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 其中container为开发者提供的容器ViewGroup, SDK会自动将KeybaordView及EmojiView生成并加入此ViewGroup。 代码示例 ：  
 **LatinIME.java:**
 
-~~~
+~~~java
 @Override
  public View onCreateInputView() {
      // 开发者自行生成一个xml布局
