@@ -65,7 +65,7 @@ dependencies {
 
 ## 2. AndroidManifest.xml
 
-### 2.1 Add appkey
+### Add appkey
 
 Add Zengine appkey into AndroidManifest.xml:  
 **AndroidManifest.xml:**
