@@ -469,7 +469,7 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 in InputMethodService.onCreateInputView(), where container stands for parent view of the KeyboardView. SDK will automatically create KeyboardView and EmojiView, and add them into ViewGroup.  
 **LatinIME.java:**
 
-~~~
+~~~java
 @Override
  public View onCreateInputView() {
      //  XML layout of your project
