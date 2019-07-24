@@ -58,14 +58,14 @@ allprojects {
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.0.4'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.1.0'
      … … … … …
 }
 ~~~
 
 ## 2. 修改AndroidManifest.xml
 
-### 2.1 添加appkey
+### 添加appkey
 
 将appkey添加到AndroidManifest.xml中  
 **AndroidManifest.xml:**
