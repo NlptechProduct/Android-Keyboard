@@ -160,14 +160,14 @@ KeyboardActionListener,....{
        … … … … 
     }
 
-  	// modify LatinIME.shouldShowLanguageSwitchKey() as below
-  	@Override
-  	public boolean shouldShowLanguageSwitchKey() {
+    // modify LatinIME.shouldShowLanguageSwitchKey() as below
+    @Override
+    public boolean shouldShowLanguageSwitchKey() {
       	return mRichImm.hasMultipleEnabledIMEsOrSubtypes(false);
-  	}
-  	… … … … …
-  	@Override
-  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
+    }
+    … … … … …
+    @Override
+    void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
          … … … … …
          mRichImm.refreshSubtypeCaches();
          final IKeyboardSwitcher switcher = mKeyboardSwitcher;
@@ -183,10 +183,10 @@ KeyboardActionListener,....{
          // otherwise it will clear the suggestion strip.
          setNeutralSuggestionStrip();
          … … … … …
-  	}
+    }
   	… … … … …
-  	// Arguments of mDictionaryFacilitator.resetDictionaries() are changed
-  	void resetSuggestMainDict() {
+    // Arguments of mDictionaryFacilitator.resetDictionaries() are changed
+    void resetSuggestMainDict() {
         final SettingsValues settingsValues = mSettings.getCurrent();
         mDictionaryFacilitator.resetDictionaries(this /* context */,
         mDictionaryFacilitator.getLocale(), settingsValues.mUseContactsDict,
@@ -195,7 +195,7 @@ KeyboardActionListener,....{
                 settingsValues.mAccount, "" /* dictNamePrefix */,
                 this /* DictionaryInitializationListener */,
                 Agent.getInstance().obtainDictionaryGetter());
-  	}
+    }
     … … … … …
     private void resetDictionaryFacilitator(final Locale locale) {
         … … … … …
@@ -220,29 +220,29 @@ KeyboardActionListener,....{
      }
      … … … … …
      
-  	@Override
-  	public void setNeutralSuggestionStrip() {
+    @Override
+    public void setNeutralSuggestionStrip() {
 		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
         	// currentSettings-->mInputLogic
   		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
        … … … … …
-  	}
-     … … … … …
+    }
+    … … … … …
     // In Settings.loadSettings()，add Zengine's InputLogic as last argument
     void loadSettings() {
        … … … … …
        mSettings.loadSettings(this, locale, inputAttributes, mInputLogic);
     }
         … … … … …
-  	public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
+    public void getSuggestedWords(final int inputStyle, final int sequenceNumber,...)
       	… … … … …
         // remove argument  keyboard
       	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
-   	}
-  … … … … …
+    }
+    … … … … …
   	// change updateStateAfterInputTransaction to public
-  	public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
+    public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
       … … … … …
       //Add code down below
       if (inputTransaction.mEvent.mKeyCode !=  
@@ -252,8 +252,9 @@ KeyboardActionListener,....{
       KeyboardSwitcher.getInstance()
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
       if (inputTransaction.requiresUpdateSuggestions()) {
-      … … … … …
-  	}
+         … … … … …
+      }
+    }
 ```
 **LatinIME$UIHandler.java:**
 
@@ -277,7 +278,7 @@ KeyboardActionListener,....{
 ~~~
 **AndroidSpellCheckerService.java:**
 
-~~~
+~~~java
  public class AndroidSpellCheckerService extends SpellCheckerService... {
      … … … … ...
      public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
@@ -294,7 +295,7 @@ KeyboardActionListener,....{
 ~~~
 **DictionaryFacilitatorLruCache.java:**
 
-~~~
+~~~java
 … … … … …
 private void resetDictionariesForLocaleLocked() {
 	… … … … …
@@ -309,7 +310,7 @@ private void resetDictionariesForLocaleLocked() {
 ~~~
 **EmojiAltPhysicalKeyDetector.java:**
 
-~~~
+~~~java
   … … … … …
   final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
       @Override
@@ -332,7 +333,7 @@ private void resetDictionariesForLocaleLocked() {
 ~~~
 **ThemeSettingsFragment.java:**
 
-~~~
+~~~java
 public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioButtonClickedListener {            
 	… … … …
    static void updateKeyboardThemeSummary(final Preference pref) {
@@ -355,7 +356,6 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 		KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
 	}
   … … … … 
-
 ~~~
 
 ## 7. Import Code
@@ -365,7 +365,7 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 Initialize agent in Application.onCreate().  
 **ExampleApplication.java:**
 
-~~~
+~~~java
 public class ExampleApplication extends Application {
 	@Override
 	public void onCreate() {
@@ -378,8 +378,8 @@ Need to call lifecycle in LatinIME
 For example:
 **LatinIME.java:**
 
-~~~
-… … … … ...
+~~~java
+… … … …
 public class LatinIME extends ZengineInputMethodService implements 
 KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
       … … … … …

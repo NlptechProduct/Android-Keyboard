@@ -160,14 +160,14 @@ KeyboardActionListener,.... {
        … … … … 
     }
 
-  	// 修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
-  	@Override
+    // 修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
+    @Override
   	public boolean shouldShowLanguageSwitchKey() {
       	return mRichImm.hasMultipleEnabledIMEsOrSubtypes(false);
-  	}
+    }
   	… … … … …
-  	@Override
-  	void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
+    @Override
+    void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
          … … … … …
          mRichImm.refreshSubtypeCaches();
          final IKeyboardSwitcher switcher = mKeyboardSwitcher;
@@ -184,10 +184,10 @@ KeyboardActionListener,.... {
          // otherwise it will clear the suggestion strip.
          setNeutralSuggestionStrip();
          … … … … …
-  	}
+    }
   	… … … … …
-  	// 需增加mDictionaryFacilitator.resetDictionaries()中的参数
-  	void resetSuggestMainDict() {
+    // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
+    void resetSuggestMainDict() {
         final SettingsValues settingsValues = mSettings.getCurrent();
         mDictionaryFacilitator.resetDictionaries(this /* context */,
         mDictionaryFacilitator.getLocale(), settingsValues.mUseContactsDict,
@@ -196,7 +196,7 @@ KeyboardActionListener,.... {
                 settingsValues.mAccount, "" /* dictNamePrefix */,
                 this /* DictionaryInitializationListener */,
                 Agent.getInstance().obtainDictionaryGetter());
-  	}
+    }
     … … … … …
     private void resetDictionaryFacilitator(final Locale locale) {
         … … … … …
@@ -221,13 +221,13 @@ KeyboardActionListener,.... {
      }
      … … … … …
      
-  	@Override
-  	public void setNeutralSuggestionStrip() {
+    @Override
+    public void setNeutralSuggestionStrip() {
 		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
         	// 把currentSettings换成mInputLogic
   		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
        … … … … …
-  	}
+    }
      … … … … …
     // 在Settings.loadSettings()中，将Zengine的InputLogic实例当作最后一个参数带入
     void loadSettings() {
@@ -235,15 +235,15 @@ KeyboardActionListener,.... {
        mSettings.loadSettings(this, locale, inputAttributes, mInputLogic);
     }
         … … … … …
-  	public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
+    public void getSuggestedWords(final int inputStyle, final int sequenceNumber,...)
       	… … … … …
         // 拿掉参数keyboard
       	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
-   	}
+    }
   … … … … …
   	// 将updateStateAfterInputTransaction改为public
-  	public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
+    public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
       … … … … …
       if (inputTransaction.mEvent.mKeyCode !=  
                                        CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
@@ -254,12 +254,13 @@ KeyboardActionListener,.... {
       KeyboardSwitcher.getInstance()
                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
       if (inputTransaction.requiresUpdateSuggestions()) {
-      … … … … …
-  	}
+         … … … … …
+      }
+    }
 ```
 **LatinIME$UIHandler.java:**
 
-~~~
+~~~java
 	public class LatinIME extends ZengineInputMethodService{
    	    	… … … … …
 		//UIHandler implements ImeUiHandlerInterface
@@ -279,7 +280,7 @@ KeyboardActionListener,.... {
 ~~~
 **AndroidSpellCheckerService.java:**
 
-~~~
+~~~java
  public class AndroidSpellCheckerService extends SpellCheckerService... {
      … … … … …
      public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
@@ -296,7 +297,7 @@ KeyboardActionListener,.... {
 ~~~
 **DictionaryFacilitatorLruCache.java:**
 
-~~~
+~~~java
 … … … … …
 private void resetDictionariesForLocaleLocked() {
 	… … … … …
@@ -311,7 +312,7 @@ private void resetDictionariesForLocaleLocked() {
 ~~~
 **EmojiAltPhysicalKeyDetector.java:**
 
-~~~
+~~~java
   … … … … …
   final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
       @Override
@@ -334,7 +335,7 @@ private void resetDictionariesForLocaleLocked() {
 ~~~
 **ThemeSettingsFragment.java:**
 
-~~~
+~~~java
 public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioButtonClickedListener {            
 	… … … …
    static void updateKeyboardThemeSummary(final Preference pref) {
@@ -357,8 +358,7 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 		// getSharedPreferences());改用
 		KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
 	}
-  … … … … 
-
+    … … … … 
 ~~~
 
 ## 7. 代码引入
@@ -507,12 +507,12 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 </RelativeLayout>
 ~~~
 ###7.3 语言管理
-可通过**Agent.getInstance().getAvailableIMELanguageList()**方法获取Zengine支持的语言列表，使用**Agent.getInstance().addIMELanguage()**和**Agent.getInstance().removeIMELanguage()**方法对语言进行添加和删除的操作。词典基于已添加语言进行下载，可通过**Agent.getInstance().getAddedIMELanguageList()**查看已添加语言列表。
+可通过 **Agent.getInstance().getAvailableIMELanguageList()** 方法获取Zengine支持的语言列表，使用 **Agent.getInstance().addIMELanguage()** 和 **Agent.getInstance().removeIMELanguage()** 方法对语言进行添加和删除的操作。词典基于已添加语言进行下载，可通过 **Agent.getInstance().getAddedIMELanguageList()** 查看已添加语言列表。
 
 ### 7.4 词典管理
 
-通过调用**Agent.getInstance().downloadDictionary()**方法进行词典下载，该方法基于当前已添加语言进行批量词典下载和更新。可通过调用**Agent.getInstance().registerDictionaryDownloadListener()**注册listener监听下载状态。词典默认会在wifi和非wifi状态进行下载，如希望关闭非wifi网络状态的下载，可调用**Agent.getInstance().enableMobileDictionaryDownload(false)**进行设置。
-词典下载会在下述情况被自动触发：添加键盘，添加/删除了一种语言，键盘落下并且与上次成功的词典请求时间的间隔超过8小时。如果希望关闭词典自动下载功能，可通过调用**Agent.getInstance().enableDictionaryAutoDownload(false)**关闭。
+通过调用 **Agent.getInstance().downloadDictionary()** 方法进行词典下载，该方法基于当前已添加语言进行批量词典下载和更新。可通过调用 **Agent.getInstance().registerDictionaryDownloadListener()** 注册listener监听下载状态。词典默认会在wifi和非wifi状态进行下载，如希望关闭非wifi网络状态的下载，可调用 **Agent.getInstance().enableMobileDictionaryDownload(false)** 进行设置。
+词典下载会在下述情况被自动触发：添加键盘，添加/删除了一种语言，键盘落下并且与上次成功的词典请求时间的间隔超过8小时。如果希望关闭词典自动下载功能，可通过调用 **Agent.getInstance().enableDictionaryAutoDownload(false)** 关闭。
 
 ### 7.5 其他设定
 
@@ -520,7 +520,7 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 
 ### 7.6 语言Layout切换
 
-可通过调用**Agent.getInstance().onLayoutChanged(IMELanguage imeLanguage,String newLayout)**方法切换对应语言的layout。通过调用**Agent.getInstance().obtainLayoutList(IMELanguage imeLanguage)**方法获取对应语言的所有layout列表。
+可通过调用 **Agent.getInstance().onLayoutChanged(IMELanguage imeLanguage,String newLayout)** 方法切换对应语言的layout。通过调用 **Agent.getInstance().obtainLayoutList(IMELanguage imeLanguage)** 方法获取对应语言的所有layout列表。
 
 
 ## 8. 添加proguard内容
