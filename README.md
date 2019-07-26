@@ -1,4 +1,4 @@
-# Zengine SDK
+![GitHub Logo](./COVER.png)
 
 ## Introduction
 Zengine SDK is a set of IME building blocks, providing complete support for emitting text. We support more than 100 languages, where most of them come with language model and dictionary, and we are still improving it.

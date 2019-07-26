@@ -1,4 +1,4 @@
-# Zengine SDK
+![GitHub Logo](../COVER.png)
 
 ## 项目介绍
 Zengine SDK是一款输入法内核SDK，目前提供了Android版本。
