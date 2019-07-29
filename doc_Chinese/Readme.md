@@ -28,3 +28,4 @@ Zengine SDK提供了完整的输入相关功能，支持100多种语言，为80�
 1. [API说明](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/Reference.md)
 2. [语言列表](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Language%20List.md)
 3. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)
+4. [隐私协议](http://zengine.nlptech.com/privacy.txt)
