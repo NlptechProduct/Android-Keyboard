@@ -1684,6 +1684,11 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         AccessibilityUtils.getInstance().setAutoCorrection(suggestedWords);
     }
 
+    @Override
+    public void onHandlePinyinSuggestionStrip(boolean b) {
+
+    }
+
     // Called from {@link SuggestionStripView} through the {@link SuggestionStripView#Listener}
     // interface
     @Override
