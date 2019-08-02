@@ -1,7 +1,11 @@
 package com.android.inputmethod;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
@@ -10,6 +14,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.android.inputmethod.latin.R;
 import com.nlptech.Agent;
+import com.nlptech.common.utils.DensityUtil;
 import com.nlptech.keyboardview.theme.external.ExternalThemeInfo;
 
 
@@ -51,6 +56,15 @@ public class TestApplication extends MultiDexApplication {
         spacebarBackgroundDrawable.addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(this, R.drawable.test_theme_space_key_press));
         spacebarBackgroundDrawable.addState(new int[]{}, ContextCompat.getDrawable(this, R.drawable.test_theme_space_key_normal));
 
+        int dividerW = DensityUtil.dp2px(this, 1);
+        int dividerH = DensityUtil.dp2px(this, 20);
+        Bitmap bitmap = Bitmap.createBitmap(dividerW, dividerH, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(Color.parseColor("#12f0e5"));
+        canvas.drawRect(new Rect(0, 0, dividerW, dividerH), paint);
+        Drawable suggestDivider = new BitmapDrawable(getResources(), bitmap);
+
         String color = String.format("#%06X", 0xFFFFFF & 0x12f0e5);
         String emojiColor = String.format("#%06X", 0xFFFFFF & 0x048f89);
         ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder("001", "Test Theme")
@@ -76,6 +90,12 @@ public class TestApplication extends MultiDexApplication {
                 .setLanguageSwitchKeyIcon(languageIcon)
                 .setEmojiCategoryPageIndicatorBackgroundColor(emojiColor)
                 .setLanguageOnSpacebarTextColor(color)
+                .setSuggestedAutoCorrectColor(color)
+                .setSuggestedTextColor(color)
+                .setSuggestedTypedWordColor(color)
+                .setSuggestedValidTypedWordColor(color)
+                .setSuggestionStripDivider(suggestDivider)
+                .setSuggestionStripViewBackground(keyboardBackgroundDrawable)
                 .build();
         Agent.getInstance().addExternalThemes(this, externalThemeInfo);
     }

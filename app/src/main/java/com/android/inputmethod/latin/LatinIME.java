@@ -51,14 +51,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.RelativeLayout;
 
 import com.android.inputmethod.annotations.UsedForTesting;
 import com.android.inputmethod.dictionarypack.DictionaryPackConstants;
 import com.android.inputmethod.event.HardwareEventDecoder;
 import com.android.inputmethod.event.HardwareKeyboardEventDecoder;
 import com.android.inputmethod.latin.settings.SettingsActivity;
-import com.android.inputmethod.latin.suggestions.SuggestionStripView;
-import com.android.inputmethod.latin.suggestions.SuggestionStripViewAccessor;
 import com.android.inputmethod.latin.touchinputconsumer.GestureConsumer;
 import com.nlptech.Agent;
 import com.nlptech.IUserInputCallback;
@@ -132,7 +131,6 @@ import static com.nlptech.common.constant.Constants.ImeOption.NO_MICROPHONE_COMP
  * Input method implementation for Qwerty'ish keyboard.
  */
 public class LatinIME extends ZengineInputMethodService implements KeyboardActionListener,
-        SuggestionStripView.Listener, SuggestionStripViewAccessor,
         DictionaryFacilitator.DictionaryInitializationListener,
         PermissionsManager.PermissionsResultCallback {
     static final String TAG = LatinIME.class.getSimpleName();
@@ -180,7 +178,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     // TODO: Move these {@link View}s to {@link KeyboardSwitcher}.
     private View mInputView;
     private ViewOutlineProviderCompatUtils.InsetsUpdater mInsetsUpdater;
-    private SuggestionStripView mSuggestionStripView;
 
     private RichInputMethodManager mRichImm;
     private final SubtypeState mSubtypeState = new SubtypeState();
@@ -189,6 +186,8 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     // Working variable for {@link #startShowingInputView()} and
     // {@link #onEvaluateInputViewShown()}.
     private boolean mIsExecutingStartShowingInputView;
+
+    private RelativeLayout mCustomizedStrip;
 
     // Object for reacting to adding/removing a dictionary pack.
     private final BroadcastReceiver mDictionaryPackInstallReceiver =
@@ -616,7 +615,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
         RichInputMethodManager.init(this);
         mRichImm = RichInputMethodManager.getInstance();
-        Agent.getInstance().onCreate(this, mInputLogic, new LanguageCallback() {
+        Agent.getInstance().onCreate(this, mInputLogic, mRichImm, new LanguageCallback() {
             @Override
             public void onIMELanguageChanged(InputMethodSubtype subtype) {
                 onCurrentInputMethodSubtypeChanged(subtype);
@@ -645,14 +644,8 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             public void onKeyboardTypeChange(int keyboardType) {
                 switch (keyboardType){
                     case IKeyboardActionCallback.ALPHA_KEYBOARD:
-                        if (mSuggestionStripView != null) {
-                            mSuggestionStripView.setVisibility(View.VISIBLE);
-                        }
                         break;
                     case IKeyboardActionCallback.EMOJI_KEYBOARD:
-                        if (mSuggestionStripView != null) {
-                            mSuggestionStripView.setVisibility(View.GONE);
-                        }
                         break;
                     case IKeyboardActionCallback.SYMBOL_KEYBOARD:
                         break;
@@ -870,10 +863,8 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         mInputView = view;
         mInsetsUpdater = ViewOutlineProviderCompatUtils.setInsetsOutlineProvider(view);
         updateSoftInputWindowLayoutParameters();
-        mSuggestionStripView = (SuggestionStripView)view.findViewById(R.id.suggestion_strip_view);
-        if (hasSuggestionStripView()) {
-            mSuggestionStripView.setListener(this, view);
-        }
+        // custom strip
+        mCustomizedStrip = view.findViewById(R.id.customized_strip);
     }
 
     @Override
@@ -1286,11 +1277,8 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             mInsetsUpdater.setInsets(outInsets);
             return;
         }
-        final int suggestionsHeight = (!KeyboardSwitcher.getInstance().isShowingEmojiPalettes()
-                && mSuggestionStripView.getVisibility() == View.VISIBLE)
-                ? mSuggestionStripView.getHeight() : 0;
-        final int visibleTopY = inputHeight - visibleKeyboardView.getHeight() - suggestionsHeight;
-        mSuggestionStripView.setMoreSuggestionsHeight(visibleTopY);
+        final int visibleTopY = inputHeight - visibleKeyboardView.getHeight();
+        setSuggestionStripViewMoreSuggestionsHeight(visibleTopY);
         // Need to set expanded touchable region only if a keyboard view is being shown.
         if (visibleKeyboardView.isShown()) {
             final int touchLeft = 0;
@@ -1600,66 +1588,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         // Nothing to do so far.
     }
 
-    public boolean hasSuggestionStripView() {
-        return null != mSuggestionStripView;
-    }
-
-    private void setSuggestedWords(final SuggestedWords suggestedWords) {
-        final SettingsValues currentSettingsValues = mSettings.getCurrent();
-        mInputLogic.setSuggestedWords(suggestedWords);
-        // TODO: Modify this when we support suggestions with hard keyboard
-        if (!hasSuggestionStripView()) {
-            return;
-        }
-        if (!onEvaluateInputViewShown()) {
-            return;
-        }
-
-        final boolean shouldShowImportantNotice =
-                ImportantNoticeUtils.shouldShowImportantNotice(this, currentSettingsValues);
-        final boolean shouldShowSuggestionCandidates =
-                currentSettingsValues.mInputAttributes.mShouldShowSuggestions
-                && currentSettingsValues.isSuggestionsEnabledPerUserSettings();
-        final boolean shouldShowSuggestionsStripUnlessPassword = shouldShowImportantNotice
-                || currentSettingsValues.mShowsVoiceInputKey
-                || shouldShowSuggestionCandidates
-                || currentSettingsValues.isApplicationSpecifiedCompletionsOn();
-        final boolean shouldSetSuggestions = shouldShowSuggestionsStripUnlessPassword
-                && !currentSettingsValues.mInputAttributes.mIsPasswordField;
-        final boolean shouldUpdateSuggestionsStripVisibility = shouldSetSuggestions &&
-                !KeyboardSwitcher.getInstance().isShowingEmojiPalettes();
-
-        mSuggestionStripView.updateVisibility(shouldUpdateSuggestionsStripVisibility, isFullscreenMode());
-
-        if (!shouldSetSuggestions) {
-            return;
-        }
-
-        final boolean isEmptyApplicationSpecifiedCompletions =
-                currentSettingsValues.isApplicationSpecifiedCompletionsOn()
-                && suggestedWords.isEmpty();
-        final boolean noSuggestionsFromDictionaries = suggestedWords.isEmpty()
-                || suggestedWords.isPunctuationSuggestions()
-                || isEmptyApplicationSpecifiedCompletions;
-        final boolean isBeginningOfSentencePrediction = (suggestedWords.mInputStyle
-                == SuggestedWords.INPUT_STYLE_BEGINNING_OF_SENTENCE_PREDICTION);
-        final boolean noSuggestionsToOverrideImportantNotice = noSuggestionsFromDictionaries
-                || isBeginningOfSentencePrediction;
-        if (shouldShowImportantNotice && noSuggestionsToOverrideImportantNotice) {
-            if (mSuggestionStripView.maybeShowImportantNoticeTitle()) {
-                return;
-            }
-        }
-
-        if (currentSettingsValues.isSuggestionsEnabledPerUserSettings()
-                || currentSettingsValues.isApplicationSpecifiedCompletionsOn()
-                // We should clear the contextual strip if there is no suggestion from dictionaries.
-                || noSuggestionsFromDictionaries) {
-            mSuggestionStripView.setSuggestions(suggestedWords,
-                    mRichImm.getCurrentSubtype().isRtlSubtype());
-        }
-    }
-
     // TODO[IL]: Move this out of LatinIME.
     public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
             final Suggest.OnGetSuggestedWordsCallback callback) {
@@ -1672,23 +1600,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
                 KeyboardSwitcher.getInstance().getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
     }
 
-    @Override
-    public void showSuggestionStrip(final SuggestedWords suggestedWords) {
-        if (suggestedWords.isEmpty()) {
-            setNeutralSuggestionStrip();
-        } else {
-            setSuggestedWords(suggestedWords);
-        }
-        // Cache the auto-correction in accessibility code so we can speak it if the user
-        // touches a key that will insert it.
-        AccessibilityUtils.getInstance().setAutoCorrection(suggestedWords);
-    }
-
-    @Override
-    public void onHandlePinyinSuggestionStrip(boolean b) {
-
-    }
-
     // Called from {@link SuggestionStripView} through the {@link SuggestionStripView#Listener}
     // interface
     @Override
@@ -1699,17 +1610,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
                 KeyboardSwitcher.getInstance().getCurrentKeyboardScriptId(),
                 mHandler);
         updateStateAfterInputTransaction(completeInputTransaction);
-    }
-
-    // This will show either an empty suggestion strip (if prediction is enabled) or
-    // punctuation suggestions (if it's disabled).
-    @Override
-    public void setNeutralSuggestionStrip() {
-        final SettingsValues currentSettings = mSettings.getCurrent();
-        final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled
-                ? SuggestedWords.getEmptyInstance()
-                : mInputLogic.getSpacingAndPunctuations().mSuggestPuncList;
-        setSuggestedWords(neutralSuggestions);
     }
 
     // Outside LatinIME, only used by the {@link InputTestsBase} test suite.
@@ -1763,6 +1663,8 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
                 inputStyle = SuggestedWords.INPUT_STYLE_TYPING;
             }
             mHandler.postUpdateSuggestionStrip(inputStyle);
+        } else {
+            setNeutralSuggestionStrip();
         }
         if (inputTransaction.didAffectContents()) {
             mSubtypeState.setCurrentSubtypeHasBeenUsed();
@@ -2062,5 +1964,15 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
                 window.setNavigationBarColor(visible ? Color.BLACK : Color.TRANSPARENT);
             }
         }
+    }
+
+    @Override
+    public void setCustomizedNeutralSuggestionStrip() {
+        mCustomizedStrip.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideCustomizedNeutralSuggestionStrip() {
+        mCustomizedStrip.setVisibility(View.GONE);
     }
 }

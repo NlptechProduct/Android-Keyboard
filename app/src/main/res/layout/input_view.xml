@@ -31,12 +31,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>
 
-    <com.android.inputmethod.latin.suggestions.SuggestionStripView
-        android:id="@+id/suggestion_strip_view"
-        android:layoutDirection="ltr"
+    <RelativeLayout
+        android:id="@+id/customized_strip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
-        android:layout_above="@id/kb_container"
-        style="?attr/suggestionStripViewStyle" />
+        android:layout_alignTop="@id/kb_container"
+        android:layoutDirection="ltr"
+        android:background="@android:color/black">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:text="Customized Strip"
+            android:textColor="@android:color/white"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
