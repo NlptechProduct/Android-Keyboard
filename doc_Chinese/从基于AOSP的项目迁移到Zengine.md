@@ -504,7 +504,7 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
    … … … … 
 </RelativeLayout>
 ~~~
-###7.3 语言管理
+### 7.3 语言管理
 可通过 **Agent.getInstance().getAvailableIMELanguageList()** 方法获取Zengine支持的语言列表，使用 **Agent.getInstance().addIMELanguage()** 和 **Agent.getInstance().removeIMELanguage()** 方法对语言进行添加和删除的操作。词典基于已添加语言进行下载，可通过 **Agent.getInstance().getAddedIMELanguageList()** 查看已添加语言列表。
 
 ### 7.4 词典管理
