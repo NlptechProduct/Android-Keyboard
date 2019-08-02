@@ -122,8 +122,6 @@ Android Studio → Editor → General → Auto Import → Java
 **LatinIME.java:**
 
 ```java
-        // The KeyboardSwitcherListener interface has the same signature with AOSP one.
-        // ImsInterface interface needs getIME()
         // Please extends ZengineInputMethodService
         public class LatinIME extends ZengineInputMethodService implements 
 KeyboardActionListener,....{
@@ -381,7 +379,7 @@ For example:
 ~~~java
 … … … …
 public class LatinIME extends ZengineInputMethodService implements 
-KeyboardActionListener,....,KeyboardSwitcherListener, ImsInterface {
+KeyboardActionListener,...{
       … … … … …
       public void onCreate() {
           DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
