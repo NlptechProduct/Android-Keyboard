@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
@@ -15,6 +16,7 @@ import androidx.multidex.MultiDexApplication;
 import com.android.inputmethod.latin.R;
 import com.nlptech.Agent;
 import com.nlptech.common.utils.DensityUtil;
+import com.nlptech.function.keyboardrender.RGBKeyboardRender;
 import com.nlptech.keyboardview.theme.external.ExternalThemeInfo;
 
 
@@ -24,11 +26,12 @@ public class TestApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         Agent.getInstance().init(this);
-        addExternalTheme();
+        addExternalThemeDefault();
+        addExternalThemeRGB();
         Agent.getInstance().loadTheme(this,"001");
     }
 
-    private void addExternalTheme() {
+    private void addExternalThemeDefault() {
 
         Drawable keyboardBackgroundDrawable = ContextCompat.getDrawable(this, R.drawable.test_background_lxx_light);
         Drawable morekeysBackgroundDrawable = ContextCompat.getDrawable(this, R.drawable.test_theme_more_keyboard_background);
@@ -98,6 +101,58 @@ public class TestApplication extends MultiDexApplication {
                 .setSuggestionStripViewBackground(keyboardBackgroundDrawable)
                 .build();
         Agent.getInstance().addExternalThemes(this, externalThemeInfo);
+    }
+    private void addExternalThemeRGB() {
+        ExternalThemeInfo.Builder builder = new ExternalThemeInfo.Builder("002", "RGB");
+        builder.setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.img_external_theme_preview_rgb));
+
+        ColorDrawable colorDrawable;
+        String color;
+
+        // keyboard
+        colorDrawable = new ColorDrawable(Color.BLACK);
+        builder.setKeyboardBackground(colorDrawable);
+        colorDrawable = new ColorDrawable(Color.TRANSPARENT);
+        builder.setKeyBackground(colorDrawable);
+        colorDrawable = new ColorDrawable(Color.TRANSPARENT);
+        builder.setFunctionKeyBackground(colorDrawable);
+
+        builder.setSpacebarBackground(ContextCompat.getDrawable(this, R.drawable.bg_external_theme_rgb_spacebar));
+
+        colorDrawable = new ColorDrawable(Color.parseColor("#1c2935"));
+        builder.setKeyPreviewBackground(colorDrawable);
+        color = String.format("#%06X", 0xFFFFFF & Color.TRANSPARENT);
+        builder.setEmojiCategoryPageIndicatorBackgroundColor(color);
+
+        // more keys keyboard
+        colorDrawable = new ColorDrawable(Color.parseColor("#000000"));
+        builder.setMoreKeysKeyboardBackground(colorDrawable);
+        builder.setMoreKeysKeyBackground(ContextCompat.getDrawable(this, R.drawable.bg_external_theme_rgb_more_key));
+
+        // color
+        color = String.format("#%06X", 0xFFFFFF & Color.WHITE);
+        builder.setKeyTextColor(color);
+        builder.setFunctionKeyTextColor(color);
+        builder.setLanguageOnSpacebarTextColor(color);
+        builder.setKeyHintLabelColor(color);
+        builder.setKeyHintLetterColor(color);
+        builder.setKeyTextInactivatedColor(color);
+        builder.setKeyShiftedLetterHintActivatedColor(color);
+        builder.setKeyShiftedLetterHintInactivatedColor(color);
+        builder.setKeyPreviewTextColor(color);
+        builder.setKeyBorderColor(color);
+        builder.setCreateKeyboardRenderCallback(RGBKeyboardRender::new);
+
+        ColorDrawable suggestColor = new ColorDrawable(Color.parseColor("#000000"));
+        builder.setSuggestedTextColor("#ffffff");
+        builder.setSuggestedAutoCorrectColor("#ffffff");
+        builder.setSuggestionStripViewBackground(suggestColor);
+
+
+
+        // add theme
+        ExternalThemeInfo info = builder.build();
+        Agent.getInstance().addExternalThemes(this, info);
     }
 
 }
