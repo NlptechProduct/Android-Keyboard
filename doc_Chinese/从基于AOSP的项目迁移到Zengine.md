@@ -514,7 +514,7 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 
 ### 7.5 其他设定
 
-输入相关的设定(如是否打开滑行输入，自动纠错等保持AOSP项目原有设置，请勿做相关改动。
+输入相关的设定，如是否打开滑行输入，自动纠错等保持AOSP项目原有设置，请勿做相关改动。
 
 ### 7.6 语言Layout切换
 
