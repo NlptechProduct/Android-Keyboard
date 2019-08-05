@@ -654,6 +654,7 @@ themes-klp.xml
 themes-lxx.xml
 themes-lxx-dark.xml
 themes-lxx-light.xml
+keyboard-icons-lxx-light.xml
 
 ~~~
 
@@ -671,29 +672,29 @@ more_keys_keyboard.xml
 .xml files to be deleted from res/xml
 
 ~~~
-kbd_xxx.xml
-key_xxx.xml
-keys_xxx.xml
-keyboard_layout_xxx.xml
-keystyle_xxx.xml
-row_xxx.xml
-rows_xxx.xml
-rowkey_xxx.xml
+kbd_***.xml
+key_***.xml
+keys_***.xml
+keyboard_layout_***.xml
+keystyle_***.xml
+row_***.xml
+rows_***.xml
+rowkey_***.xml
 ~~~
 
 .png files to be deleted from res/drawable
 
 ~~~
 drawable-xhdpi/keyboard_background_lxx_dark.9.png        
-drawable-xhdpi/keyboard_background_lxx_light.9.png
+drawable-xhdpi/***_lxx_light***
 drawable-xxhdpi/keyboard_background_lxx_dark.9.png
-drawable-xxhdpi/keyboard_background_lxx_light.9.png
+drawable-xxhdpi/***_lxx_light***
 drawable-hdpi/keyboard_background_lxx_dark.9.png
-drawable-hdpi/keyboard_background_lxx_light.9.png
+drawable-hdpi/***_lxx_light***
 drawable-mdpi/keyboard_background_lxx_dark.9.png
-drawable-mdpi/keyboard_background_lxx_light.9.png
+drawable-mdpi/***_lxx_light***
 drawable-xxxhdpi/keyboard_background_lxx_dark.9.png
-drawable-xxxhdpi/keyboard_background_lxx_light.9.png
+drawable-xxxhdpi/***_lxx_light***
 
 ~~~
 
