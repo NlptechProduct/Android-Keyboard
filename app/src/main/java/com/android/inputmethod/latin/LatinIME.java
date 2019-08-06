@@ -93,7 +93,6 @@ import com.nlptech.inputmethod.latin.personalization.PersonalizationHelper;
 import com.nlptech.inputmethod.latin.settings.Settings;
 import com.nlptech.inputmethod.latin.settings.SettingsValues;
 import com.nlptech.inputmethod.latin.utils.DialogUtils;
-import com.nlptech.inputmethod.latin.utils.ImportantNoticeUtils;
 import com.nlptech.inputmethod.latin.utils.IntentUtils;
 import com.nlptech.inputmethod.latin.utils.JniUtils;
 import com.nlptech.inputmethod.latin.utils.StatsUtils;
@@ -1407,7 +1406,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     @Override
     public void onRequestPermissionsResult(boolean allGranted) {
-        ImportantNoticeUtils.updateContactsNoticeShown(this /* context */);
         setNeutralSuggestionStrip();
     }
 
