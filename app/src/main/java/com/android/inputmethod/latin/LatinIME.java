@@ -1821,6 +1821,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 //                    intent.putExtra(Intent.EXTRA_TITLE, languageSelectionTitle);
 //                    startActivity(intent);
                     final Intent intent = new Intent(LatinIME.this, LanguageAddedActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     break;
                 case 1:
