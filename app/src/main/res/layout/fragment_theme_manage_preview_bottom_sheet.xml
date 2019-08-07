@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/fragment_theme_manage_keyboard_preview_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/theme_manage_preview_button_margin"
+            android:layout_marginEnd="@dimen/theme_manage_preview_button_margin"
+            android:layout_marginBottom="@dimen/theme_manage_preview_button_margin"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/theme_manage_preview_switch_margin_horizontal"
+                android:layout_marginBottom="@dimen/theme_manage_preview_switch_margin_horizontal">
+
+                <TextView
+                    android:id="@+id/fragment_theme_manage_preview_show_key_board_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
+                    android:gravity="center_vertical"
+                    android:text="@string/theme_manage_preview_show_key_boarder"
+                    android:textSize="@dimen/theme_manage_preview_switch_text_size" />
+
+                <Switch
+                    android:id="@+id/fragment_theme_manage_preview_show_key_board_sw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/theme_manage_preview_switch_size"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/fragment_theme_manage_preview_show_key_board_tv" />
+
+                <ImageButton
+                    android:id="@+id/fragment_theme_manage_preview_delete_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/theme_manage_preview_delete_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_theme_manage_preview_delete" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/theme_manage_bottom_sheet_apply_button_background_color">
+
+                <Button
+                    android:id="@+id/fragment_theme_manage_preview_apply_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/theme_manage_preview_button_height"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:text="@string/theme_manage_preview_apply_button_text"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/theme_manage_preview_button_text_size" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/fragment_theme_manage_preview_close_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/theme_manage_preview_button_height"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/theme_manage_preview_close_button_text"
+                android:textColor="@color/theme_manage_bottom_sheet_close_button_text_color"
+                android:textSize="@dimen/theme_manage_preview_button_text_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -22,13 +22,20 @@ import com.nlptech.keyboardview.theme.external.ExternalThemeInfo;
 
 public class TestApplication extends MultiDexApplication {
 
+    private static TestApplication instance;
+
+    public static TestApplication getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         Agent.getInstance().init(this);
         addExternalThemeDefault();
         addExternalThemeRGB();
-        Agent.getInstance().loadTheme(this,"001");
+        Agent.getInstance().loadTheme(this, "001");
     }
 
     private void addExternalThemeDefault() {
@@ -102,6 +109,7 @@ public class TestApplication extends MultiDexApplication {
                 .build();
         Agent.getInstance().addExternalThemes(this, externalThemeInfo);
     }
+
     private void addExternalThemeRGB() {
         ExternalThemeInfo.Builder builder = new ExternalThemeInfo.Builder("002", "RGB");
         builder.setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.img_external_theme_preview_rgb));
@@ -147,7 +155,6 @@ public class TestApplication extends MultiDexApplication {
         builder.setSuggestedTextColor("#ffffff");
         builder.setSuggestedAutoCorrectColor("#ffffff");
         builder.setSuggestionStripViewBackground(suggestColor);
-
 
 
         // add theme
