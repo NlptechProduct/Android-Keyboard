@@ -155,6 +155,12 @@
         <activity android:name=".settings.TestFragmentActivity"
             android:exported="false" />
 
+        <activity
+            android:name="com.nlptech.function.theme.theme_manage.ThemeManageActivity"
+            android:launchMode="singleTask"
+            android:label="@string/label_theme"
+            android:theme="@style/AppTheme" />
+
         <!-- Broadcast receivers -->
         <receiver android:name="SystemBroadcastReceiver">
             <intent-filter>

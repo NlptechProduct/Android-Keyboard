@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.settings.SettingsActivity;
-import com.nlptech.Agent;
 import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
+import com.nlptech.function.theme.theme_manage.ThemeManageActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
 
     private ArrayList<String> ITEM_LIST = new ArrayList<>(
-            Arrays.asList("Language", "Settings")
+            Arrays.asList("Language", "Theme", "Settings")
     );
 
     @Override
@@ -49,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
                     invokeLanguageActivity();
                     break;
                 case 1:
+                    invokeThemeManageOfThisIme();
+                    break;
+                case 2:
                     invokeSettingsOfThisIme();
                     break;
-                    default:
-                        break;
+                default:
+                    break;
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -116,9 +119,11 @@ public class MainActivity extends AppCompatActivity {
 
         public void bind(int index, String s) {
             textview.setText(s);
-            if(index == 0){
+            if (index == 0) {
                 img.setImageResource(R.drawable.ic_keyboard_menu_language);
-            }else{
+            } else if (index == 1) {
+                img.setImageResource(R.drawable.ic_keyboard_menu_theme_manage);
+            } else {
                 img.setImageResource(R.drawable.ic_keyboard_menu_settings);
             }
             itemView.setOnClickListener(v -> {
@@ -127,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void invokeThemeManageOfThisIme() {
+        Intent intent = new Intent(this, ThemeManageActivity.class);
+        startActivity(intent);
     }
 
     private void invokeSettingsOfThisIme() {
@@ -139,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private  void invokeLanguageActivity(){
+    private void invokeLanguageActivity() {
         Intent intent = new Intent(this, LanguageAddedActivity.class);
         startActivity(intent);
     }
