@@ -13,6 +13,7 @@ import android.graphics.drawable.StateListDrawable;
 import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDexApplication;
 
+import com.airbnb.lottie.LottieCompositionFactory;
 import com.android.inputmethod.latin.R;
 import com.nlptech.Agent;
 import com.nlptech.common.utils.DensityUtil;
@@ -66,6 +67,9 @@ public class TestApplication extends MultiDexApplication {
         spacebarBackgroundDrawable.addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(this, R.drawable.test_theme_space_key_press));
         spacebarBackgroundDrawable.addState(new int[]{}, ContextCompat.getDrawable(this, R.drawable.test_theme_space_key_normal));
 
+        ExternalThemeInfo.LottieDrawableInfo lottieDrawableInfo = new ExternalThemeInfo.LottieDrawableInfo(() -> LottieCompositionFactory
+                .fromAsset(this, "test_lottie_click_effect.json"), 1000, 1);
+
         int dividerW = DensityUtil.dp2px(this, 1);
         int dividerH = DensityUtil.dp2px(this, 20);
         Bitmap bitmap = Bitmap.createBitmap(dividerW, dividerH, Bitmap.Config.ARGB_8888);
@@ -106,6 +110,8 @@ public class TestApplication extends MultiDexApplication {
                 .setSuggestedValidTypedWordColor(color)
                 .setSuggestionStripDivider(suggestDivider)
                 .setSuggestionStripViewBackground(keyboardBackgroundDrawable)
+                .setKeyboardClickedEffectLottieDrawable(lottieDrawableInfo)
+                .setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.test_thumbnail))
                 .build();
         Agent.getInstance().addExternalThemes(this, externalThemeInfo);
     }
