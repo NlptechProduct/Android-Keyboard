@@ -873,6 +873,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     @Override
     public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+        super.onStartInput(editorInfo, restarting);
         mHandler.onStartInput(editorInfo, restarting);
     }
 
@@ -894,6 +895,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     @Override
     public void onFinishInput() {
+        super.onFinishInput();
         mHandler.onFinishInput();
     }
 
@@ -1277,7 +1279,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             return;
         }
         final int visibleTopY = inputHeight - visibleKeyboardView.getHeight();
-        setSuggestionStripViewMoreSuggestionsHeight(visibleTopY);
         // Need to set expanded touchable region only if a keyboard view is being shown.
         if (visibleKeyboardView.isShown()) {
             final int touchLeft = 0;
@@ -1393,15 +1394,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
                     Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE);
         }
         return keyboard.getCoordinates(codePoints);
-    }
-
-    // Callback for the {@link SuggestionStripView}, to call when the important notice strip is
-    // pressed.
-    @Override
-    public void showImportantNoticeContents() {
-        PermissionsManager.get(this).requestPermissions(
-                this /* PermissionsResultCallback */,
-                null /* activity */, permission.READ_CONTACTS);
     }
 
     @Override
@@ -1966,12 +1958,12 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     }
 
     @Override
-    public void setCustomizedNeutralSuggestionStrip() {
+    public void onShowCustomizedNeutralStripView() {
         mCustomizedStrip.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideCustomizedNeutralSuggestionStrip() {
+    public void onHideCustomizedNeutralStripView() {
         mCustomizedStrip.setVisibility(View.GONE);
     }
 }
