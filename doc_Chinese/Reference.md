@@ -10,7 +10,8 @@
     * [词典管理](#1.4)
     * [Theme设定](#1.5)
     * [其他回调设定](#1.6)
-    
+    * [自定义功能键](#1.7)
+
 * [回调类](#2)
     * [LanguageCallback](#2.1)
     * [IKeyboardActionCallback](#2.2)
@@ -19,8 +20,16 @@
     * [ImsInterface](#2.5)
     * [IUserInputCallback](#2.6)
     
-* [Builder类](#3)
-    * [ExternalThemeInfo](#3.1)
+* [讯息类](#3)
+    * [ExternalThemeInfo.Builder](#3.1)
+    * [CustomFunctionalKeyInfo](#3.2)
+    * [LottieDrawableInfo](#3.3)
+
+* [渲染类](#4)
+    * [KeyboardRender](#4.1)
+    * [DefaultKeyboardRender](#3.2)
+    * [GestureTrailRender](#4.3)
+    * [DefaultGestureTrailRender](#4.4)
 
 <br/>
 
@@ -396,6 +405,31 @@ public void setKeyboardSpecificEventCallback (IKeyboardSpecificEventCallback key
 -----|:--------
 keyboardSpecificEventCallback | IKeyboardSpecificEventCallback实现
 
+
+<br/>
+
+<h3 id="1.7">自定义功能键</h3>
+
+#### setKeyboardSpecificEventCallback
+```Java
+public void addCustomFunctionalKeyToLeftOfSpace (CustomFunctionalKeyInfo customFunctionalKeyInfo)
+```
+在空白键的左方，新增自定义的功能键。
+
+参数 | 参数说明
+-----|:--------
+customFunctionalKeyInfo | 自定义功能键的讯息
+
+#### setKeyboardSpecificEventCallback
+```Java
+public void addCustomFunctionalKeyToRightOfSpace (CustomFunctionalKeyInfo customFunctionalKeyInfo)
+```
+在空白键的右方，新增自定义的功能键。
+
+参数 | 参数说明
+-----|:--------
+customFunctionalKeyInfo | 自定义功能键的讯息
+
 <br/>
 
 <h2 id="2">回调类</h2>
@@ -470,7 +504,7 @@ boolean | 是否显示语言切换按钮
 <br/>
 
 <h3 id="2.4">ImeUiHandlerInterface</h3>
-用途：用于與AOSP LatinIME.UIHhandler交互
+用途：用于与AOSP LatinIME.UIHhandler交互
 
 #### showGesturePreviewAndSuggestionStrip
 ```Java
@@ -574,7 +608,7 @@ suggestedWords | 与AOSP LatinIME.UIHhandler内相同名称方法内, 参数相�
 <br/>
 
 <h3 id="2.5">ImsInterface</h3>
-用途：用于與AOSP LatinIME部分功能交互
+用途：用于与AOSP LatinIME部分功能交互
 
 #### getIME
 ```Java
@@ -671,7 +705,7 @@ public void onTextChanged ()
 
 <br/>
 
-<h2 id="3">Builder类</h2>
+<h2 id="3">讯息类</h2>
 
 <br/>
 
@@ -686,8 +720,8 @@ ExternalThemeInfo的建构器。
 
 参数 | 参数说明
 -----|:--------
-externalId | 用戶自行給予主题的 unique identification，不能為空
-themeName | 主题的名称，不能為空
+externalId | 用户自行给予主题的 unique identification，不能为空
+themeName | 主题的名称，不能为空
 
 #### setThemePreviewImage
 ```Java
@@ -749,11 +783,25 @@ Builder | 返回的Builder
 ```Java
 public Builder setMoreKeysKeyboardBackground (Drawable moreKeysKeyboardBackground)
 ```
-设置长按一般键而跳出的多键键盘的背景。
+设置长按一般键而跳出的more keys键盘的背景。
 
 参数 | 参数说明
 -----|:--------
-moreKeysKeyboardBackground | 长按一般键而跳出的多键键盘的背景
+moreKeysKeyboardBackground | 长按一般键而跳出的more keys键盘的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setMoreKeysKeyBackground
+```Java
+public Builder setMoreKeysKeyBackground (Drawable moreKeysKeyBackground)
+```
+设置长按一般键而跳出的more keys键盘的键的背景。
+
+参数 | 参数说明
+-----|:--------
+moreKeysKeyBackground | 长按一般键而跳出的more keys键盘的键的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -775,7 +823,7 @@ Builder | 返回的Builder
 
 #### setKeyTextColor
 ```Java
-public Builder setKeyTextColor (@ColorInt int keyTextColor)
+public Builder setKeyTextColor (String keyTextColor)
 ```
 设置键的文字颜色。
 
@@ -789,7 +837,7 @@ Builder | 返回的Builder
 
 #### setKeyTextInactivatedColor
 ```Java
-public Builder setKeyTextInactivatedColor (@ColorInt int keyTextInactivatedColor)
+public Builder setKeyTextInactivatedColor (String keyTextInactivatedColor)
 ```
 设置非激活键的文字颜色。
 
@@ -803,7 +851,7 @@ Builder | 返回的Builder
 
 #### setFunctionKeyTextColor
 ```Java
-public Builder setFunctionKeyTextColor (@ColorInt int functionKeyTextColor)
+public Builder setFunctionKeyTextColor (String functionKeyTextColor)
 ```
 设置功能键的文字颜色。
 
@@ -817,7 +865,7 @@ Builder | 返回的Builder
 
 #### setKeyHintLetterColor
 ```Java
-public Builder setKeyHintLetterColor (@ColorInt int keyHintLetterColor)
+public Builder setKeyHintLetterColor (String keyHintLetterColor)
 ```
 设置键上Hint Letter的颜色。
 
@@ -831,7 +879,7 @@ Builder | 返回的Builder
 
 #### setKeyShiftedLetterHintActivatedColor
 ```Java
-public Builder setSpacebarBackground (@ColorInt int keyShiftedLetterHintActivatedColor)
+public Builder setSpacebarBackground (String keyShiftedLetterHintActivatedColor)
 ```
 设置Shifted Letter Hint激活的颜色。
 
@@ -845,7 +893,7 @@ Builder | 返回的Builder
 
 #### setKeyShiftedLetterHintActivatedColor
 ```Java
-public Builder setKeyShiftedLetterHintActivatedColor (@ColorInt int keyShiftedLetterHintActivatedColor)
+public Builder setKeyShiftedLetterHintActivatedColor (String keyShiftedLetterHintActivatedColor)
 ```
 设置Shifted Letter Hint非激活的颜色。
 
@@ -859,7 +907,7 @@ Builder | 返回的Builder
 
 #### setKeyPreviewTextColor
 ```Java
-public Builder setKeyPreviewTextColor (@ColorInt int keyPreviewTextColor)
+public Builder setKeyPreviewTextColor (String keyPreviewTextColor)
 ```
 设置键的preview popup的文字颜色。
 
@@ -873,7 +921,7 @@ Builder | 返回的Builder
 
 #### setKeyBorderColor
 ```Java
-public Builder setKeyBorderColor (@ColorInt int keyBorderColor)
+public Builder setKeyBorderColor (String keyBorderColor)
 ```
 设置按键Border的颜色。
 
@@ -887,7 +935,7 @@ Builder | 返回的Builder
 
 #### setLanguageOnSpacebarTextColor
 ```Java
-public Builder setLanguageOnSpacebarTextColor (@ColorInt int languageOnSpacebarTextColor)
+public Builder setLanguageOnSpacebarTextColor (String languageOnSpacebarTextColor)
 ```
 设置空白键上的语言文字颜色。
 
@@ -901,7 +949,7 @@ Builder | 返回的Builder
 
 #### setGestureTrailColor
 ```Java
-public Builder setGestureTrailColor (@ColorInt int gestureTrailColor)
+public Builder setGestureTrailColor (String gestureTrailColor)
 ```
 设置滑行轨迹的颜色。
 
@@ -915,7 +963,7 @@ Builder | 返回的Builder
 
 #### setEmojiCategoryPageIndicatorBackground
 ```Java
-public Builder setEmojiCategoryPageIndicatorBackground (@ColorInt int emojiCategoryPageIndicatorBackgroundColor)
+public Builder setEmojiCategoryPageIndicatorBackground (String emojiCategoryPageIndicatorBackgroundColor)
 ```
 设置Emoji页面下方的分类TabLayout的背景颜色。
 
@@ -1220,3 +1268,655 @@ emojiNormalKeyIcon | emoji normal键的icon
 返回 | 返回说明 | 
 -----|:--------
 Builder | 返回的Builder
+
+#### setGestureTrailDrawable
+```Java
+public Builder setGestureTrailDrawable (Drawable gestureTrailDrawable)
+```
+设置滑行轨迹的icon。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailDrawable | 滑行轨迹的icon
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setGestureTrailStartWidth
+```Java
+public Builder setGestureTrailStartWidth (float gestureTrailStartWidth)
+```
+设置滑行轨迹的起始宽度。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailStartWidth | 滑行轨迹的起始宽度
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setGestureTrailEndWidth
+```Java
+public Builder setGestureTrailEndWidth (float gestureTrailEndWidth)
+```
+设置滑行轨迹的结束宽度。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailEndWidth | 滑行轨迹的结束宽度
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setGestureTrailBodyRatio
+```Java
+public Builder setGestureTrailBodyRatio (float gestureTrailBodyRatio)
+```
+设置滑行轨迹的起始百分比，值的范围是[1, 100]，预设为100。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailBodyRatio | 滑行轨迹的起始百分比
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setGestureTrailFadeoutStartDelay
+```Java
+public Builder setGestureTrailFadeoutStartDelay (float gestureTrailFadeoutStartDelay)
+```
+设置滑行轨迹淡出前的时间长。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailFadeoutStartDelay | 滑行轨迹淡出前的时间长
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setGestureTrailFadeoutDuration
+```Java
+public Builder setGestureTrailFadeoutDuration (float gestureTrailFadeoutDuration)
+```
+设置滑行轨迹淡出的时间长。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailFadeoutDuration | 滑行轨迹淡出的时间长
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setGestureTrailUpdateInterval
+```Java
+public Builder setGestureTrailUpdateInterval (float gestureTrailUpdateInterval)
+```
+设置滑行轨迹的FPS，预设为20。
+
+参数 | 参数说明
+-----|:--------
+gestureTrailUpdateInterval | 滑行轨迹的FPS
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSuggestionStripViewBackground
+```Java
+public Builder setSuggestionStripViewBackground (Drawable suggestionStripViewBackground)
+```
+设置候选词列表的背景。
+
+参数 | 参数说明
+-----|:--------
+suggestionStripViewBackground | 候选词列表的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSuggestionStripDivider
+```Java
+public Builder setSuggestionStripDivider (Drawable suggestionStripDivider)
+```
+设置候选词列表的分隔线。
+
+参数 | 参数说明
+-----|:--------
+suggestionStripDivider | 候选词列表的分隔线
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setValidTypedWordColor
+```Java
+public Builder setValidTypedWordColor (String validTypedWordColor)
+```
+设置valid typed的候选词的文字颜色。
+
+参数 | 参数说明
+-----|:--------
+validTypedWordColor | valid typed的候选词的文字颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setTypedWordColor
+```Java
+public Builder setTypedWordColor (String typedWordColor)
+```
+设置typed的候选词的文字颜色。
+
+参数 | 参数说明
+-----|:--------
+typedWordColor | typed的候选词的文字颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setAutoCorrectColor
+```Java
+public Builder setAutoCorrectColor (String autoCorrectColor)
+```
+设置自动纠错的候选词的文字颜色。
+
+参数 | 参数说明
+-----|:--------
+autoCorrectColor | 自动纠错的候选词的文字颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSuggestedColor
+```Java
+public Builder setSuggestedColor (String suggestedColor)
+```
+设置候选词的文字颜色。
+
+参数 | 参数说明
+-----|:--------
+autoCorrectColor | 候选词的文字颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSuggestedWordSelectedBackground
+```Java
+public Builder setSuggestedWordSelectedBackground (Drawable suggestedWordSelectedBackground)
+```
+设置候选词被选择时的背景。
+
+参数 | 参数说明
+-----|:--------
+suggestedWordSelectedBackground |候选词被选择时的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyboardLottieBackground
+```Java
+public Builder setKeyboardLottieBackground (LottieDrawableInfo keyboardLottieBackground)
+```
+使用LottieDrawable设置键盘的背景。
+
+参数 | 参数说明
+-----|:--------
+keyboardLottieBackground | 键盘的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyLottieBackground
+```Java
+public Builder setKeyLottieBackground (LottieDrawableInfo... keyLottieBackground)
+```
+使用LottieDrawable设置键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+keyLottieBackground | 键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setFunctionKeyLottieBackground
+```Java
+public Builder setFunctionKeyLottieBackground (LottieDrawableInfo... functionKeyLottieBackground)
+```
+使用LottieDrawable设置功能键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+functionKeyLottieBackground | 功能键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSpacebarLottieBackground
+```Java
+public Builder setSpacebarLottieBackground (LottieDrawableInfo... spacebarLottieBackground)
+```
+使用LottieDrawable设置空白键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+spacebarLottieBackground | 空白键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyPreviewLottieBackground
+```Java
+public Builder setKeyPreviewLottieBackground (LottieDrawableInfo keyPreviewLottieBackground)
+```
+使用LottieDrawable设置键的预览背景。
+
+参数 | 参数说明
+-----|:--------
+keyPreviewLottieBackground | 键的预览背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+
+#### setMoreKeysKeyboardLottieBackground
+```Java
+public Builder setMoreKeysKeyboardLottieBackground (LottieDrawableInfo moreKeysKeyboardLottieBackground)
+```
+设置more keys键盘的背景。
+
+参数 | 参数说明
+-----|:--------
+moreKeysKeyboardLottieBackground | more keys键盘的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setMoreKeysKeyLottieBackground
+```Java
+public Builder setMoreKeysKeyLottieBackground (LottieDrawableInfo... moreKeysKeyLottieBackground)
+```
+设置more keys键盘的键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+ggg | ggg
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyboardClickedEffectLottieDrawable
+```Java
+public Builder setKeyboardClickedEffectLottieDrawable (LottieDrawableInfo keyboardClickedEffectLottieDrawable)
+```
+设置键盘点击的效果。
+
+参数 | 参数说明
+-----|:--------
+keyboardClickedEffectLottieDrawable | 键盘点击的效果
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setCreateKeyboardRenderCallback
+```Java
+public Builder setCreateKeyboardRenderCallback (CreateRenderCallback<KeyboardRender> createKeyboardRenderCallback)
+```
+设置生成渲染键盘Render的回调。
+
+参数 | 参数说明
+-----|:--------
+createKeyboardRenderCallback | 生成渲染键盘Render的回调
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setCreateGestureTrailRenderCallback
+```Java
+public Builder setCreateGestureTrailRenderCallback (CreateRenderCallback<GestureTrailRender> createGestureTrailRenderCallback)
+```
+设置生成渲染滑行轨迹Render的回调。
+
+参数 | 参数说明
+-----|:--------
+createKeyboardRenderCallback | 生成渲染滑行轨迹Render的回调
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+<br/>
+
+<h3 id="3.2">CustomFunctionalKeyInfo</h3>
+用途 : 新增自定义功能键时需要的数据结构
+
+#### CustomFunctionalKeyInfo
+```Java
+public CustomFunctionalKeyInfo (String label, CustomFunctionalKeyCallback callback)
+```
+CustomFunctionalKeyInfo的建构器，用来生成带有文本的自定义功能键。
+
+参数 | 参数说明
+-----|:--------
+label | 键上的文本
+callback | 自定义功能键被触发时的实现
+
+#### CustomFunctionalKeyInfo
+```Java
+public CustomFunctionalKeyInfo (Drawable icon, CustomFunctionalKeyCallback callback)
+```
+CustomFunctionalKeyInfo的建构器，用来生成带有icon的自定义功能键。
+
+参数 | 参数说明
+-----|:--------
+icon | 键上的icon
+callback | 自定义功能键被触发时的实现
+
+#### buildKeyInfoLanguageSwitch
+```Java
+public static CustomFunctionalKeyInfo buildKeyInfoLanguageSwitch ()
+```
+生成一个语言切换键的讯息。
+
+返回 | 返回说明 | 
+-----|:--------
+CustomFunctionalKeyInfo | 返回一个语言切换键的讯息
+
+#### buildKeyInfoEmoji
+```Java
+public static CustomFunctionalKeyInfo buildKeyInfoEmoji ()
+```
+生成一个Emoji键的讯息。
+
+返回 | 返回说明 | 
+-----|:--------
+CustomFunctionalKeyInfo | 返回一个Emoji键的讯息。
+
+#### buildKeyInfoEmoji
+```Java
+public static CustomFunctionalKeyInfo buildKeyInfoComma ()
+```
+生成一个Comma键的讯息。
+
+返回 | 返回说明 | 
+-----|:--------
+CustomFunctionalKeyInfo | 返回一个Comma键的讯息。
+
+#### buildKeyInfoEmoji
+```Java
+public static CustomFunctionalKeyInfo buildKeyInfoPeriod ()
+```
+生成一个Period键的讯息。
+
+返回 | 返回说明 | 
+-----|:--------
+CustomFunctionalKeyInfo | 返回一个Period键的讯息。
+
+#### addMoreKeyInfo
+```Java
+public void addMoreKeyInfo (CustomFunctionalKeyInfo... infos)
+```
+在此功能键上加入more keys。
+
+参数 | 参数说明
+-----|:--------
+infos | more keys的讯息
+
+<br/>
+
+<h3 id="3.3">LottieDrawableInfo</h3>
+用途 : 新增LottieDrawable时需要的数据结构
+
+#### LottieDrawableInfo
+```Java
+public LottieDrawableInfo(CreateLottieTaskCallback createLottieTaskCallback, float scale)
+```
+LottieDrawableInfo的建构器，用来生成一般LottieDrawable的讯息。
+
+参数 | 参数说明
+-----|:--------
+createLottieTaskCallback | 生成LottieDrawable的实现
+scale | LottieDrawable的缩放倍率，一般会设置1f
+
+#### LottieDrawableInfo
+```Java
+public LottieDrawableInfo(CreateLottieTaskCallback createLottieTaskCallback, long duration, float scale)
+```
+LottieDrawableInfo的建构器，用来生成使用在键盘点击效果的LottieDrawable的讯息。
+
+参数 | 参数说明
+-----|:--------
+createLottieTaskCallback | 生成LottieDrawable的实现
+duration | 点击效果的动画持续时间
+scale | LottieDrawable的缩放倍率，一般会设置1f
+
+#### getLottieDrawableScale
+```Java
+public float getLottieDrawableScale(float viewWidth, float viewHeight, LottieComposition composition)
+```
+取得LottieDrawable的缩放倍率，用于在canvase渲染LottieDrawable以前，需要对LottieDrawable调用setScale(float scale)。
+
+参数 | 参数说明
+-----|:--------
+viewWidth | 渲染此LottieDrawable的宽度
+viewHeight | 渲染此LottieDrawable的高度
+composition | LottieDrawable.getLottieComposition()
+
+返回 | 返回说明 | 
+-----|:--------
+float | LottieDrawable的缩放倍率
+
+#### getLottieDrawableScale
+```Java
+public float getLottieDrawableScale(LottieComposition composition)
+```
+取得LottieDrawable的缩放倍率，用于在canvase上渲染以前，需要对LottieDrawable调用setScale(float scale)。使用前必须调用setViewSize(float viewWidth, float viewHeight)。
+
+参数 | 参数说明
+-----|:--------
+composition | LottieDrawable.getLottieComposition()
+
+返回 | 返回说明 | 
+-----|:--------
+float | LottieDrawable的缩放倍率
+
+#### setViewSize
+```Java
+public void setViewSize(float viewWidth, float viewHeight)
+```
+设置在canvase上渲染时，渲染的范围长宽大小，必须调用此方法后，才能调用getLottieDrawableScale(LottieComposition composition)。
+
+参数 | 参数说明
+-----|:--------
+viewWidth | 在canvase上渲染的范围长
+viewHeight | 在canvase上渲染的范围宽
+     
+<br/>
+
+<h2 id="4">渲染类</h2>
+
+<br/>
+
+<h3 id="4.1">KeyboardRender</h3>
+用途 : 用来渲染键盘的渲染器
+
+#### onDrawKeyboardBackground
+```Java
+public abstract void onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background)
+```
+渲染键盘背景，同一个Render中，此方法和onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, @Nonnull LottieDrawableInfo lottieDrawableInfo)两者之间只会有一个被调用。
+
+参数 | 参数说明
+-----|:--------
+canvas | 画布
+background | 渲染的内容
+
+#### onDrawKeyboardBackground
+```Java
+public abstract void onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, @Nonnull LottieDrawableInfo lottieDrawableInfo)
+```
+透过LottieDrawable来渲染键盘背景，同一个Render中，此方法和onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background)两者之间只会有一个被调用。
+
+参数 | 参数说明
+-----|:--------
+canvas | 画布
+background | LottieDrawable
+lottieDrawableInfo | LottieDrawable的相关讯息，主要是用来取得LottieDrawable所需的scale
+
+#### onDrawKeyBackground
+```Java
+public abstract void onDrawKeyBackground(int keyboardType, @Nonnull final Key key, int keyStatus,
+                                             @Nonnull KeyDrawParams keyDrawParams,
+                                             @Nonnull KeyboardDrawParams keyboardDrawParams,
+                                             @Nullable Drawable keyBackground,
+                                             @Nonnull final Canvas canvas, @Nonnull Paint paint)
+```
+渲染键的背景。
+
+参数 | 参数说明
+-----|:--------
+keyboardType | 为定义在KeyboardType中的某一个值，用来区分主键盘、more keys键盘或emoji键盘
+key | Key，原生ASOP IME中的Key
+keyStatus | 为定义在KeyStatus中的某一个值，用来区分键的状态
+keyDrawParams | KeyDrawParams，原生ASOP IME中的KeyDrawParams
+keyboardDrawParams | 原生ASOP IME中的部分绘制所需的值，统一包到KeyboardDrawParams这个数据结构里，传给KeyboardRender使用
+background | 渲染的内容
+canvas | 画布
+paint | 画笔
+
+#### onDrawKeyBackground
+```Java
+
+public abstract void onDrawKeyTopVisuals(int keyboardType, @Nonnull final Key key, int keyStatus,
+                                             @Nonnull KeyDrawParams keyDrawParams,
+                                             @Nonnull KeyboardDrawParams keyboardDrawParams,
+                                             @Nonnull final Canvas canvas, @Nonnull Paint paint)
+```
+渲染键的外观。
+
+参数 | 参数说明
+-----|:--------
+keyboardType | 为定义在KeyboardType中的某一个值，用来区分主键盘、more keys键盘或emoji键盘
+key | Key，原生ASOP IME中的Key
+keyStatus | 为定义在KeyStatus中的某一个值，用来区分键的状态
+keyDrawParams | KeyDrawParams，原生ASOP IME中的KeyDrawParams
+keyboardDrawParams | 原生ASOP IME中的部分绘制所需的值，统一包到KeyboardDrawParams这个数据结构里，传给KeyboardRender使用
+canvas | 画布
+paint | 画笔
+
+#### onDrawKeyBackground
+```Java
+
+public abstract void (int keyboardType, @Nonnull final Key key, int keyStatus,
+                                             @Nonnull KeyDrawParams keyDrawParams,
+                                             @Nonnull KeyboardDrawParams keyboardDrawParams,
+                                             @Nonnull final Canvas canvas, @Nonnull Paint paint)
+```
+渲染键的外观。
+
+参数 | 参数说明
+-----|:--------
+keyboardType | 为定义在KeyboardType中的某一个值，用来区分主键盘、more keys键盘或emoji键盘
+key | Key，原生ASOP IME中的Key
+keyStatus | 为定义在KeyStatus中的某一个值，用来区分键的状态
+keyDrawParams | KeyDrawParams，原生ASOP IME中的KeyDrawParams
+keyboardDrawParams | 原生ASOP IME中的部分绘制所需的值，统一包到KeyboardDrawParams这个数据结构里，传给KeyboardRender使用
+canvas | 画布
+paint | 画笔
+
+#### afterDrawKeyboard
+```Java
+
+public void afterDrawKeyboard(int keyboardType, @Nonnull Keyboard keyboard,
+                                  @Nonnull KeyDrawParams keyDrawParams,
+                                  @Nonnull KeyboardDrawParams keyboardDrawParams,
+                                  @Nonnull Canvas canvas)
+```
+渲染完键盘后。如果需要再键盘的最上层渲染其他东西，可以实现在这里。
+
+参数 | 参数说明
+-----|:--------
+keyboardType | 为定义在KeyboardType中的某一个值，用来区分主键盘、more keys键盘或emoji键盘
+keyboard | Keyboard，原生ASOP IME中的Keyboard
+keyStatus | 为定义在KeyStatus中的某一个值，用来区分键的状态
+keyDrawParams | KeyDrawParams，原生ASOP IME中的KeyDrawParams
+keyboardDrawParams | 原生ASOP IME中的部分绘制所需的值，统一包到KeyboardDrawParams这个数据结构里，传给KeyboardRender使用
+canvas | 画布
+
+#### onDrawKeyPreviewBackground
+```Java
+
+public abstract void onDrawKeyPreviewBackground(@Nonnull Canvas canvas, @Nullable Drawable backgroundDrawable)
+```
+渲染键的预览背景。
+
+参数 | 参数说明
+-----|:--------
+canvas | 画布
+backgroundDrawable | 渲染的内容
+
+#### onDrawKeyPreviewBackground
+```Java
+
+public abstract void onDrawKeyPreviewBackground(@Nonnull Canvas canvas,
+                                                 @Nonnull LottieDrawable backgroundDrawable,
+                                                 @Nonnull ExternalThemeInfo.LottieDrawableInfo lottieDrawableInfo)
+```
+透过LottieDrawable渲染键的预览背景。
+
+参数 | 参数说明
+-----|:--------
+canvas | 画布
+backgroundDrawable | 渲染的内容
+lottieDrawableInfo | LottieDrawable的相关讯息，主要是用来取得LottieDrawable所需的scale
+
+#### onDrawKeyPreviewBackground
+```Java
+
+public abstract void onDrawKeyPreviewText(@Nonnull Canvas canvas, @Nullable Bitmap textBitmap)
+```
+渲染键的预览文字。
+
+参数 | 参数说明
+-----|:--------
+canvas | 画布
+textBitmap | 渲染的文字
+
+#### isInvalidationNeeded
+```Java
+
+public boolean isInvalidationNeeded()
+```
+渲染键的预览文字。
+
+返回 | 返回说明 | 
+-----|:--------
+boolean | 是否在afterDrawKeyboard之后，调用View.invidate()。如果需要渲染像是Lottie动效或其他自定义的动效，可以返回true，使键盘持续被渲染。
+
+
+
+
+
+
