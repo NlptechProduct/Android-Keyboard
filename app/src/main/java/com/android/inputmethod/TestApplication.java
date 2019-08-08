@@ -68,7 +68,7 @@ public class TestApplication extends MultiDexApplication {
         spacebarBackgroundDrawable.addState(new int[]{}, ContextCompat.getDrawable(this, R.drawable.test_theme_space_key_normal));
 
         ExternalThemeInfo.LottieDrawableInfo lottieDrawableInfo = new ExternalThemeInfo.LottieDrawableInfo(() -> LottieCompositionFactory
-                .fromAsset(this, "test_lottie_click_effect.json"), 1000, 1);
+                .fromAsset(this, "test_lottie_click_effect.json"), 1);
 
         int dividerW = DensityUtil.dp2px(this, 1);
         int dividerH = DensityUtil.dp2px(this, 20);
