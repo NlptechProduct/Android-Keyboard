@@ -607,6 +607,8 @@ If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELa
 -keep class com.nlptech.common.domain.** { *; }
 -keep class com.nlptech.common.api.ResultData { *; }
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
+# [zengine v1.2]
+-keep class com.nlptech.keyboardview.suggestions.*{ *; } 
 ~~~
 
 ## 9. Resolve remaining import issues
