@@ -108,7 +108,7 @@ zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的�
 
 ## 5. 删除so文件
 
-删除项目创建的so文件:  **libjni_latinime.so**
+删除项目创建的so文件:  **libjni_latinime.so**   
 如果您的项目中包含pinyin so文件，请删除： **libejni_pinyinime.so** [zengine v1.2]
 
 ## 6. 修改原有AOSP内容
@@ -128,12 +128,12 @@ public class LatinIME extends ZengineInputMethodService implements
     KeyboardActionListener,.... {
 
     … … … … …
-    // KeyboardSwitcher更改為IKeyboardSwitcher
+    // 请将KeyboardSwitcher更改为IKeyboardSwitcher
     @UsedForTesting final IKeyboardSwitcher mKeyboardSwitcher;
     … … … … …
     public final UIHandler mHandler = new UIHandler(this);
-  	// 将创建InputLogic的代码移动到创建UIHandler的下方
-  	// 并更改InputLogic构造函数的参数
+    // 将创建InputLogic的代码移动到创建UIHandler的下方
+    // 并更改InputLogic构造函数的参数
     final InputLogic mInputLogic = new InputLogic(this, mHandler, KeyboardSwitcher.getInstance() 
             ,mDictionaryFacilitator);
     … … … … …
@@ -152,7 +152,7 @@ public class LatinIME extends ZengineInputMethodService implements
     }
 
     private boolean isImeSuppressedByHardwareKeyboard() {
-        // 请更改KeyboardSwitcher为IKeyboardSwitcher
+        // 请将KeyboardSwitcher更改为IKeyboardSwitcher
         final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();             
         … … … … 
     }
@@ -172,9 +172,9 @@ public class LatinIME extends ZengineInputMethodService implements
         switcher.updateKeyboardAdditionalNumberRow();
         final MainKeyboardView mainKeyboardView = switcher.getMainKeyboardView();
         … … … … …
-        // 请增加requestUpdatingKeyboardToFirstPage()调用
+        // 请增加对KeyboardSwitcher.requestUpdatingKeyboardToFirstPage()的调用
         KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
-        // 请增加requestUpdatingDeformableKeyState()调用
+        // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
         KeyboardSwitcher.getInstance()
             .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         … … … … …
@@ -182,7 +182,7 @@ public class LatinIME extends ZengineInputMethodService implements
     … … … … …
     void resetSuggestMainDict() {
         final SettingsValues settingsValues = mSettings.getCurrent();
-            // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
+        // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
         mDictionaryFacilitator.resetDictionaries(this /* context */,
         mDictionaryFacilitator.getLocale(), settingsValues.mUseContactsDict,
                 settingsValues.mUsePersonalizedDicts,
@@ -216,16 +216,6 @@ public class LatinIME extends ZengineInputMethodService implements
         … … … … …
     }
     … … … … …
-     
-    @Override
-    public void setNeutralSuggestionStrip() {
-		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled 
-		    ? SuggestedWords.getEmptyInstance()
-            // 请把currentSettings换成mInputLogic
-            :mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
-       … … … … …
-    }
-     … … … … …
     // 在Settings.loadSettings()中，将Zengine的InputLogic实例当作最后一个参数带入
     void loadSettings() {
         … … … … …
@@ -244,10 +234,10 @@ public class LatinIME extends ZengineInputMethodService implements
     public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
         … … … … …
         if (inputTransaction.mEvent.mKeyCode !=  CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
-            // 请增加requestUpdatingKeyboardToFirstPage()调用
+            // 请增加对KeyboardSwitcher.requestUpdatingKeyboardToFirstPage()的调用
             KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
         }
-        // 请增加requestUpdatingDeformableKeyState()调用
+        // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
         KeyboardSwitcher.getInstance()
                 .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         
@@ -275,7 +265,7 @@ public class LatinIME extends ZengineInputMethodService{
         @Override
         public void handleMessage(final Message msg) {
             … … … … …
-            // 请将KeyboardSwitcher更改為IKeyboardSwitcher
+            // 请将KeyboardSwitcher更改为IKeyboardSwitcher
             final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
             … … … … …
         }
@@ -322,7 +312,7 @@ private void resetDictionariesForLocaleLocked() {
 final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
     @Override
     protected void action() {
-        //请更改引用为IKeyboardSwitcher
+        // 请将KeyboardSwitcher更改为IKeyboardSwitcher
         final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
         … … … …
     }
@@ -331,7 +321,7 @@ final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
 final EmojiHotKeys symbolsHotKeys = new EmojiHotKeys("symbols", symbolsSwitchSet) {
     @Override
     protected void action() {
-        //请更改引用为IKeyboardSwitcher
+        // 请将KeyboardSwitcher更改为IKeyboardSwitcher
         final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
         … … … …
     }
@@ -342,27 +332,27 @@ final EmojiHotKeys symbolsHotKeys = new EmojiHotKeys("symbols", symbolsSwitchSet
 
 ~~~java
 public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioButtonClickedListener {            
-	… … … …
-   static void updateKeyboardThemeSummary(final Preference pref) {
-		… … … … …
-		// 改用KeyboardThemeManager的getLastUsedKeyboardTheme
-		final KeyboardTheme keyboardTheme = KeyboardThemeManager.getInstance().getLastUsedKeyboardTheme(context);
+    … … … …
+    static void updateKeyboardThemeSummary(final Preference pref) {
+        … … … … …
+        // 改用KeyboardThemeManager的getLastUsedKeyboardTheme
+        final KeyboardTheme keyboardTheme = KeyboardThemeManager.getInstance().getLastUsedKeyboardTheme(context);
 	}
 
-	@Override public void onCreate(final Bundle icicle) {
-		 … … … … …
-		// 改用KeyboardThemeManager的getLastUsedKeyboardTheme
-		final KeyboardTheme keyboardTheme = KeyboardThemeManager.getInstance().getLastUsedKeyboardTheme(context);
-	}
+	@Override 
+	public void onCreate(final Bundle icicle) {
+        … … … … …
+        // 改用KeyboardThemeManager的getLastUsedKeyboardTheme
+        final KeyboardTheme keyboardTheme = KeyboardThemeManager.getInstance().getLastUsedKeyboardTheme(context);
+    }
 	… … … …
- 
 	@Override
 	public void onPause() {
-		super.onPause();
-		// KeyboardTheme.saveKeyboardThemeId(mSelectedThemeId,   
-		// getSharedPreferences());改用
-		KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
-	}
+        super.onPause();
+        // KeyboardTheme.saveKeyboardThemeId(mSelectedThemeId,   
+        // getSharedPreferences());改用
+        KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
+    }
     … … … … 
 ~~~
 
@@ -438,8 +428,7 @@ public class ExampleApplication extends Application {
 ~~~java
 … … … …
 public class LatinIME extends ZengineInputMethodService implements 
-    KeyboardActionListener,....,
-    SuggestionStripView.Listener, SuggestionStripViewAccessor{
+    KeyboardActionListener,....{
     … … … … …
     public void onCreate() {
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
@@ -461,18 +450,18 @@ public class LatinIME extends ZengineInputMethodService implements
                 // Show your own Emoji Keyboard if needed
                 return false;
             }
-
-        @Override
-        public void onKeyboardTypeChange(int keyboardType) {
-            switch (keyboardType){
-                case IKeyboardActionCallback.ALPHA_KEYBOARD:
-                break;
-                case IKeyboardActionCallback.EMOJI_KEYBOARD:
-                break;
-                case IKeyboardActionCallback.SYMBOL_KEYBOARD:
-                break;
-            }
-        });
+            
+            @Override
+            public void onKeyboardTypeChange(int keyboardType) {
+                switch (keyboardType){
+                    case IKeyboardActionCallback.ALPHA_KEYBOARD:
+                    break;
+                    case IKeyboardActionCallback.EMOJI_KEYBOARD:
+                    break;
+                    case IKeyboardActionCallback.SYMBOL_KEYBOARD:
+                    break;
+                }
+            });
         … … … …
     }
       
@@ -516,10 +505,11 @@ public class LatinIME extends ZengineInputMethodService implements
         if (isInputViewShown()
             && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
             newSelStart, newSelEnd,settingsValues)) {
-            //请添加下列代码
+            // 请增加对KeyboardSwitcher.requestUpdatingShiftState()的调用
             KeyboardSwitcher.getInstance()
                 .requestUpdatingShiftState(getCurrentAutoCapsState(),
                 getCurrentRecapitalizeState());
+            // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
             KeyboardSwitcher.getInstance()
                 .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
@@ -540,24 +530,23 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 
 ~~~java
 @Override
- public View onCreateInputView() {
-     // 开发者自行生成一个xml布局
-     View currentInputView =   
-                  LayoutInflater.from(this).inflate(R.layout.example_input_view, null);
-     // 布局提供一个容器     
-     ViewGroup kbContainer = currentInputView.findViewById(R.id.kb_container);
-     // 调用Agent.getInstance().onCreateInputView()， 并传入容器
-     Agent.getInstance().onCreateInputView(kbContainer, mIsHardwareAcceleratedDrawingEnabled);
-     // 返回布局
-     return currentInputView;
- }
+public View onCreateInputView() {
+    // 开发者自行生成一个xml布局
+    View currentInputView =   
+        LayoutInflater.from(this).inflate(R.layout.example_input_view, null);
+    // 布局提供一个容器     
+    ViewGroup kbContainer = currentInputView.findViewById(R.id.kb_container);
+    // 调用Agent.getInstance().onCreateInputView()， 并传入容器
+    Agent.getInstance().onCreateInputView(kbContainer, mIsHardwareAcceleratedDrawingEnabled);
+    // 返回布局
+    return currentInputView;
+}
 
 ~~~
 布局代码示例 ：  
 **example_input_view.xml:**
 
 ~~~
-
 <RelativeLayout
    xmlns:android="http://schemas.android.com/apk/res/android"
    android:layout_width="match_parent"
