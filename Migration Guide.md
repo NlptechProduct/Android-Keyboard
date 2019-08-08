@@ -19,21 +19,21 @@ Zengine SDK supports APILevel 19 (Android 4.4) or above, plus Java 1.8. Make sur
 
 ~~~
 … … … …
-        android {
-            … … … … ...
-            defaultConfig {
-                … … … … …
-                minSdkVersion 19
-                multiDexEnabled true
-                … … … …
-             }
-             … … … …
-             compileOptions {
-                 sourceCompatibility 1.8
-                 targetCompatibility 1.8
-            }
-        }
-        … … … … 
+android {
+    … … … … ...
+    defaultConfig {
+        … … … … …
+        minSdkVersion 19
+        multiDexEnabled true
+        … … … …
+    }
+    … … … …
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+… … … … 
 ~~~
 
 # Integration
@@ -71,15 +71,15 @@ Add Zengine appkey into AndroidManifest.xml:
 **AndroidManifest.xml:**
 
 ~~~
-   … … … … …
-        <application
-              … … … … …
-        <meta-data
-            android:name="nlptech_appkey"
-            android:value="{appkey_value}" />
-                    … … … … …
-       </application>
-       … … … … …
+… … … … …
+<application
+    … … … … …
+    <meta-data
+        android:name="nlptech_appkey"
+        android:value="{appkey_value}" />
+        … … … … …
+</application>
+
 ~~~
 Please contact zengine@nlptech.com to get appkey and license if you don’t have one yet.
 
@@ -109,7 +109,8 @@ If the tool does not work well for you, please see [FAQ](https://github.com/Nlpt
 
 ## 5. Native JNI library
 
-Remove unneeded JNI library:  **libjni_latinime.so**
+Remove unneeded JNI library:  **libjni_latinime.so**   
+Remove pinyin so ： **libejni_pinyinime.so** [zengine v1.2]
 
 ## 6. Customize AOSP
 
@@ -122,10 +123,9 @@ Android Studio → Editor → General → Auto Import → Java
 **LatinIME.java:**
 
 ```java
-        // Please extends ZengineInputMethodService
-        public class LatinIME extends ZengineInputMethodService implements 
-KeyboardActionListener,....{
-
+// Please extends ZengineInputMethodService
+public class LatinIME extends ZengineInputMethodService implements 
+    KeyboardActionListener,....{
     … … … … …
     // KeyboardSwitcher-->IKeyboardSwitcher
     @UsedForTesting final IKeyboardSwitcher mKeyboardSwitcher;
@@ -138,10 +138,7 @@ KeyboardActionListener,....{
     @Override
     public void onCreate() {
     	… … … … …
-        // KeyboardSwitcher.init(
-        // final InputMethodService ims,
-        // final KeyboardActionListener actionListener,
-        // final KeyboardSwitcherListener switcherListene);
+        // add arguments of KeyboardSwitcher.init()
         KeyboardSwitcher.init(this, this, this);
         … … … … …
 		// Remove second argument
@@ -166,26 +163,24 @@ KeyboardActionListener,....{
     … … … … …
     @Override
     void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
-         … … … … …
-         mRichImm.refreshSubtypeCaches();
-         final IKeyboardSwitcher switcher = mKeyboardSwitcher;
-         switcher.updateKeyboardTheme(false);
-         switcher.updateKeyboardAdditionalNumberRow();
-         final MainKeyboardView mainKeyboardView = switcher.getMainKeyboardView();
-         … … … … …
-          // add code as below
-         KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();   
-         KeyboardSwitcher.getInstance()
-                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
-         // This will set the punctuation suggestions if next word suggestion is off;
-         // otherwise it will clear the suggestion strip.
-         setNeutralSuggestionStrip();
-         … … … … …
+        … … … … …
+        mRichImm.refreshSubtypeCaches();
+        final IKeyboardSwitcher switcher = mKeyboardSwitcher;
+        switcher.updateKeyboardTheme(false);
+        switcher.updateKeyboardAdditionalNumberRow();
+        final MainKeyboardView mainKeyboardView = switcher.getMainKeyboardView();
+        … … … … …
+        // Please call KeyboardSwitcher.requestUpdatingKeyboardToFirstPage()
+        KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
+        // Please call KeyboardSwitcher.requestUpdatingDeformableKeyState()
+        KeyboardSwitcher.getInstance()
+            .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+        … … … … …
     }
   	… … … … …
-    // Arguments of mDictionaryFacilitator.resetDictionaries() are changed
     void resetSuggestMainDict() {
         final SettingsValues settingsValues = mSettings.getCurrent();
+        // Arguments of mDictionaryFacilitator.resetDictionaries() are changed
         mDictionaryFacilitator.resetDictionaries(this /* context */,
         mDictionaryFacilitator.getLocale(), settingsValues.mUseContactsDict,
                 settingsValues.mUsePersonalizedDicts,
@@ -197,6 +192,7 @@ KeyboardActionListener,....{
     … … … … …
     private void resetDictionaryFacilitator(final Locale locale) {
         … … … … …
+        // Arguments of mDictionaryFacilitator.resetDictionaries() are changed
         mDictionaryFacilitator.resetDictionaries(this /* context */, locale,
                 settingsValues.mUseContactsDict, settingsValues.mUsePersonalizedDicts,
                 false /* forceReloadMainDictionary */,
@@ -204,26 +200,18 @@ KeyboardActionListener,....{
                 this /* DictionaryInitializationListener */,
                 Agent.getInstance().obtainDictionaryGetter());
                 … … … … …
-     }
-     … … … … …
-     void replaceDictionariesForTest(final Locale locale) {
+    }
+    … … … … …
+    void replaceDictionariesForTest(final Locale locale) {
          … … … … …
+         // Arguments of mDictionaryFacilitator.resetDictionaries() are changed
          mDictionaryFacilitator.resetDictionaries(this, locale,
                      settingsValues.mUseContactsDict, settingsValues.mUsePersonalizedDicts,
                      false /* forceReloadMainDictionary */,
                      settingsValues.mAccount, "", /* dictionaryNamePrefix */
                      this /* DictionaryInitializationListener */,
                      Agent.getInstance().obtainDictionaryGetter());
-       	… … … … …
-     }
-     … … … … …
-     
-    @Override
-    public void setNeutralSuggestionStrip() {
-		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
-        	// currentSettings-->mInputLogic
-  		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
-       … … … … …
+        … … … … …
     }
     … … … … …
     // In Settings.loadSettings()，add Zengine's InputLogic as last argument
@@ -234,62 +222,70 @@ KeyboardActionListener,....{
         … … … … …
     public void getSuggestedWords(final int inputStyle, final int sequenceNumber,...)
       	… … … … …
-        // remove argument  keyboard
+        // remove argument keyboard
       	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
          … … … … …
     }
     … … … … …
   	// change updateStateAfterInputTransaction to public
     public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
-      … … … … …
-      //Add code down below
-      if (inputTransaction.mEvent.mKeyCode !=  
-                                       CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
-        KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
-      }
-      KeyboardSwitcher.getInstance()
-                    .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
-      if (inputTransaction.requiresUpdateSuggestions()) {
-         … … … … …
-      }
+        … … … … …
+        // Please call KeyboardSwitcher.requestUpdatingKeyboardToFirstPage()
+        if (inputTransaction.mEvent.mKeyCode !=  CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
+            KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
+        }
+        // Please call KeyboardSwitcher.requestUpdatingDeformableKeyState()
+        KeyboardSwitcher.getInstance()
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+        
+        if (inputTransaction.requiresUpdateSuggestions()) {
+            … … … … …
+        }
+        [zengine v1.2]
+        // Add code down below,
+        else {
+            setNeutralSuggestionStrip();	
+        }
     }
 ```
 **LatinIME$UIHandler.java:**
 
 ~~~java
-	public class LatinIME extends ZengineInputMethodService{
-   	    … … … … …
-        //UIHandler implements ImeUiHandlerInterface
-        public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
-		implements ImeUiHandlerInterface {
-          	… … … … …
- 			// Functions in ImeUiHandlerInterface work the same in LatinIME.UIHandler
-          	… … … … …
-          	@Override
-          	public void handleMessage(final Message msg) {
-          		… … … … …
-          		final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
-          		… … … … …
-          	}
+public class LatinIME extends ZengineInputMethodService{
+    … … … … …
+    //UIHandler implements ImeUiHandlerInterface
+    public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
+        implements ImeUiHandlerInterface {
+        … … … … …
+        // Functions in ImeUiHandlerInterface work the same in LatinIME.UIHandler
+        … … … … …
+        @Override
+        public void handleMessage(final Message msg) {
+            … … … … …
+            // KeyboardSwitcher-->IKeyboardSwitcher
+            final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
+            … … … … …
         }
-	}
+    }
+}
 ~~~
 **AndroidSpellCheckerService.java:**
 
 ~~~java
- public class AndroidSpellCheckerService extends SpellCheckerService... {
-     … … … … ...
-     public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
-         @Nonnull final Keyboard keyboard) {
-         	… … … …
-          	try {
-                 … … … … 
-                 // Please change the third parameter in getSuggestionResults
-                 return dictionaryFacilitatorForLocale.getSuggestionResults(composedData,   ngramContext,keyboard.getProximityInfo().getNativeProximityInfo(),  …)
-             }
-             … … … … …
-      }
- }
+public class AndroidSpellCheckerService extends SpellCheckerService... {
+    … … … … …
+    public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
+        @Nonnull final Keyboard keyboard) {
+        … … … …
+        try {
+            … … … … 
+            // Please change the third parameter in getSuggestionResults
+            return dictionaryFacilitatorForLocale.getSuggestionResults(composedData
+                ,ngramContext,keyboard.getProximityInfo().getNativeProximityInfo(),  …)
+        }
+        … … … … …
+    }
+}
 ~~~
 **DictionaryFacilitatorLruCache.java:**
 
@@ -309,25 +305,25 @@ private void resetDictionariesForLocaleLocked() {
 **EmojiAltPhysicalKeyDetector.java:**
 
 ~~~java
-  … … … … …
-  final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
-      @Override
-      protected void action() {
-          //KeyboardSwitcher --> IKeyboardSwitcher
-          final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
-          … … … …
-      }
-  };
-  … … … … …
-  final EmojiHotKeys symbolsHotKeys = new EmojiHotKeys("symbols", symbolsSwitchSet) {
-      @Override
-      protected void action() {
-          //KeyboardSwitcher --> IKeyboardSwitcher
-          final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
-          … … … …
-      }
-  };
-  … … … … …
+… … … … …
+final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
+    @Override
+    protected void action() {
+        //KeyboardSwitcher --> IKeyboardSwitcher
+        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
+        … … … …
+    }
+};
+… … … … …
+final EmojiHotKeys symbolsHotKeys = new EmojiHotKeys("symbols", symbolsSwitchSet) {
+    @Override
+    protected void action() {
+        //KeyboardSwitcher --> IKeyboardSwitcher
+        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
+        … … … …
+    }
+};
+… … … … …
 ~~~
 **ThemeSettingsFragment.java:**
 
@@ -353,8 +349,58 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
 		// Use KeyboardThemeManager's saveLastUsedKeyboardThemeId instead
 		KeyboardThemeManager.getInstance().saveLastUsedKeyboardThemeId(mSelectedThemeId, getSharedPreferences());
 	}
-  … … … … 
+… … … … 
 ~~~
+
+### 6.3 Delete Code [zengine v1.2]
+**LatinIME.java:**
+
+```java
+public class LatinIME extends ZengineInputMethodService implements 
+        // Delete interface:SuggestionStripView.Listener and SuggestionStripViewAccessor
+...., S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶L̶i̶s̶t̶e̶n̶e̶r̶,̶ ̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶A̶c̶c̶e̶s̶s̶o̶r̶ {
+
+	… … … … 
+	
+	// Delete mSuggestionStripView
+	p̶r̶i̶v̶a̶t̶e̶ ̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶ ̶m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶;̶
+	
+	… … … …
+	
+	public void setInputView(final View view) {
+		m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶ ̶=̶ ̶(̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶)̶v̶i̶e̶w̶.̶f̶i̶n̶d̶V̶i̶e̶w̶B̶y̶I̶d̶(̶R̶.̶i̶d̶.̶s̶u̶g̶g̶e̶s̶t̶i̶o̶n̶_̶s̶t̶r̶i̶p̶_̶v̶i̶e̶w̶)̶;̶
+	}
+	
+	… … … … 
+	
+	public void onComputeInsets(final Insets outInsets) {
+		m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶s̶e̶t̶M̶o̶r̶e̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶H̶e̶i̶g̶h̶t̶(̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶)̶;̶
+	}
+	
+	… … … … 
+	
+	// Delete function down below : hasSuggestionStripView(),setNeutralSuggestionStrip(), 
+	// showSuggestionStrip(), setSuggestedWords(), showImportantNoticeContents()
+	p̶u̶b̶l̶i̶c̶ ̶b̶o̶o̶l̶e̶a̶n̶ ̶h̶a̶s̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶(̶)̶
+	p̶r̶i̶v̶a̶t̶e̶ ̶v̶o̶i̶d̶ ̶s̶e̶t̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶(̶f̶i̶n̶a̶l̶ ̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶ ̶s̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶)̶
+	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶h̶o̶w̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶(̶f̶i̶n̶a̶l̶ ̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶ ̶s̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶)̶
+	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶e̶t̶N̶e̶u̶t̶r̶a̶l̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶(̶)̶
+	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶h̶o̶w̶I̶m̶p̶o̶r̶t̶a̶n̶t̶N̶o̶t̶i̶c̶e̶C̶o̶n̶t̶e̶n̶t̶s̶(̶)̶
+	
+	… … … … 
+	// Delete ImportantNoticeUtils
+	public void onRequestPermissionsResult(boolean allGranted) {
+		I̶m̶p̶o̶r̶t̶a̶n̶t̶N̶o̶t̶i̶c̶e̶U̶t̶i̶l̶s̶.̶u̶p̶d̶a̶t̶e̶C̶o̶n̶t̶a̶c̶t̶s̶N̶o̶t̶i̶c̶e̶S̶h̶o̶w̶n̶(̶t̶h̶i̶s̶ ̶/̶*̶ ̶c̶o̶n̶t̶e̶x̶t̶ ̶*̶/̶)̶;̶
+	}
+```
+
+**input_view.xml:**
+
+~~~
+// Delete SuggestionStripView
+<̶c̶o̶m̶.̶a̶n̶d̶r̶o̶i̶d̶.̶i̶n̶p̶u̶t̶m̶e̶t̶h̶o̶d̶.̶l̶a̶t̶i̶n̶.̶s̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶.̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶
+~~~
+
 
 ## 7. Import Code
 
@@ -370,7 +416,7 @@ public class ExampleApplication extends Application {
 		super.onCreate();
 		Agent.getInstance().init(this);
 	}
-  … … … … 
+… … … … 
 ~~~
 Need to call lifecycle in LatinIME  
 For example:
@@ -406,14 +452,8 @@ KeyboardActionListener,...{
 			public void onKeyboardTypeChange(int keyboardType) {
 				switch (keyboardType){
    					case IKeyboardActionCallback.ALPHA_KEYBOARD:
-      					// if (mSuggestionStripView != null) {
-      					// mSuggestionStripView.setVisibility(View.VISIBLE);
-      					// }
        					break;
    					case IKeyboardActionCallback.EMOJI_KEYBOARD:
-      					// if (mSuggestionStripView!= null) {
-      					// mSuggestionStripView.setVisibility(View.GONE);
-      					// }
        					break;
    					case IKeyboardActionCallback.SYMBOL_KEYBOARD:
        					break;
@@ -421,37 +461,55 @@ KeyboardActionListener,...{
 		});
       	… … … … …
       }
+      
+    [zengine v1.2]
+    @Override
+    public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+        // Please call super.onStartInput(editorInfo, restarting)
+        super.onStartInput(editorInfo, restarting);
+        … … … …
+    }
 
-      @Override
-      public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
-          // Please call super.onStartInputView(editorInfo,restarting)
-          super.onStartInputView(editorInfo,restarting);
-          … … … … 
-      }
+    @Override
+    public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
+        // Please call super.onStartInputView(editorInfo,restarting)
+        super.onStartInputView(editorInfo,restarting);
+        … … … … 
+    }
 
-      @Override
-      public void onFinishInputView(final boolean finishingInput) {
-          // Please call super.onFinishInputView(finishingInput)
-          super.onFinishInputView(finishingInput);
-          … … … …  
-      }
+    [zengine v1.2]
+    @Override
+    public void onFinishInput() {
+        // Please call super.onFinishInput()
+        super.onFinishInput();
+        … … … …
+    }
+    
+    @Override
+    public void onFinishInputView(final boolean finishingInput) {
+        // Please call super.onFinishInputView(finishingInput)
+        super.onFinishInputView(finishingInput);
+        … … … …  
+    }
 
-     @Override
-     public void onUpdateSelection(final int oldSelStart, final int oldSelEnd,
-                             final int newSelStart, final int newSelEnd,
-                             final int composingSpanStart, final int composingSpanEnd) {
+    @Override
+    public void onUpdateSelection(final int oldSelStart, final int oldSelEnd,
+        final int newSelStart, final int newSelEnd,
+        final int composingSpanStart, final int composingSpanEnd) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
-                 composingSpanStart, composingSpanEnd);
+            composingSpanStart, composingSpanEnd);
         … … … …
         // Add code down below
         if (isInputViewShown()
-                && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
-                                                 newSelStart, newSelEnd,  settingsValues)) {
-          KeyboardSwitcher.getInstance()
-                             .requestUpdatingShiftState(getCurrentAutoCapsState(),
-                                                        getCurrentRecapitalizeState());
-          KeyboardSwitcher.getInstance()
-                    .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+            && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
+            newSelStart, newSelEnd,  settingsValues)) {
+            // Please call KeyboardSwitcher.requestUpdatingShiftState()
+            KeyboardSwitcher.getInstance()
+                .requestUpdatingShiftState(getCurrentAutoCapsState(),
+                getCurrentRecapitalizeState());
+            // Please call KeyboardSwitcher.requestUpdatingDeformableKeyState()
+            KeyboardSwitcher.getInstance()
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
         … … … …
      }
@@ -461,8 +519,9 @@ KeyboardActionListener,...{
 
 Developer only needs to call:
 
-~~~
+~~~java
 Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
+
 ~~~
 in InputMethodService.onCreateInputView(), where container stands for parent view of the KeyboardView. SDK will automatically create KeyboardView and EmojiView, and add them into ViewGroup.  
 **LatinIME.java:**
