@@ -610,6 +610,8 @@ If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELa
 # Zengine[v1.1.1]
 -keep class com.nlptech.keyboardtrace.trace.aether.AetherEvent { *; }
 -keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
+# [zengine v1.2]
+-keep class com.nlptech.keyboardview.suggestions.*{ *; } 
 ~~~
 
 ## 9. Resolve remaining import issues

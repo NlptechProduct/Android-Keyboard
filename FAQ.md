@@ -642,6 +642,29 @@
    </tr>
 </table>
 
+<table>
+   <tr>
+      <th bgcolor="#9FB6CD" >
+      com.android.inputmethod.latin.suggestions<br>(5个)</th>
+      
+   </tr>
+   <tr>
+      <td>MoreSuggestions</td>
+   </tr>
+   <tr>
+      <td>MoreSuggestionsView</td>
+   </tr>
+   <tr>
+      <td>SuggestionStripLayoutHelper</td>
+   </tr>
+   <tr>
+      <td>SuggestionStripView</td>
+   </tr>
+   <tr>
+      <td>SuggestionStripViewAccessor</td>
+   </tr>
+</table>
+
 ####Resources to be deleted：
 
 .xml files to be deleted from res/values
@@ -665,7 +688,8 @@ keyboard-icons-lxx-light.xml
 emoji_palettes_view.xml
 main_keyboard_frame.xml
 more_keys_keyboard.xml
-
+more_suggestions.xml
+suggestions_strip.xml 
 ~~~
 
 
