@@ -645,6 +645,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
                     case IKeyboardActionCallback.ALPHA_KEYBOARD:
                         break;
                     case IKeyboardActionCallback.EMOJI_KEYBOARD:
+                        onHideCustomizedNeutralStripView();
                         break;
                     case IKeyboardActionCallback.SYMBOL_KEYBOARD:
                         break;
