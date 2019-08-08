@@ -254,6 +254,11 @@ KeyboardActionListener,.... {
       if (inputTransaction.requiresUpdateSuggestions()) {
          … … … … …
       }
+      [zengine v1.2]
+      // 针对SuggestStripView相关行为补充
+      else {
+       	setNeutralSuggestionStrip();	
+      }
     }
 ```
 **LatinIME$UIHandler.java:**
@@ -359,6 +364,56 @@ public class ThemeSettingsFragment extends SubScreenFragment implements OnRadioB
     … … … … 
 ~~~
 
+### 6.3 刪除代码 [zengine v1.2]
+**LatinIME.java:**
+
+```java
+public class LatinIME extends ZengineInputMethodService implements 
+        // 删除SuggestStripView相关的implement interface
+...., S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶L̶i̶s̶t̶e̶n̶e̶r̶,̶ ̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶A̶c̶c̶e̶s̶s̶o̶r̶ {
+
+	… … … … 
+	
+	// 删除mSuggestionStripView相关代码
+	p̶r̶i̶v̶a̶t̶e̶ ̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶ ̶m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶;̶
+	
+	… … … …
+	
+	public void setInputView(final View view) {
+		m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶ ̶=̶ ̶(̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶)̶v̶i̶e̶w̶.̶f̶i̶n̶d̶V̶i̶e̶w̶B̶y̶I̶d̶(̶R̶.̶i̶d̶.̶s̶u̶g̶g̶e̶s̶t̶i̶o̶n̶_̶s̶t̶r̶i̶p̶_̶v̶i̶e̶w̶)̶;̶
+	}
+	
+	… … … … 
+	
+	public void onComputeInsets(final Insets outInsets) {
+		m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶s̶e̶t̶M̶o̶r̶e̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶H̶e̶i̶g̶h̶t̶(̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶)̶;̶
+	}
+	
+	… … … … 
+	
+	// 删除以下方法 : hasSuggestionStripView(),setNeutralSuggestionStrip(), 
+	// showSuggestionStrip(), setSuggestedWords(), showImportantNoticeContents
+	p̶u̶b̶l̶i̶c̶ ̶b̶o̶o̶l̶e̶a̶n̶ ̶h̶a̶s̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶(̶)̶
+	p̶r̶i̶v̶a̶t̶e̶ ̶v̶o̶i̶d̶ ̶s̶e̶t̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶(̶f̶i̶n̶a̶l̶ ̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶ ̶s̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶)̶
+	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶h̶o̶w̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶(̶f̶i̶n̶a̶l̶ ̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶ ̶s̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶)̶
+	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶e̶t̶N̶e̶u̶t̶r̶a̶l̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶(̶)̶
+	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶h̶o̶w̶I̶m̶p̶o̶r̶t̶a̶n̶t̶N̶o̶t̶i̶c̶e̶C̶o̶n̶t̶e̶n̶t̶s̶(̶)̶
+	
+	… … … … 
+	// 删除ImportantNoticeUtils相关代码
+	public void onRequestPermissionsResult(boolean allGranted) {
+		I̶m̶p̶o̶r̶t̶a̶n̶t̶N̶o̶t̶i̶c̶e̶U̶t̶i̶l̶s̶.̶u̶p̶d̶a̶t̶e̶C̶o̶n̶t̶a̶c̶t̶s̶N̶o̶t̶i̶c̶e̶S̶h̶o̶w̶n̶(̶t̶h̶i̶s̶ ̶/̶*̶ ̶c̶o̶n̶t̶e̶x̶t̶ ̶*̶/̶)̶;̶
+	}
+```
+
+**input_view.xml:**
+
+~~~
+// 删除原生SuggestionStripView的使用
+<̶c̶o̶m̶.̶a̶n̶d̶r̶o̶i̶d̶.̶i̶n̶p̶u̶t̶m̶e̶t̶h̶o̶d̶.̶l̶a̶t̶i̶n̶.̶s̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶.̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶
+~~~
+
+
 ## 7. 代码引入
 
 ### 7.1 Agent引入
@@ -381,7 +436,8 @@ public class ExampleApplication extends Application {
 ~~~java
 … … … …
 public class LatinIME extends ZengineInputMethodService implements 
-KeyboardActionListener,.... {
+KeyboardActionListener,....,
+SuggestionStripView.Listener, SuggestionStripViewAccessor, {
       … … … … …
       public void onCreate() {
           DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
@@ -408,14 +464,8 @@ KeyboardActionListener,.... {
 			public void onKeyboardTypeChange(int keyboardType) {
 				switch (keyboardType){
    					case IKeyboardActionCallback.ALPHA_KEYBOARD:
-      					// if (mSuggestionStripView != null) {
-      					// mSuggestionStripView.setVisibility(View.VISIBLE);
-      					// }
        					break;
    					case IKeyboardActionCallback.EMOJI_KEYBOARD:
-      					// if (mSuggestionStripView!= null) {
-      					// mSuggestionStripView.setVisibility(View.GONE);
-      					// }
        					break;
    					case IKeyboardActionCallback.SYMBOL_KEYBOARD:
        					break;
@@ -423,12 +473,28 @@ KeyboardActionListener,.... {
 		});
       	… … … …
       }
+      
+      [zengine v1.2]
+      @Override
+      public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+          //请添加对父类super.onStartInput的调用
+          super.onStartInput(editorInfo, restarting);
+          … … … …
+      }
 
       @Override
       public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
           //请添加对父类onStartInputView的调用
           super.onStartInputView(editorInfo,restarting);
           … … … …
+      }
+      
+      [zengine v1.2]
+      @Override
+      public void onFinishInput() {
+      	  //请添加对父类onFinishInput的调用
+          super.onFinishInput();
+      		… … … …
       }
 
       @Override
@@ -550,6 +616,8 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 -keep class com.nlptech.common.domain.** { *; }
 -keep class com.nlptech.common.api.ResultData { *; }
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
+# [zengine v1.2]
+-keep class com.nlptech.keyboardview.suggestions.*{ *; } 
 ~~~
 
 ## 9. 新增或修改引用

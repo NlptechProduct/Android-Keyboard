@@ -614,7 +614,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
         RichInputMethodManager.init(this);
         mRichImm = RichInputMethodManager.getInstance();
-        Agent.getInstance().onCreate(this, mInputLogic, mRichImm, new LanguageCallback() {
+        Agent.getInstance().onCreate(this, mInputLogic, new LanguageCallback() {
             @Override
             public void onIMELanguageChanged(InputMethodSubtype subtype) {
                 onCurrentInputMethodSubtypeChanged(subtype);
