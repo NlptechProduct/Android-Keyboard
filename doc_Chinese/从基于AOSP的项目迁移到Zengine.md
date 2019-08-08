@@ -233,8 +233,8 @@ public class LatinIME extends ZengineInputMethodService implements
     // 将updateStateAfterInputTransaction改为public
     public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
         … … … … …
+        // 请增加对KeyboardSwitcher.requestUpdatingKeyboardToFirstPage()的调用
         if (inputTransaction.mEvent.mKeyCode !=  CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
-            // 请增加对KeyboardSwitcher.requestUpdatingKeyboardToFirstPage()的调用
             KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
         }
         // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
@@ -256,7 +256,7 @@ public class LatinIME extends ZengineInputMethodService implements
 ~~~java
 public class LatinIME extends ZengineInputMethodService{
     … … … … …
-    //UIHandler implements ImeUiHandlerInterface
+    //UIHandler 需实现接口 ImeUiHandlerInterface
     public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
         implements ImeUiHandlerInterface {
         … … … … …
@@ -455,11 +455,11 @@ public class LatinIME extends ZengineInputMethodService implements
             public void onKeyboardTypeChange(int keyboardType) {
                 switch (keyboardType){
                     case IKeyboardActionCallback.ALPHA_KEYBOARD:
-                    break;
+                        break;
                     case IKeyboardActionCallback.EMOJI_KEYBOARD:
-                    break;
+                        break;
                     case IKeyboardActionCallback.SYMBOL_KEYBOARD:
-                    break;
+                        break;
                 }
             });
         … … … …
