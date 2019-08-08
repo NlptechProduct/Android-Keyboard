@@ -52,5 +52,6 @@
 -keep class com.nlptech.common.domain.** { *; }
 -keep class com.nlptech.common.api.ResultData { *; }
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
+-keep class com.nlptech.keyboardview.suggestions.*{ *; }
 -keep class com.nlptech.keyboardtrace.trace.aether.AetherEvent { *; }
 -keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
