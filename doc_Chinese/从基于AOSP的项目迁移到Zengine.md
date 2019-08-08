@@ -19,21 +19,21 @@ Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8
 
 ~~~
 … … … …
-        android {
-            … … … … ...
-            defaultConfig {
-                … … … … …
-                minSdkVersion 19
-                multiDexEnabled true
-                … … … …
-             }
-             … … … …
-             compileOptions {
-                 sourceCompatibility 1.8
-                 targetCompatibility 1.8
-            }
-        }
-        … … … … 
+android {
+    … … … … ...
+    defaultConfig {
+        … … … … …
+        minSdkVersion 19
+        multiDexEnabled true
+        … … … …
+    }
+    … … … …
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+… … … … 
 ~~~
 
 # 开始集成
@@ -71,15 +71,15 @@ dependencies {
 **AndroidManifest.xml:**
 
 ~~~
-   … … … … …
-        <application
-              … … … … …
-        <meta-data
-            android:name="nlptech_appkey"
-            android:value="{appkey_value}" />
-                    … … … … …
-       </application>
-       … … … … …
+… … … … …
+<application
+    … … … … …
+    <meta-data
+        android:name="nlptech_appkey"
+        android:value="{appkey_value}" />
+        … … … … …
+</application>
+
 ~~~
 如果您还没有appkey，请联系zengine@nlptech.com申请appkey和使用授权。
 
@@ -109,6 +109,7 @@ zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的�
 ## 5. 删除so文件
 
 删除项目创建的so文件:  **libjni_latinime.so**
+如果您的项目中包含pinyin so文件，请删除： **libejni_pinyinime.so** [zengine v1.2]
 
 ## 6. 修改原有AOSP内容
 
@@ -122,9 +123,9 @@ Android Studio → Editor → General → Auto Import → Java
 **LatinIME.java:**
 
 ```java
-        // 需继承ZengineInputMethodService
-        public class LatinIME extends ZengineInputMethodService implements 
-KeyboardActionListener,.... {
+// 需继承ZengineInputMethodService
+public class LatinIME extends ZengineInputMethodService implements 
+    KeyboardActionListener,.... {
 
     … … … … …
     // KeyboardSwitcher更改為IKeyboardSwitcher
@@ -133,18 +134,16 @@ KeyboardActionListener,.... {
     public final UIHandler mHandler = new UIHandler(this);
   	// 将创建InputLogic的代码移动到创建UIHandler的下方
   	// 并更改InputLogic构造函数的参数
-    final InputLogic mInputLogic = new InputLogic(this, mHandler, KeyboardSwitcher.getInstance() ,mDictionaryFacilitator);
+    final InputLogic mInputLogic = new InputLogic(this, mHandler, KeyboardSwitcher.getInstance() 
+            ,mDictionaryFacilitator);
     … … … … …
     @Override
     public void onCreate() {
     	… … … … …
-        // KeyboardSwitcher.init(
-        // final InputMethodService ims,
-        // final KeyboardActionListener actionListener,
-        // final KeyboardSwitcherListener switcherListene);
+        // 请增加KeyboardSwitcher.init()的参数
         KeyboardSwitcher.init(this, this, this);
         … … … … …
-		// 删除第二个参数
+        // 删除第二个参数
         mStatsUtilsManager.onCreate(this);
         … … … … …
         // 请更改为不带参数
@@ -153,40 +152,37 @@ KeyboardActionListener,.... {
     }
 
     private boolean isImeSuppressedByHardwareKeyboard() {
-		// 请更改KeyboardSwitcher为IKeyboardSwitcher
-       final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();             
-       … … … … 
+        // 请更改KeyboardSwitcher为IKeyboardSwitcher
+        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();             
+        … … … … 
     }
 
-    // 修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
+    // 请修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
     @Override
   	public boolean shouldShowLanguageSwitchKey() {
       	return mRichImm.hasMultipleEnabledIMEsOrSubtypes(false);
     }
-  	… … … … …
+    … … … … …
     @Override
     void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
-         … … … … …
-         mRichImm.refreshSubtypeCaches();
-         final IKeyboardSwitcher switcher = mKeyboardSwitcher;
-         switcher.updateKeyboardTheme(false);
-         switcher.updateKeyboardAdditionalNumberRow();
-         final MainKeyboardView mainKeyboardView = switcher.getMainKeyboardView();
-         … … … … …
-          // 检查是否需要把键盘翻到第一页
-         KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
-         // 检查是否更新变形键盘    
-         KeyboardSwitcher.getInstance()
-                     .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
-         // This will set the punctuation suggestions if next word suggestion is off;
-         // otherwise it will clear the suggestion strip.
-         setNeutralSuggestionStrip();
-         … … … … …
+        … … … … …
+        mRichImm.refreshSubtypeCaches();
+        final IKeyboardSwitcher switcher = mKeyboardSwitcher;
+        switcher.updateKeyboardTheme(false);
+        switcher.updateKeyboardAdditionalNumberRow();
+        final MainKeyboardView mainKeyboardView = switcher.getMainKeyboardView();
+        … … … … …
+        // 请增加requestUpdatingKeyboardToFirstPage()调用
+        KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
+        // 请增加requestUpdatingDeformableKeyState()调用
+        KeyboardSwitcher.getInstance()
+            .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+        … … … … …
     }
-  	… … … … …
-    // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
+    … … … … …
     void resetSuggestMainDict() {
         final SettingsValues settingsValues = mSettings.getCurrent();
+            // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
         mDictionaryFacilitator.resetDictionaries(this /* context */,
         mDictionaryFacilitator.getLocale(), settingsValues.mUseContactsDict,
                 settingsValues.mUsePersonalizedDicts,
@@ -198,6 +194,7 @@ KeyboardActionListener,.... {
     … … … … …
     private void resetDictionaryFacilitator(final Locale locale) {
         … … … … …
+        // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
         mDictionaryFacilitator.resetDictionaries(this /* context */, locale,
                 settingsValues.mUseContactsDict, settingsValues.mUsePersonalizedDicts,
                 false /* forceReloadMainDictionary */,
@@ -205,136 +202,141 @@ KeyboardActionListener,.... {
                 this /* DictionaryInitializationListener */,
                 Agent.getInstance().obtainDictionaryGetter());
                 … … … … …
-     }
+    }
      … … … … …
-     void replaceDictionariesForTest(final Locale locale) {
-         … … … … …
-         mDictionaryFacilitator.resetDictionaries(this, locale,
-                     settingsValues.mUseContactsDict, settingsValues.mUsePersonalizedDicts,
-                     false /* forceReloadMainDictionary */,
-                     settingsValues.mAccount, "", /* dictionaryNamePrefix */
-                     this /* DictionaryInitializationListener */,
-                     Agent.getInstance().obtainDictionaryGetter());
-       	… … … … …
-     }
-     … … … … …
+    void replaceDictionariesForTest(final Locale locale) {
+        … … … … …
+        // 需增加mDictionaryFacilitator.resetDictionaries()中的参数
+        mDictionaryFacilitator.resetDictionaries(this, locale,
+            settingsValues.mUseContactsDict, settingsValues.mUsePersonalizedDicts,
+            false /* forceReloadMainDictionary */,
+            settingsValues.mAccount, "", /* dictionaryNamePrefix */
+            this /* DictionaryInitializationListener */,
+            Agent.getInstance().obtainDictionaryGetter());
+        … … … … …
+    }
+    … … … … …
      
     @Override
     public void setNeutralSuggestionStrip() {
-		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled ? SuggestedWords.getEmptyInstance()
-        	// 把currentSettings换成mInputLogic
-  		:mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
+		final SuggestedWords neutralSuggestions = currentSettings.mBigramPredictionEnabled 
+		    ? SuggestedWords.getEmptyInstance()
+            // 请把currentSettings换成mInputLogic
+            :mInputLogic.mSpacingAndPunctuations.mSuggestPuncList;
        … … … … …
     }
      … … … … …
     // 在Settings.loadSettings()中，将Zengine的InputLogic实例当作最后一个参数带入
     void loadSettings() {
-       … … … … …
-       mSettings.loadSettings(this, locale, inputAttributes, mInputLogic);
-    }
         … … … … …
+        mSettings.loadSettings(this, locale, inputAttributes, mInputLogic);
+    }
+    … … … … …
     public void getSuggestedWords(final int inputStyle, final int sequenceNumber,...)
-      	… … … … …
+        … … … … …
         // 拿掉参数keyboard
-      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode(), inputStyle, sequenceNumber, callback);
+      	mInputLogic.getSuggestedWords(mSettings.getCurrent(),mKeyboardSwitcher.getKeyboardShiftMode()
+      	    , inputStyle, sequenceNumber, callback);
          … … … … …
     }
-  … … … … …
-  	// 将updateStateAfterInputTransaction改为public
+    … … … … …
+    // 将updateStateAfterInputTransaction改为public
     public void updateStateAfterInputTransaction(final InputTransaction inputTransaction) {
-      … … … … …
-      if (inputTransaction.mEvent.mKeyCode !=  
-                                       CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
-        // 检查是否需要把键盘翻到第一页
-        KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
-      }
-      // 检查是否更新变形键盘
-      KeyboardSwitcher.getInstance()
-                    .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
-      if (inputTransaction.requiresUpdateSuggestions()) {
-         … … … … …
-      }
-      [zengine v1.2]
-      // 针对SuggestStripView相关行为补充
-      else {
-       	setNeutralSuggestionStrip();	
-      }
+        … … … … …
+        if (inputTransaction.mEvent.mKeyCode !=  CODE_SWITCH_TO_NEXT_ALPHABET_PAGE) {
+            // 请增加requestUpdatingKeyboardToFirstPage()调用
+            KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
+        }
+        // 请增加requestUpdatingDeformableKeyState()调用
+        KeyboardSwitcher.getInstance()
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+        
+        if (inputTransaction.requiresUpdateSuggestions()) {
+            … … … … …
+        }
+        [zengine v1.2]
+        // 针对SuggestStripView相关行为补充，请添加以下代码
+        else {
+            setNeutralSuggestionStrip();	
+        }
     }
 ```
 **LatinIME$UIHandler.java:**
 
 ~~~java
-	public class LatinIME extends ZengineInputMethodService{
-   	    	… … … … …
-		//UIHandler implements ImeUiHandlerInterface
-		public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
-			implements ImeUiHandlerInterface {
-			… … … … …
-			// 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
-			… … … … …
-			@Override
-			public void handleMessage(final Message msg) {
-				… … … … …
-				final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
-				… … … … …
-			}
-		}
-	}
+public class LatinIME extends ZengineInputMethodService{
+    … … … … …
+    //UIHandler implements ImeUiHandlerInterface
+    public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> 
+        implements ImeUiHandlerInterface {
+        … … … … …
+        // 需实现的ImeUiHandlerInterface接口皆與AOSP LatinIME.UIHandler原生接口相同
+        … … … … …
+        @Override
+        public void handleMessage(final Message msg) {
+            … … … … …
+            // 请将KeyboardSwitcher更改為IKeyboardSwitcher
+            final IKeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
+            … … … … …
+        }
+    }
+}
 ~~~
 **AndroidSpellCheckerService.java:**
 
 ~~~java
- public class AndroidSpellCheckerService extends SpellCheckerService... {
-     … … … … …
-     public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
-         @Nonnull final Keyboard keyboard) {
-         	… … … …
-          	try {
-                 … … … … 
-                 // 请更改getSuggestionResults的第三个参数
-                 return dictionaryFacilitatorForLocale.getSuggestionResults(composedData,   ngramContext,keyboard.getProximityInfo().getNativeProximityInfo(),  …)
-             }
-             … … … … …
-      }
- }
+public class AndroidSpellCheckerService extends SpellCheckerService... {
+    … … … … …
+    public SuggestionResults getSuggestionResults(final Locale locale, final ComposedData composedData, final NgramContext ngramContext,
+        @Nonnull final Keyboard keyboard) {
+        … … … …
+        try {
+            … … … … 
+            // 请更改getSuggestionResults的第三个参数
+            return dictionaryFacilitatorForLocale.getSuggestionResults(composedData
+                ,ngramContext,keyboard.getProximityInfo().getNativeProximityInfo(),  …)
+        }
+        … … … … …
+    }
+}
 ~~~
 **DictionaryFacilitatorLruCache.java:**
 
 ~~~java
 … … … … …
 private void resetDictionariesForLocaleLocked() {
-	… … … … …
-	//请增加Agent.getInstance().obtainDictionaryGetter()参数
-	mDictionaryFacilitator.resetDictionaries(mContext, mLocale,
-		mUseContactsDictionary, false /* usePersonalizedDicts */,
-		false /* forceReloadMainDictionary */, null /* account */,
-		mDictionaryNamePrefix, null /* listener */,
-		Agent.getInstance().obtainDictionaryGetter());
+    … … … … …
+    //请增加Agent.getInstance().obtainDictionaryGetter()参数
+    mDictionaryFacilitator.resetDictionaries(mContext, mLocale,
+        mUseContactsDictionary, false /* usePersonalizedDicts */,
+        false /* forceReloadMainDictionary */, null /* account */,
+        mDictionaryNamePrefix, null /* listener */,
+        Agent.getInstance().obtainDictionaryGetter());
 }
 … … … … …
 ~~~
 **EmojiAltPhysicalKeyDetector.java:**
 
 ~~~java
-  … … … … …
-  final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
-      @Override
-      protected void action() {
-          //请更改引用为IKeyboardSwitcher
-          final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
-          … … … …
-      }
-  };
-  … … … … …
-  final EmojiHotKeys symbolsHotKeys = new EmojiHotKeys("symbols", symbolsSwitchSet) {
-      @Override
-      protected void action() {
-          //请更改引用为IKeyboardSwitcher
-          final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
-          … … … …
-      }
-  };
-  … … … … …
+… … … … …
+final EmojiHotKeys emojiHotKeys = new EmojiHotKeys("emoji", emojiSwitchSet) {
+    @Override
+    protected void action() {
+        //请更改引用为IKeyboardSwitcher
+        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
+        … … … …
+    }
+};
+… … … … …
+final EmojiHotKeys symbolsHotKeys = new EmojiHotKeys("symbols", symbolsSwitchSet) {
+    @Override
+    protected void action() {
+        //请更改引用为IKeyboardSwitcher
+        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
+        … … … …
+    }
+};
+… … … … …
 ~~~
 **ThemeSettingsFragment.java:**
 
@@ -392,7 +394,7 @@ public class LatinIME extends ZengineInputMethodService implements
 	… … … … 
 	
 	// 删除以下方法 : hasSuggestionStripView(),setNeutralSuggestionStrip(), 
-	// showSuggestionStrip(), setSuggestedWords(), showImportantNoticeContents
+	// showSuggestionStrip(), setSuggestedWords(), showImportantNoticeContents()
 	p̶u̶b̶l̶i̶c̶ ̶b̶o̶o̶l̶e̶a̶n̶ ̶h̶a̶s̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶(̶)̶
 	p̶r̶i̶v̶a̶t̶e̶ ̶v̶o̶i̶d̶ ̶s̶e̶t̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶(̶f̶i̶n̶a̶l̶ ̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶ ̶s̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶)̶
 	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶h̶o̶w̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶(̶f̶i̶n̶a̶l̶ ̶S̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶ ̶s̶u̶g̶g̶e̶s̶t̶e̶d̶W̶o̶r̶d̶s̶)̶
@@ -423,12 +425,12 @@ public class LatinIME extends ZengineInputMethodService implements
 
 ~~~java
 public class ExampleApplication extends Application {
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		Agent.getInstance().init(this);
-	}
-  … … … … 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Agent.getInstance().init(this);
+    }
+… … … … 
 ~~~
 需在LatinIME生命周期调用,示例：
 **LatinIME.java:**
@@ -436,93 +438,93 @@ public class ExampleApplication extends Application {
 ~~~java
 … … … …
 public class LatinIME extends ZengineInputMethodService implements 
-KeyboardActionListener,....,
-SuggestionStripView.Listener, SuggestionStripViewAccessor, {
-      … … … … …
-      public void onCreate() {
-          DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
-          RichInputMethodManager.init(this);
-          mRichImm = RichInputMethodManager.getInstance();
-          Agent.getInstance().onCreate(this, mInputLogic, new LanguageCallback(){
-              @Override
-              public void onIMELanguageChanged(InputMethodSubtype subtype) {
-                  onCurrentInputMethodSubtypeChanged(subtype);
+    KeyboardActionListener,....,
+    SuggestionStripView.Listener, SuggestionStripViewAccessor{
+    … … … … …
+    public void onCreate() {
+        DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
+        RichInputMethodManager.init(this);
+        mRichImm = RichInputMethodManager.getInstance();
+        Agent.getInstance().onCreate(this, mInputLogic, new LanguageCallback(){
+            @Override
+            public void onIMELanguageChanged(InputMethodSubtype subtype) {
+                onCurrentInputMethodSubtypeChanged(subtype);
               }
-          });
+        });
           
-          // 设置键盘切换回调
-          Agent.getInstance().
-                  setKeyboardActionCallback(new IKeyboardActionCallback() {
-              @Override
-              // 返回值：是否要显示开发者自己的Emoji Keyboard
-              public boolean onDisplayEmojiKeyboard() {
-                  // Show your own Emoji Keyboard if needed
-                  return false;
-              }
+        // 设置键盘切换回调
+        Agent.getInstance().
+            setKeyboardActionCallback(new IKeyboardActionCallback() {
+            @Override
+            // 返回值：是否要显示开发者自己的Emoji Keyboard
+            public boolean onDisplayEmojiKeyboard() {
+                // Show your own Emoji Keyboard if needed
+                return false;
+            }
 
-			@Override
-			public void onKeyboardTypeChange(int keyboardType) {
-				switch (keyboardType){
-   					case IKeyboardActionCallback.ALPHA_KEYBOARD:
-       					break;
-   					case IKeyboardActionCallback.EMOJI_KEYBOARD:
-       					break;
-   					case IKeyboardActionCallback.SYMBOL_KEYBOARD:
-       					break;
-			}
-		});
-      	… … … …
-      }
+        @Override
+        public void onKeyboardTypeChange(int keyboardType) {
+            switch (keyboardType){
+                case IKeyboardActionCallback.ALPHA_KEYBOARD:
+                break;
+                case IKeyboardActionCallback.EMOJI_KEYBOARD:
+                break;
+                case IKeyboardActionCallback.SYMBOL_KEYBOARD:
+                break;
+            }
+        });
+        … … … …
+    }
       
-      [zengine v1.2]
-      @Override
-      public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
-          //请添加对父类super.onStartInput的调用
-          super.onStartInput(editorInfo, restarting);
-          … … … …
-      }
+    [zengine v1.2]
+    @Override
+    public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+        //请添加对父类super.onStartInput的调用
+        super.onStartInput(editorInfo, restarting);
+        … … … …
+    }
 
-      @Override
-      public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
-          //请添加对父类onStartInputView的调用
-          super.onStartInputView(editorInfo,restarting);
-          … … … …
-      }
+    @Override
+    public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
+        //请添加对父类onStartInputView的调用
+        super.onStartInputView(editorInfo,restarting);
+        … … … …
+    }
       
-      [zengine v1.2]
-      @Override
-      public void onFinishInput() {
-      	  //请添加对父类onFinishInput的调用
-          super.onFinishInput();
-      		… … … …
-      }
+    [zengine v1.2]
+    @Override
+    public void onFinishInput() {
+        //请添加对父类onFinishInput的调用
+        super.onFinishInput();
+        … … … …
+    }
 
-      @Override
-      public void onFinishInputView(final boolean finishingInput) {
-          //请添加对父类onFinishInputView的调用
-          super.onFinishInputView(finishingInput);
-          … … … … 
-      }
+    @Override
+    public void onFinishInputView(final boolean finishingInput) {
+        //请添加对父类onFinishInputView的调用
+        super.onFinishInputView(finishingInput);
+        … … … … 
+    }
 
-     @Override
-     public void onUpdateSelection(final int oldSelStart, final int oldSelEnd,
-                             final int newSelStart, final int newSelEnd,
-                             final int composingSpanStart, final int composingSpanEnd) {
+    @Override
+    public void onUpdateSelection(final int oldSelStart, final int oldSelEnd,
+            final int newSelStart, final int newSelEnd,
+            final int composingSpanStart, final int composingSpanEnd) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
-                 composingSpanStart, composingSpanEnd);
+            composingSpanStart, composingSpanEnd);
         … … … …
         if (isInputViewShown()
-                && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
-                                                 newSelStart, newSelEnd,settingsValues)) {
-          KeyboardSwitcher.getInstance()
-                             .requestUpdatingShiftState(getCurrentAutoCapsState(),
-                                                        getCurrentRecapitalizeState());
-          // 检查是否更新变形键盘
-          KeyboardSwitcher.getInstance()
-                    .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+            && mInputLogic.onUpdateSelection(oldSelStart, oldSelEnd, 
+            newSelStart, newSelEnd,settingsValues)) {
+            //请添加下列代码
+            KeyboardSwitcher.getInstance()
+                .requestUpdatingShiftState(getCurrentAutoCapsState(),
+                getCurrentRecapitalizeState());
+            KeyboardSwitcher.getInstance()
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
         }
         … … … … 
-     }
+    }
 ~~~
 
 ### 7.2 View集成
@@ -531,6 +533,7 @@ Zengine SDK中提供的KeyboardView已经整合了默认的EmojiView,开发者�
 
 ~~~java
 Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
+
 ~~~
 其中container为开发者提供的容器ViewGroup, SDK会自动将KeybaordView及EmojiView生成并加入此ViewGroup。 代码示例 ：  
 **LatinIME.java:**
