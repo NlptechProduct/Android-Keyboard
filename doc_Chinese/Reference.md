@@ -1700,18 +1700,6 @@ LottieDrawableInfo的建构器，用来生成一般LottieDrawable的讯息。
 createLottieTaskCallback | 生成LottieDrawable的实现
 scale | LottieDrawable的缩放倍率，一般会设置1f
 
-#### LottieDrawableInfo
-```Java
-public LottieDrawableInfo(CreateLottieTaskCallback createLottieTaskCallback, long duration, float scale)
-```
-LottieDrawableInfo的建构器，用来生成使用在键盘点击效果的LottieDrawable的讯息。
-
-参数 | 参数说明
------|:--------
-createLottieTaskCallback | 生成LottieDrawable的实现
-duration | 点击效果的动画持续时间
-scale | LottieDrawable的缩放倍率，一般会设置1f
-
 #### getLottieDrawableScale
 ```Java
 public float getLottieDrawableScale(float viewWidth, float viewHeight, LottieComposition composition)
