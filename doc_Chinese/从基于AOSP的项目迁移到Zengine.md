@@ -58,7 +58,7 @@ allprojects {
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.1.0'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.1.1'
      … … … … …
 }
 ~~~
@@ -552,6 +552,9 @@ Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 -keep class com.nlptech.common.domain.** { *; }
 -keep class com.nlptech.common.api.ResultData { *; }
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
+# Zengine[v1.1.1]
+-keep class com.nlptech.keyboardtrace.trace.aether.AetherEvent { *; }
+-keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
 ~~~
 
 ## 9. 新增或修改引用
