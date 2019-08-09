@@ -16,7 +16,6 @@
 
 package com.android.inputmethod.latin;
 
-import android.Manifest.permission;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.inputmethodservice.InputMethodService;
 import android.media.AudioManager;
 import android.os.Build;
@@ -39,7 +39,6 @@ import android.util.Log;
 import android.util.PrintWriterPrinter;
 import android.util.Printer;
 import android.util.SparseArray;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -67,10 +66,9 @@ import com.nlptech.common.utils.ApplicationUtils;
 import com.nlptech.common.utils.BuildCompatUtils;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
 import com.nlptech.function.callback.IKeyboardActionCallback;
-import com.nlptech.function.callback.IKeyboardSpecificEventCallback;
 import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
+import com.nlptech.function.languagesetting.langswitch.SubtypeSwitchDialogView;
 import com.nlptech.inputlogic.ImeUiHandlerInterface;
-import com.nlptech.inputlogic.ImsInterface;
 import com.nlptech.inputmethod.compat.EditorInfoCompatUtils;
 import com.nlptech.inputmethod.compat.InputMethodServiceCompatUtils;
 import com.nlptech.inputmethod.compat.ViewOutlineProviderCompatUtils;
@@ -93,7 +91,6 @@ import com.nlptech.inputmethod.latin.personalization.PersonalizationHelper;
 import com.nlptech.inputmethod.latin.settings.Settings;
 import com.nlptech.inputmethod.latin.settings.SettingsValues;
 import com.nlptech.inputmethod.latin.utils.DialogUtils;
-import com.nlptech.inputmethod.latin.utils.IntentUtils;
 import com.nlptech.inputmethod.latin.utils.JniUtils;
 import com.nlptech.inputmethod.latin.utils.StatsUtils;
 import com.nlptech.inputmethod.latin.utils.StatsUtilsManager;
@@ -104,10 +101,7 @@ import com.nlptech.keyboardview.keyboard.Keyboard;
 import com.nlptech.keyboardview.keyboard.KeyboardActionListener;
 import com.nlptech.keyboardview.keyboard.KeyboardId;
 import com.nlptech.keyboardview.keyboard.KeyboardSwitcher;
-import com.nlptech.keyboardview.keyboard.KeyboardSwitcherListener;
 import com.nlptech.keyboardview.keyboard.MainKeyboardView;
-import com.nlptech.keyboardview.theme.KeyboardTheme;
-import com.nlptech.keyboardview.theme.KeyboardThemeManager;
 import com.nlptech.language.LanguageCallback;
 import com.nlptech.language.RichInputMethodManager;
 import com.nlptech.language.utils.SubtypeLocaleUtils;
@@ -131,7 +125,8 @@ import static com.nlptech.common.constant.Constants.ImeOption.NO_MICROPHONE_COMP
  */
 public class LatinIME extends ZengineInputMethodService implements KeyboardActionListener,
         DictionaryFacilitator.DictionaryInitializationListener,
-        PermissionsManager.PermissionsResultCallback {
+        PermissionsManager.PermissionsResultCallback,
+        SubtypeSwitchDialogView.SubtypeSwitchDialogViewListener {
     static final String TAG = LatinIME.class.getSimpleName();
     private static final boolean TRACE = false;
 
@@ -215,6 +210,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     final HideSoftInputReceiver mHideSoftInputReceiver = new HideSoftInputReceiver(this);
 
     private AlertDialog mOptionsDialog;
+    private AlertDialog mSubtypeSwitchDialog;
 
     private final boolean mIsHardwareAcceleratedDrawingEnabled;
 
@@ -1415,7 +1411,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         switch (requestCode) {
         case Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER:
             if (mRichImm.hasMultipleEnabledIMEsOrSubtypes(true /* include aux subtypes */)) {
-                mRichImm.getInputMethodManager().showInputMethodPicker();
+                showSubtypeSwitchDialog();
                 return true;
             }
             return false;
@@ -1966,5 +1962,43 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     @Override
     public void onHideCustomizedNeutralStripView() {
         mCustomizedStrip.setVisibility(View.GONE);
+    }
+
+    private void showSubtypeSwitchDialog() {
+        // prepare dialog
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
+                DialogUtils.getPlatformDialogThemeContext(this));
+
+        SubtypeSwitchDialogView dialogView = (SubtypeSwitchDialogView) getLayoutInflater().inflate(R.layout.subtype_switch_dialog_view, null);
+        dialogView.setListener(this);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // show dialog
+        final IBinder windowToken = KeyboardSwitcher.getInstance().getMainKeyboardView().getWindowToken();
+        if (windowToken == null) {
+            return;
+        }
+
+        final Window window = dialog.getWindow();
+        final WindowManager.LayoutParams lp = window.getAttributes();
+        lp.token = windowToken;
+        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        window.setAttributes(lp);
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+        mSubtypeSwitchDialog = dialog;
+        dialog.show();
+    }
+
+    @Override
+    public void dismissSubtypeSwitchDialog() {
+        if (mSubtypeSwitchDialog != null && mSubtypeSwitchDialog.isShowing()) {
+            mSubtypeSwitchDialog.dismiss();
+            mSubtypeSwitchDialog = null;
+        }
     }
 }
