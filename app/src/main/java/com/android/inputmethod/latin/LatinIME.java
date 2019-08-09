@@ -1084,7 +1084,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
 
         // 檢查是否更新變形鍵盤
-        KeyboardSwitcher.getInstance().requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+        KeyboardSwitcher.getInstance().requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
 
         // This will set the punctuation suggestions if next word suggestion is off;
         // otherwise it will clear the suggestion strip.
@@ -1171,7 +1171,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             KeyboardSwitcher.getInstance().requestUpdatingShiftState(getCurrentAutoCapsState(),
                     getCurrentRecapitalizeState());
             // 檢查是否更新變形鍵盤
-            KeyboardSwitcher.getInstance().requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+            KeyboardSwitcher.getInstance().requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         }
     }
 
@@ -1642,7 +1642,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
         }
         // 檢查是否更新變形鍵盤
-        KeyboardSwitcher.getInstance().requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+        KeyboardSwitcher.getInstance().requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         if (inputTransaction.requiresUpdateSuggestions()) {
             final int inputStyle;
             if (inputTransaction.mEvent.isSuggestionStripPress()) {

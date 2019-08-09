@@ -176,7 +176,7 @@ public class LatinIME extends ZengineInputMethodService implements
         KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
         // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
         KeyboardSwitcher.getInstance()
-            .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+            .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         … … … … …
     }
     … … … … …
@@ -239,7 +239,7 @@ public class LatinIME extends ZengineInputMethodService implements
         }
         // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
         KeyboardSwitcher.getInstance()
-                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         
         if (inputTransaction.requiresUpdateSuggestions()) {
             … … … … …
@@ -511,7 +511,7 @@ public class LatinIME extends ZengineInputMethodService implements
                 getCurrentRecapitalizeState());
             // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
             KeyboardSwitcher.getInstance()
-                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         }
         … … … … 
     }
