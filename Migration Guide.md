@@ -58,7 +58,7 @@ Add dependencies:
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.1.0'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.1.1'
      … … … … …
 }
 ~~~
@@ -607,6 +607,9 @@ If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELa
 -keep class com.nlptech.common.domain.** { *; }
 -keep class com.nlptech.common.api.ResultData { *; }
 -keep class com.nlptech.keyboardtrace.trace.upload.PublicField { *; }
+# Zengine[v1.1.1]
+-keep class com.nlptech.keyboardtrace.trace.aether.AetherEvent { *; }
+-keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
 # [zengine v1.2]
 -keep class com.nlptech.keyboardview.suggestions.*{ *; } 
 ~~~
