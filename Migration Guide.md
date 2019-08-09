@@ -174,7 +174,7 @@ public class LatinIME extends ZengineInputMethodService implements
         KeyboardSwitcher.getInstance().requestUpdatingKeyboardToFirstPage();
         // Please call KeyboardSwitcher.requestUpdatingDeformableKeyState()
         KeyboardSwitcher.getInstance()
-            .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+            .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         … … … … …
     }
   	… … … … …
@@ -236,7 +236,7 @@ public class LatinIME extends ZengineInputMethodService implements
         }
         // Please call KeyboardSwitcher.requestUpdatingDeformableKeyState()
         KeyboardSwitcher.getInstance()
-                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         
         if (inputTransaction.requiresUpdateSuggestions()) {
             … … … … …
@@ -509,7 +509,7 @@ KeyboardActionListener,...{
                 getCurrentRecapitalizeState());
             // Please call KeyboardSwitcher.requestUpdatingDeformableKeyState()
             KeyboardSwitcher.getInstance()
-                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(1));
+                .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
         }
         … … … …
      }
