@@ -56,5 +56,13 @@
 -keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
 
 -keep class com.nlptech.keyboardview.suggestions.*{ *; }
+
+#for Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
 -keep class com.nlptech.keyboardtrace.trace.aether.AetherEvent { *; }
 -keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }

@@ -17,6 +17,7 @@ import android.widget.Switch
 import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
 import com.nlptech.keyboardview.theme.KeyboardTheme
 import com.android.inputmethod.latin.R
+import com.nlptech.Agent
 import com.nlptech.inputmethod.latin.settings.Settings
 import com.nlptech.inputmethod.latin.utils.RecapitalizeStatus
 import com.nlptech.common.constant.Constants
@@ -84,24 +85,18 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
 
         val inputViewContainer = dialog!!.findViewById<ViewGroup>(R.id.fragment_theme_manage_keyboard_preview_container)
         inputViewContainer!!.removeAllViews()
-        val keyboardTheme = KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId)
-        val themeContext = ContextThemeWrapper(context, keyboardTheme.styleId)
+        val themeContext =  Agent.getInstance().getThemeContext(context,themeId )
         val currentInputView = LayoutInflater.from(themeContext).inflate(
                 R.layout.fragment_theme_manage_preview_input_view, null)
         inputViewContainer.addView(currentInputView)
         val container = currentInputView.findViewById<ViewGroup>(R.id.kb_container)
+        Agent.getInstance().showThemePreview(container, themeId)
         updateThemeAndCreateInputView(container)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        KeyboardThemeManager.getInstance().isInKeyboardThemePreview = true
     }
 
     override fun onPause() {
         super.onPause()
-        KeyboardThemeManager.getInstance().isInKeyboardThemePreview = false
-        KeyboardSwitcher.getInstance().updateKeyboardTheme(true)
+        Agent.getInstance().dismissThemePreview()
     }
 
     private fun updateThemeAndCreateInputView(inputViewContainer: ViewGroup) {
