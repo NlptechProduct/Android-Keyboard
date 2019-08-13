@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/customized_strip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
@@ -39,14 +39,30 @@
         android:layoutDirection="ltr"
         android:background="@android:color/black">
 
-        <TextView
+        <ImageView
+            android:id="@+id/toolbar_menu"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textStyle="bold"
-            android:text="Customized Strip"
-            android:textColor="@android:color/white"/>
+            android:src="@drawable/ic_toolbar_menu"
+            android:layout_gravity="center"/>
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/toolbar_selector"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_toolbar_selector"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/toolbar_clipboard"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_toolbar_clipboard"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
