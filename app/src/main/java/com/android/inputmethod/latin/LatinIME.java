@@ -50,6 +50,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.inputmethod.annotations.UsedForTesting;
@@ -181,7 +182,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     // {@link #onEvaluateInputViewShown()}.
     private boolean mIsExecutingStartShowingInputView;
 
-    private RelativeLayout mCustomizedStrip;
+    private LinearLayout mCustomizedStrip;
 
     // Object for reacting to adding/removing a dictionary pack.
     private final BroadcastReceiver mDictionaryPackInstallReceiver =
@@ -861,6 +862,15 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         updateSoftInputWindowLayoutParameters();
         // custom strip
         mCustomizedStrip = view.findViewById(R.id.customized_strip);
+        view.findViewById(R.id.toolbar_menu).setOnClickListener(v -> {
+
+        });
+        view.findViewById(R.id.toolbar_selector).setOnClickListener(v -> {
+
+        });
+        view.findViewById(R.id.toolbar_clipboard).setOnClickListener(v -> {
+
+        });
     }
 
     @Override
