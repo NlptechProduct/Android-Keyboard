@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.nlptech.function.suggestionStrip.CustomizedChineseComposingTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/custom_top"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ffd1a4"/>
+
+    <ImageView
+        android:id="@+id/custom_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_top"
+        android:padding="4dp"
+        android:src="@drawable/ic_add_circle_white_24dp"
+        android:background="#ffd1a4"/>
+
+    <ImageView
+        android:id="@+id/custom_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/custom_left"
+        android:background="#ffd1a4"/>
+
+    <TextView
+        android:id="@+id/composing_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/custom_left"
+        android:layout_below="@id/custom_top"
+        android:layout_above="@id/custom_bottom"
+        android:background="@android:color/holo_orange_dark"
+        android:padding="4dp"
+        android:textSize="@dimen/pinyin_suggest_text_size"
+        android:textColor="@color/pinyin_composing_text_color" />
+
+    <ImageView
+        android:id="@+id/custom_right"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/composing_tv"
+        android:layout_below="@id/custom_top"
+        android:layout_above="@id/custom_bottom"
+        android:background="#ffd1a4"/>
+
+</com.nlptech.function.suggestionStrip.CustomizedChineseComposingTextView>
