@@ -343,10 +343,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onScroll(MotionEvent down, MotionEvent me, float deltaX, float deltaY) {
-            final float dy = me.getY() - down.getY();
-            if (deltaY > 0 && dy < 0) {
-                return showMoreSuggestions();
-            }
+//            final float dy = me.getY() - down.getY();
+//            if (deltaY > 0 && dy < 0) {
+//                return showMoreSuggestions();
+//            }
             return false;
         }
     };
