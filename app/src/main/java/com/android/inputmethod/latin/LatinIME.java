@@ -103,6 +103,9 @@ import com.nlptech.keyboardview.keyboard.KeyboardActionListener;
 import com.nlptech.keyboardview.keyboard.KeyboardId;
 import com.nlptech.keyboardview.keyboard.KeyboardSwitcher;
 import com.nlptech.keyboardview.keyboard.MainKeyboardView;
+import com.nlptech.keyboardview.keyboard.chinese.ChineseComposingTextView;
+import com.nlptech.keyboardview.keyboard.chinese.ChineseSuggestStripView;
+import com.nlptech.keyboardview.suggestions.SuggestionStripView;
 import com.nlptech.language.LanguageCallback;
 import com.nlptech.language.RichInputMethodManager;
 import com.nlptech.language.utils.SubtypeLocaleUtils;
@@ -2010,5 +2013,23 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             mSubtypeSwitchDialog.dismiss();
             mSubtypeSwitchDialog = null;
         }
+    }
+
+    @Override
+    public SuggestionStripView getSuggestionView() {
+        return super.getSuggestionView();
+//        return (SuggestionStripView) LayoutInflater.from(getThemeContext()).inflate(R.layout.customized_suggest_view, null);
+    }
+
+    @Override
+    public ChineseSuggestStripView getChineseSuggestionView() {
+        return super.getChineseSuggestionView();
+//        return (ChineseSuggestStripView) LayoutInflater.from(getThemeContext()).inflate(R.layout.customized_chinesed_suggest_view, null);
+    }
+
+    @Override
+    public ChineseComposingTextView getChineseComposingTextView() {
+        return super.getChineseComposingTextView();
+//        return (ChineseComposingTextView) LayoutInflater.from(getThemeContext()).inflate(R.layout.customized_chinesed_composing_textview, null);
     }
 }

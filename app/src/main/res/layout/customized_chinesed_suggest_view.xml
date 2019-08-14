@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.nlptech.function.suggestionStrip.CustomizedChineseSuggestStripView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/left"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/custom_top"
+        android:gravity="center"
+        android:text="L"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="#d94600"/>
+
+    <TextView
+        android:id="@+id/right"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:text="R"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:background="#d94600"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/left"
+        android:layout_toStartOf="@id/right"
+        android:background="@android:color/holo_orange_dark"/>
+
+</com.nlptech.function.suggestionStrip.CustomizedChineseSuggestStripView>
