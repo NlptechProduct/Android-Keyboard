@@ -643,6 +643,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             public void onKeyboardTypeChange(int keyboardType) {
                 switch (keyboardType){
                     case IKeyboardActionCallback.ALPHA_KEYBOARD:
+                        onShowCustomizedNeutralStripView();
                         break;
                     case IKeyboardActionCallback.EMOJI_KEYBOARD:
                         onHideCustomizedNeutralStripView();
