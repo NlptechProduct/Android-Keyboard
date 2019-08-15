@@ -1752,25 +1752,27 @@ viewHeight | 在canvase上渲染的范围宽
 
 #### onDrawKeyboardBackground
 ```Java
-public abstract void onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background)
+public abstract void onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, Drawable stripContainerBackground)
 ```
-渲染键盘背景，同一个Render中，此方法和onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, @Nonnull LottieDrawableInfo lottieDrawableInfo)两者之间只会有一个被调用。
+渲染键盘背景，同一个Render中，此方法和onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, Drawable stripContainerBackground, @Nonnull LottieDrawableInfo lottieDrawableInfo)两者之间只会有一个被调用。
 
 参数 | 参数说明
 -----|:--------
 canvas | 画布
 background | 渲染的内容
+stripContainerBackground | 如果suggestion strip container没有任何东西时，可以渲染一个底图在键盘最上方
 
 #### onDrawKeyboardBackground
 ```Java
-public abstract void onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, @Nonnull LottieDrawableInfo lottieDrawableInfo)
+public abstract void onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, Drawable stripContainerBackground, @Nonnull LottieDrawableInfo lottieDrawableInfo)
 ```
-透过LottieDrawable来渲染键盘背景，同一个Render中，此方法和onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background)两者之间只会有一个被调用。
+透过LottieDrawable来渲染键盘背景，同一个Render中，此方法和onDrawKeyboardBackground(@Nonnull Canvas canvas, Drawable background, Drawable stripContainerBackground)两者之间只会有一个被调用。
 
 参数 | 参数说明
 -----|:--------
 canvas | 画布
 background | LottieDrawable
+stripContainerBackground | 如果suggestion strip container没有任何东西时，可以渲染一个底图在键盘最上方
 lottieDrawableInfo | LottieDrawable的相关讯息，主要是用来取得LottieDrawable所需的scale
 
 #### onDrawKeyBackground
@@ -1903,8 +1905,37 @@ public boolean isInvalidationNeeded()
 -----|:--------
 boolean | 是否在afterDrawKeyboard之后，调用View.invidate()。如果需要渲染像是Lottie动效或其他自定义的动效，可以返回true，使键盘持续被渲染。
 
+<br/>
 
+<h3 id="4.2">DefaultKeyboardRender</h3>
+用途 : 预设的渲染器
 
+<br/>
+
+<h3 id="4.3">GestureTrailRender</h3>
+用途 : 用来渲染滑行轨迹的渲染器
+
+#### onDrawGestureTrail
+```Java
+
+public abstract DrawResult onDrawGestureTrail(final Canvas offscreenCanvas, final GestureTrailPoints gestureTrailPoints, final GestureTrailDrawingParams drawParams)
+```
+渲染键的预览背景。
+
+参数 | 参数说明
+-----|:--------
+offscreenCanvas | 轨迹的画布
+gestureTrailPoints | 轨迹数据，详细使用方式请参考DefaultGestureTrailRender里的实现代码。
+drawParams | 渲染轨迹的参数，详细使用方式请参考DefaultGestureTrailRender里的实现代码。
+
+返回 | 返回说明 | 
+-----|:--------
+DrawResult | 返回一个渲染结果，DrawResult需要设置一个渲染范围的Rect和isRemainingToBeDrawn。isRemainingToBeDrawn为true时，代表还有下一桢需要渲染，会在短暂延迟后去调用invalidate。
+
+<br/>
+
+<h3 id="4.4">DefaultGestureTrailRender</h3>
+用途 : 预设的渲染器
 
 
 

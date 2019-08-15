@@ -52,7 +52,7 @@ public class TestApplication extends MultiDexApplication {
         Drawable languageIcon = ContextCompat.getDrawable(this, R.drawable.test_icon_language);
         Drawable chineseSuggestionMorePageBackground = new ColorDrawable(Color.parseColor("#3c3c3c"));
         Drawable chineseSuggestionComposingViewBackground = new ColorDrawable(Color.parseColor("#AA000000"));
-
+        Drawable suggestionStripViewBackground = new ColorDrawable(Color.BLACK);
 
         StateListDrawable keyBackgroundDrawable = new StateListDrawable();
         keyBackgroundDrawable.addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(this, R.drawable.test_theme_key_press));
@@ -81,7 +81,6 @@ public class TestApplication extends MultiDexApplication {
         paint.setColor(Color.parseColor("#12f0e5"));
         canvas.drawRect(new Rect(0, 0, dividerW, dividerH), paint);
         Drawable suggestDivider = new BitmapDrawable(getResources(), bitmap);
-
         String color = String.format("#%06X", 0xFFFFFF & 0x12f0e5);
         String emojiColor = String.format("#%06X", 0xFFFFFF & 0x048f89);
         ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder("001", "Test Theme")
@@ -112,7 +111,7 @@ public class TestApplication extends MultiDexApplication {
                 .setSuggestedTypedWordColor(color)
                 .setSuggestedValidTypedWordColor(color)
                 .setSuggestionStripDivider(suggestDivider)
-                .setSuggestionStripViewBackground(keyboardBackgroundDrawable)
+                .setSuggestionStripViewBackground(suggestionStripViewBackground)
                 .setKeyboardClickedEffectLottieDrawable(lottieDrawableInfo)
                 .setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.test_thumbnail))
                 .setChineseSuggestionMorePageBackground(chineseSuggestionMorePageBackground)
