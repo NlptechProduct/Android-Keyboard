@@ -50,6 +50,9 @@ public class TestApplication extends MultiDexApplication {
         Drawable shiftLockIcon = ContextCompat.getDrawable(this, R.drawable.test_icon_shift_locked);
         Drawable enterIcon = ContextCompat.getDrawable(this, R.drawable.test_icon_enter);
         Drawable languageIcon = ContextCompat.getDrawable(this, R.drawable.test_icon_language);
+        Drawable chineseSuggestionMorePageBackground = new ColorDrawable(Color.parseColor("#3c3c3c"));
+        Drawable chineseSuggestionComposingViewBackground = new ColorDrawable(Color.parseColor("#AA000000"));
+
 
         StateListDrawable keyBackgroundDrawable = new StateListDrawable();
         keyBackgroundDrawable.addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(this, R.drawable.test_theme_key_press));
@@ -112,6 +115,17 @@ public class TestApplication extends MultiDexApplication {
                 .setSuggestionStripViewBackground(keyboardBackgroundDrawable)
                 .setKeyboardClickedEffectLottieDrawable(lottieDrawableInfo)
                 .setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.test_thumbnail))
+                .setChineseSuggestionMorePageBackground(chineseSuggestionMorePageBackground)
+                .setChineseSuggestionStripOpenMorePageButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_open_moepage))
+                .setChineseSuggestionStripCloseMorePageButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_close_moepage))
+                .setChineseSuggestionComposingViewBackground(chineseSuggestionComposingViewBackground)
+                .setChineseSuggestionComposingTextColor("#009393")
+                .setChineseSuggestionMorePageUpEnableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_enable))
+                .setChineseSuggestionMorePageUpDisableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_disable))
+                .setChineseSuggestionMorePageDownEnableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_enable))
+                .setChineseSuggestionMorePageDownDisableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_disable))
+                .setChineseSuggestionMorePageDeleteButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_delete))
+                .setChineseSuggestionMorePageResetButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_retransfusion))
                 .build();
         Agent.getInstance().addExternalThemes(this, externalThemeInfo);
     }
@@ -142,6 +156,21 @@ public class TestApplication extends MultiDexApplication {
         colorDrawable = new ColorDrawable(Color.parseColor("#000000"));
         builder.setMoreKeysKeyboardBackground(colorDrawable);
         builder.setMoreKeysKeyBackground(ContextCompat.getDrawable(this, R.drawable.bg_external_theme_rgb_more_key));
+
+        // Chinese Suggest MorePage
+        colorDrawable = new ColorDrawable(Color.parseColor("#3c3c3c"));
+        builder.setChineseSuggestionMorePageBackground(colorDrawable);
+        builder.setChineseSuggestionStripOpenMorePageButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_open_moepage));
+        builder.setChineseSuggestionStripCloseMorePageButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_close_moepage));
+        colorDrawable = new ColorDrawable(Color.parseColor("#AA000000"));
+        builder.setChineseSuggestionComposingViewBackground(colorDrawable);
+        builder.setChineseSuggestionComposingTextColor("#ff5151");
+        builder.setChineseSuggestionMorePageUpEnableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_enable));
+        builder.setChineseSuggestionMorePageUpDisableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_disable));
+        builder.setChineseSuggestionMorePageDownEnableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_enable));
+        builder.setChineseSuggestionMorePageDownDisableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_disable));
+        builder.setChineseSuggestionMorePageDeleteButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_delete));
+        builder.setChineseSuggestionMorePageResetButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_retransfusion));
 
         // color
         color = String.format("#%06X", 0xFFFFFF & Color.WHITE);
