@@ -1,10 +1,16 @@
 package com.nlptech.function.languagesetting.langchooser;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -20,10 +26,11 @@ import com.nlptech.function.languagesetting.LanguageSettingAdapter;
 import com.nlptech.function.languagesetting.LanguageSettingViewModel;
 import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
+import com.nlptech.ui.ToolBarActivity;
 
 import java.util.List;
 
-public class LanguageChooserActivity extends AppCompatActivity implements LanguageListener, DictionaryListener {
+public class LanguageChooserActivity extends ToolBarActivity implements LanguageListener, DictionaryListener {
     public static final int LAYOUT = R.layout.activity_language_choose;
 
     private ActivityLanguageChooseBinding binding;
@@ -107,6 +114,51 @@ public class LanguageChooserActivity extends AppCompatActivity implements Langua
             return;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return LAYOUT;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            supportFinishAfterTransition();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.language_choose_search, menu);
+
+        MenuItem menuSearchItem = menu.findItem(R.id.search);
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menuSearchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        searchView.setOnCloseListener(() -> {
+            viewModel.filterChooseResult(null);
+            return false;
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                viewModel.filterChooseResult(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                viewModel.filterChooseResult(s);
+                return false;
+            }
+        });
+
+        return true;
     }
 
 }
