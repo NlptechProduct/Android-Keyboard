@@ -113,7 +113,7 @@
 <!-- If IME doesn't have an applicable subtype, the first subtype will be used as a default
      subtype.-->
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
-        android:settingsActivity="com.android.inputmethod.latin.settings.SettingsActivity"
+        android:settingsActivity="com.android.inputmethod.latin.setup.SetupActivity"
         android:isDefault="false"
         android:supportsSwitchingToNextInputMethod="false">
     <!--<subtype android:icon="@drawable/ic_ime_switcher_dark"-->
