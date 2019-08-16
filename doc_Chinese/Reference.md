@@ -19,6 +19,8 @@
     * [ImeUiHandlerInterface](#2.4)
     * [ImsInterface](#2.5)
     * [IUserInputCallback](#2.6)
+    * [SuggestionStripViewListener](#2.7)
+    * [ChineseSuggestStripViewListener](#2.8)
     
 * [讯息类](#3)
     * [ExternalThemeInfo.Builder](#3.1)
@@ -27,9 +29,14 @@
 
 * [渲染类](#4)
     * [KeyboardRender](#4.1)
-    * [DefaultKeyboardRender](#3.2)
+    * [DefaultKeyboardRender](#4.2)
     * [GestureTrailRender](#4.3)
     * [DefaultGestureTrailRender](#4.4)
+
+* [抽象类](#5)
+    * [SuggestionStripView](#5.1)
+    * [ChineseSuggestStripView](#5.2)
+    * [ChineseComposingTextView](#5.3)
 
 <br/>
 
@@ -702,6 +709,36 @@ wordcomposing | 用户上屏的词
 public void onTextChanged ()
 ```
 用户输入内容发生改变的回调。
+
+<br/>
+
+<h3 id="2.7">SuggestionStripViewListener</h3>
+用途：用于候选词条操作
+
+#### pickSuggestionManually
+```Java
+public void pickSuggestionManually(SuggestedWordInfo word)
+```
+当点击候选词时, 用户需传入对应的SuggestedWordInfo资讯。
+
+参数 | 参数说明
+-----|:--------
+word | SuggestedWordInfo资讯
+
+<br/>
+
+<h3 id="2.8">ChineseSuggestStripViewListener</h3>
+用途：用于中文候选词条操作
+
+#### pickSuggestionManually
+```Java
+public void pickSuggestionManually(int suggestionId)
+```
+当点击候选词时, 用户需传入对应项目在全部候选词中的index。
+
+参数 | 参数说明
+-----|:--------
+suggestionId | 点击项目在全部候选词中的index
 
 <br/>
 
@@ -1559,7 +1596,7 @@ public Builder setMoreKeysKeyLottieBackground (LottieDrawableInfo... moreKeysKey
 
 参数 | 参数说明
 -----|:--------
-ggg | ggg
+moreKeysKeyLottieBackground | more keys键盘的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -1607,7 +1644,171 @@ createKeyboardRenderCallback | 生成渲染滑行轨迹Render的回调
 -----|:--------
 Builder | 返回的Builder
 
+#### setChineseSuggestionStripOpenMorePageButton
+```Java
+public Builder setChineseSuggestionStripOpenMorePageButton(Drawable chineseSuggestionStripOpenMorePageButton) 
+```
+设置预设中文候选条上, 开启更多候选词页面按钮的Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionStripOpenMorePageButton | 开启更多候选词页面按钮Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setChineseSuggestionStripCloseMorePageButton
+```Java
+public Builder setChineseSuggestionStripOpenMorePageButton(Drawable chineseSuggestionStripCloseMorePageButton) 
+```
+设置预设中文候选条上, 关闭更多候选词页面按钮的Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionStripCloseMorePageButton | 关闭更多候选词页面按钮Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setChineseSuggestionMorePageUpEnableButton
+```Java
+public Builder setChineseSuggestionMorePageUpEnableButton(Drawable chineseSuggestionMorePageUpEnableButton)
+```
+设置预设中文更多候选词页面中上一页按钮的enable Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageUpEnableButton | 上一页按钮enable Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setChineseSuggestionMorePageUpDisableButton
+```Java
+public Builder setChineseSuggestionMorePageUpDisableButton(Drawable chineseSuggestionMorePageDownEnableButton)
+```
+设置预设中文更多候选词页面中上一页按钮的disable Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageDownEnableButton | 上一页按钮disable Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+#### setChineseSuggestionMorePageDownEnableButton
+```Java
+public Builder setChineseSuggestionMorePageDownEnableButton(Drawable chineseSuggestionMorePageDownEnableButton)
+```
+设置预设中文更多候选词页面中下一页按钮的enable Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageDownEnableButton | 下一页按钮enable Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setChineseSuggestionMorePageDownDisableButton
+```Java
+public Builder setChineseSuggestionMorePageDownDisableButton(Drawable chineseSuggestionMorePageDownDisableButton)
+```
+设置预设中文更多候选词页面中下一页按钮的enable Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageDownDisableButton | 下一页按钮disable Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+#### setChineseSuggestionMorePageDeleteButton
+```Java
+public Builder setChineseSuggestionMorePageDeleteButton(Drawable chineseSuggestionMorePageDownDisableButton)
+```
+设置预设中文更多候选词页面中删除按钮的Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageDownDisableButton | 删除按钮Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setChineseSuggestionMorePageResetButton
+```Java
+public Builder setChineseSuggestionMorePageResetButton(Drawable chineseSuggestionMorePageResetButton)
+```
+设置预设中文更多候选词页面中重输按钮的Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageResetButton | 重输按钮Drawable
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+#### setChineseSuggestionMorePageBackground
+```Java
+public Builder setChineseSuggestionMorePageBackground(Drawable chineseSuggestionMorePageBackground)
+```
+设置预设中文更多候选词页面背景的Drawable。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionMorePageBackground | 更多候选词页面背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setChineseSuggestionComposingViewBackground
+```Java
+public Builder setChineseSuggestionComposingViewBackground(Drawable chineseSuggestionComposingViewBackground)
+```
+设置预设对应中文输入的ComposingView背景。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionComposingViewBackground | ComposingView背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+#### setChineseSuggestionComposingTextColor
+```Java
+public Builder setChineseSuggestionComposingTextColor(String chineseSuggestionComposingTextColor)
+```
+设置预设对应中文输入的ComposingView文字颜色。
+
+参数 | 参数说明
+-----|:--------
+chineseSuggestionComposingTextColor | ComposingView文字颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+
+
 <br/>
+
+
+
 
 <h3 id="3.2">CustomFunctionalKeyInfo</h3>
 用途 : 新增自定义功能键时需要的数据结构
@@ -1936,6 +2137,113 @@ DrawResult | 返回一个渲染结果，DrawResult需要设置一个渲染范围
 
 <h3 id="4.4">DefaultGestureTrailRender</h3>
 用途 : 预设的渲染器
+
+<br/>
+
+<h2 id="5">抽象类</h2>
+
+<br/>
+
+<h3 id="5.1"> SuggestionStripView </h3>
+用途 : 自定义候选词条画面及操作
+
+#### setSuggestionStripViewListener
+```Java
+public abstract void setSuggestionStripViewListener(final SuggestionStripViewListener listener, final View inputView)
+```
+传入输入条所监听的listener
+
+参数 | 参数说明
+-----|:--------
+listener | [SuggestionStripViewListener](#2.7)实例
+inputView | 键盘的InputView实例
+
+
+#### setSuggestions
+```Java
+public abstract void setSuggestions(final SuggestedWords suggestedWords, final boolean isRtlLanguage)
+```
+传入当前输入对应的候选词
+
+参数 | 参数说明
+-----|:--------
+suggestedWords | 当前候选词（SuggestedWords类型）
+isRtlLanguage | 当前语言是否为RTL
+
+
+<br/>
+
+<h3 id="5.2"> ChineseSuggestStripView </h3>
+用途 : 自定义中文候选词条画面及操作
+
+
+#### setChineseSuggestStripViewListener
+```Java
+public abstract void setChineseSuggestStripViewListener(final ChineseSuggestStripViewListener listener)
+```
+
+传入中文输入条所监听的listener
+
+
+参数 | 参数说明
+-----|:--------
+listener | [ChineseSuggestStripViewListener](#2.8)实例
+
+
+#### setChineseSuggestion
+```Java
+public abstract void setChineseSuggestion(List<String> suggestionsList, boolean enableActiveHighlight)
+```
+
+传入当前中文输入对应的中文候选词列表 （预设为10笔）
+
+参数 | 参数说明
+-----|:--------
+suggestionsList | 中文候选词列表
+enableActiveHighlight | 当前输入过程是否为高亮状态 （可忽略）
+
+
+#### getMoreSuggestionsList
+```Java
+public List<String> getMoreSuggestionsList(int fetchSize)
+```
+针对当前输入, 若是存在足够候选词, 将返回指定数量的候选词 (并且会自动将此次取得的候选词添加至getSuggestionsList()内容)
+
+参数 | 参数说明
+-----|:--------
+fetchSize | 欲获取的候选词数量
+
+返回 | 返回说明 | 
+-----|:--------
+List<String>| 此次获取的候选词列表
+
+#### getSuggestionsList
+```Java
+public List<String> getSuggestionsList()
+```
+针对当前输入, 系统内储存的候选词列表
+
+返回 | 返回说明 | 
+-----|:--------
+List<String>| 候选词列表
+
+ 
+<br/>
+
+<h3 id="5.3"> ChineseComposingTextView </h3>
+用途 : 自定义中文输入时, 位于键盘左上方的composing view的画面及操作
+
+#### setComposingText
+```Java
+public abstract void setComposingText(String text)
+```
+针对现在输入, 中文候选词引擎提供composing字段
+
+参数 | 参数说明
+-----|:--------
+text | composing字段
+
+
 
 
 
