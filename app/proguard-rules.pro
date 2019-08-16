@@ -56,6 +56,7 @@
 -keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
 
 -keep class com.nlptech.keyboardview.suggestions.*{ *; }
+-keep class com.android.inputmethod.pinyin.PinyinDecoderService {*;}
 
 #for Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
