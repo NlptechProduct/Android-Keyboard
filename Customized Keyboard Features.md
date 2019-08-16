@@ -66,7 +66,7 @@ If the developers would like to customize the display of emojis rather than usin
 
 ## 4. Customize NeutralStrip and SuggestionStripView
 
-NeutralStrip and SuggestionStripView could be customized after LatinIME extends ZengineInputMethodService.
+NeutralStrip, SuggestionStripView, ChineseSuggestStripView and ChineseComposingTextView could be customized after LatinIME extends ZengineInputMethodService.
 
 ### NeutralStrip
 
@@ -138,11 +138,10 @@ Zengine provides default SuggestionStripView and its operations.
 And also you could customize SuggestStripView by extending com.nlptech.keyboardview.suggestions.SuggestionStripView.   
 Please implement functions down below if you would like to customize.   
 ##### setSuggestionStripViewListener() : 
-传入SuggestionStripViewListener, listner包含pickSuggestionManually方法会接回原生LatinIME中的pickSuggestionManually
 Pass SuggestionStripViewListener. You could commit suggested word by using pickSuggestionManually of listner.    
 
 ##### setSuggestions() : 
-Pass suggest words
+Pass suggest words.
 
 Example :  
 
@@ -177,6 +176,99 @@ public class CustomizedSuggestStripView extends SuggestionStripView {
 
 
 Control customized SuggestStripView by calling showSuggestionView() / hideSuggestionView() of ZengineInputMethodService
+
+### ChineseSuggestStripView
+
+When using Chinese Input Method, Zengine also provides default ChineseSuggestStripView and its operations.   
+
+If you would like to customize ChineseSuggestStripView, you need to extend com.nlptech.keyboardview.keyboard.chinese.ChineseSuggestStripView and implement functions down below. 
+
+##### setChineseSuggestStripViewListener() : 
+Pass ChineseSuggestStripViewListener. You could commit chinese suggested word by using pickSuggestionManually of listner.
+
+
+##### setChineseSuggestion() : 
+Pass chinese suggest words.
+
+
+##### getMoreSuggestionsList() : 
+If there're enough suggested words, you can get more suggested words by passing fetch size.
+
+
+##### getSuggestionsList() : 
+Get the total suggested words.
+   
+Example :  
+
+**CustomizedChineseSuggestStripView:**
+
+~~~java
+public class CustomizedChineseSuggestStripView extends ChineseSuggestStripView implements View.OnClickListener {
+
+	 … … … …
+	 @Override
+    public void setChineseSuggestStripViewListener(ChineseSuggestStripViewListener chineseSuggestStripViewListener) {
+        mChineseSuggestStripViewListener = chineseSuggestStripViewListener;
+        // you can call below method in a appropriate situation
+        // mChineseSuggestStripViewListener.pickSuggestionManually(index);
+    }
+
+    @Override
+    public void setChineseSuggestion(List<String> list, boolean enableActiveHighlight) {
+        // only get more 50 items
+        getMoreSuggestionsList(50);
+        
+        // implement related behaviors
+    }
+    … … … …
+}
+~~~
+
+**LatinIME.java:**
+
+~~~java
+    // Pass customized ChineseSuggestStripView by overriding getChineseSuggestionView() of LatinIME.java
+    @Override
+    public ChineseSuggestStripView getChineseSuggestionView() {
+        return new CustomizedChineseSuggestionView(getContext());
+    }
+~~~
+
+### ChineseComposingTextView
+
+When using Chinese Input Method, there's a default ChineseSuggestStripView at the upper left corner of the KeyboardView.
+
+If you would like to customize ChineseComposingTextView, you need to extend com.nlptech.keyboardview.keyboard.chinese. ChineseComposingTextView and implement function down below. 
+
+##### setComposingText() : 
+Pass current composing text.
+
+Example : 
+
+**CustomizedChineseComposingTextView.java:**
+
+~~~java
+public class CustomizedChineseComposingTextView extends ChineseComposingTextView {
+	 … … … …
+	 @Override
+    public void setComposingText(String s) {
+    	// implement related behaviors
+        mComposingTextView.setText(s);
+    }
+    … … … …
+}
+~~~
+
+**LatinIME.java:**
+
+~~~java
+    // Pass customized ChineseComposingTextView by overriding getChineseComposingTextView() of LatinIME.java    @Override
+    public ChineseComposingTextView getChineseComposingTextView()  {
+        return new Customized ChineseComposingTextView(getContext());
+    }
+~~~
+
+
 
 ## 5.  Setting Input Event Callback
 
