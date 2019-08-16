@@ -149,13 +149,13 @@ Example :
 
 ~~~java
 public class CustomizedSuggestStripView extends SuggestionStripView {
-	… … … …
-	@Override
+    … … … …
+    @Override
     public void setSuggestionStripViewListener(final SuggestionStripViewListener listener, final View inputView) {
     	// TODO something
     }
-	… … … …
-	@Override
+    … … … …
+    @Override
     public void setSuggestions(final SuggestedWords suggestedWords, final boolean isRtlLanguage) {
 	    // TODO something
     }
@@ -167,8 +167,8 @@ public class CustomizedSuggestStripView extends SuggestionStripView {
 **LatinIME.java:**
 
 ~~~java
-	//Pass customized SuggestionStripView by overriding getSuggestionView() of LatinIME.java
-	@Override
+    //Pass customized SuggestionStripView by overriding getSuggestionView() of LatinIME.java
+    @Override
     public SuggestionStripView getSuggestionView() {
     	return new CustomizedSuggestStripView(getContext());
     }
@@ -205,8 +205,8 @@ Example :
 ~~~java
 public class CustomizedChineseSuggestStripView extends ChineseSuggestStripView implements View.OnClickListener {
 
-	 … … … …
-	 @Override
+    … … … …
+    @Override
     public void setChineseSuggestStripViewListener(ChineseSuggestStripViewListener chineseSuggestStripViewListener) {
         mChineseSuggestStripViewListener = chineseSuggestStripViewListener;
         // you can call below method in a appropriate situation
@@ -249,8 +249,8 @@ Example :
 
 ~~~java
 public class CustomizedChineseComposingTextView extends ChineseComposingTextView {
-	 … … … …
-	 @Override
+    … … … …
+    @Override
     public void setComposingText(String s) {
     	// implement related behaviors
         mComposingTextView.setText(s);
