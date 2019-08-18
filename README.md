@@ -1,24 +1,31 @@
 ![GitHub Logo](./COVER.png)
 
-## Introduction
-Zengine SDK is a set of IME building blocks, providing complete support for emitting text. We support more than 100 languages, where most of them come with language model and dictionary, and we are still improving it.
 
-With Zengine SDK, software keyboard developers can focus on business logic instead of tinkering various caveats in text input.
+#### The most powerful Android Keyboard project is online now!
 
+#### Build the most efficient personalized keyboard for your users in 1 day. 
 
-## Features
-* Render keyboard layout
-* Input by keys, including auto-completion, error-correction, and prediction
-* Auto-capitalization on first word of sentence
+## Input support
+
+* More than 180 languages with dictionaries and AI language models ready to be downloaded
+* Emoji keyboard
+* Various keyboard layouts, including qwerty, qwertz, azerty layouts for Latin scripts, and dynamic Indian language script layouts and so on
+* Input by keys, with auto-capitalization on first word of sentence, auto-completion, error-correction, and next-word prediction
 * Input by sliding
 * AI-powered next-word prediction
-* Dynamic dictionary loading & download
-* Emoji keyboard
-* Theme support
-* Callbacks for various input event. For example, when the user is typing Good Morning, you can get notified the typing action, so that you can recommend contents according to what the user is typing. 
+* AI-powered Hindi transliteration, using Latin script to type Hindi words
+* Chinese input
+* Callbacks for various input event. For example, when the user is typing Good Morning, contents related to Good Morning can be recommended to the user by our API
 
-## Applying for appkey
-Before starting, please contact zengine@nlptech.com to get an appkey and license.
+## Theme support
+
+Beautiful themes are necessary to attract users. 
+
+With the help of the theme customization framework, it's very easy for you to make quality themes. The following Led effect theme and Neon theme are made with our theme API. 
+
+![GitHub Logo](./Led.gif)
+![GitHub Logo](./Neon.gif)
+
 
 ## Tutorials
 1. [Building a new software keyboard](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Build%20a%20New%20Virtual%20Keyboard%20Project.md)
