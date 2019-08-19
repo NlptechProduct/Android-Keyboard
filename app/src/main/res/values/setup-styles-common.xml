@@ -56,7 +56,7 @@
         <item name="android:layout_height">@dimen/setup_step_action_height</item>
     </style>
     <style name="setupStepActionLabelStyleCommon" parent="setupStepBaseStyle">
-        <item name="android:textColor">@color/setup_step_action_color</item>
+        <item name="android:textColor">@color/setup_step_background</item>
         <item name="android:background">@drawable/setup_step_action_background</item>
         <item name="android:layout_height">@dimen/setup_step_action_height</item>
         <item name="android:paddingLeft">@dimen/setup_step_horizontal_padding_half</item>
