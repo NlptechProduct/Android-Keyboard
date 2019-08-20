@@ -73,7 +73,9 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
     private final Rect canvasRect;
 
     private float mDeltaPixel;
+    private float mDeltaPixelMore;
     private long mLastDrawCanvasTime;
+    private long mLastDrawCanvasTimeMore;
 
     private static int convert(int color) {
         float[] a = new float[3];
@@ -90,7 +92,9 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY);
         mRgbPaint.setXfermode(porterDuffXfermode);
         mDeltaPixel = 0f;
+        mDeltaPixelMore = 0f;
         mLastDrawCanvasTime = 0L;
+        mLastDrawCanvasTimeMore = 0L;
     }
 
     @Override
@@ -98,8 +102,72 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         if (keyboardType == KeyboardType.EMOJI_PAGE_KEYBOARD) {
             return;
         }
-
         super.afterDrawKeyboard(keyboardType, keyboard, keyDrawParams, keyboardDrawParams, canvas);
+        if (keyboardType == KeyboardType.MORE_KEYS_KEYBOARD) {
+            drawMorekeyBackground(canvas);
+        } else {
+            drawBackground(canvas);
+        }
+    }
+
+    @Override
+    public void onDrawKeyPreviewText(@Nonnull Canvas canvas, @Nullable Bitmap textBitmap) {
+        super.onDrawKeyPreviewText(canvas,textBitmap);
+        if (textBitmap != null) {
+            Rect canvasRect = new Rect();
+            canvasRect.left = 0;
+            canvasRect.top = 0;
+            canvasRect.right = textBitmap.getWidth();
+            canvasRect.bottom = textBitmap.getHeight();
+            canvas.drawRect(canvasRect, mRgbPaint);
+
+        }
+    }
+
+    @Override
+    public boolean isInvalidationNeeded() {
+        return true;
+    }
+
+    private void drawMorekeyBackground(Canvas canvas){
+        final long currentTime = System.currentTimeMillis();
+        final int width = canvas.getWidth();
+        final int height = canvas.getHeight();
+
+        // first time
+        if (mLastDrawCanvasTimeMore == 0L) {
+            mLastDrawCanvasTimeMore = currentTime;
+        }
+
+        // update delta pixel
+        final long deltaTime = currentTime - mLastDrawCanvasTimeMore;
+        if (deltaTime >= FPS) {
+            mLastDrawCanvasTimeMore = currentTime;
+            final float addedDeltaPixel = VELOCITY * deltaTime;
+            mDeltaPixelMore += addedDeltaPixel;
+
+            float pathLength = height;
+            if (mDeltaPixelMore > pathLength) {
+                mDeltaPixelMore %= pathLength;
+            }
+        }
+        // draw
+        LinearGradient linearGradient = new LinearGradient(
+                0 - mDeltaPixelMore, - mDeltaPixelMore,
+                height - mDeltaPixelMore,  height - mDeltaPixelMore,
+                COLORS,
+                POSITIONS,
+                Shader.TileMode.REPEAT);
+
+        mRgbPaint.setShader(linearGradient);
+        canvasRect.left = 0;
+        canvasRect.top = 0;
+        canvasRect.right = width;
+        canvasRect.bottom = height;
+        canvas.drawRect(canvasRect, mRgbPaint);
+    }
+
+    private void drawBackground(Canvas canvas){
         final long currentTime = System.currentTimeMillis();
         final int width = canvas.getWidth();
         final int height = canvas.getHeight();
@@ -135,25 +203,5 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         canvasRect.right = width;
         canvasRect.bottom = height;
         canvas.drawRect(canvasRect, mRgbPaint);
-
-    }
-
-    @Override
-    public void onDrawKeyPreviewText(@Nonnull Canvas canvas, @Nullable Bitmap textBitmap) {
-        super.onDrawKeyPreviewText(canvas,textBitmap);
-        if (textBitmap != null) {
-            Rect canvasRect = new Rect();
-            canvasRect.left = 0;
-            canvasRect.top = 0;
-            canvasRect.right = textBitmap.getWidth();
-            canvasRect.bottom = textBitmap.getHeight();
-            canvas.drawRect(canvasRect, mRgbPaint);
-
-        }
-    }
-
-    @Override
-    public boolean isInvalidationNeeded() {
-        return true;
     }
 }
