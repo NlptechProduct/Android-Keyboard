@@ -6,16 +6,16 @@
 
     <RelativeLayout
         android:id="@+id/subtype_layout"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/round_img_bg">
 
         <RelativeLayout
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="15dp">
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/title"
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_img_bg"
         android:layout_centerInParent="true"
-        android:padding="15dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/layoutset_layout_title"
