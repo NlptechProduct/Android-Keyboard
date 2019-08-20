@@ -1,6 +1,6 @@
 #### Date: 2019.08.20
 
-| Language 			| Dictionary Available |
+| Language 			| Dictionary/AI Model Available |
 | -------- 			| :------------------: |
 | Afrikaans   		| ✓                    |
 | Akan    			| ✓ 				    |
@@ -41,16 +41,16 @@
 | Dogri (Arabic)   
 | Dogri (Latin)   	
 | Dutch   		| ✓                    |
-| English (United Kingdom)   		| ✓                    |
-| English (United States)   		| ✓                    |
+| English (United Kingdom)   		| ✓                    
+| English (United States)   		| ✓                    
 | Esperanto   		| ✓                    |
 | Estonian   		| ✓                    |
-| Ewe   		| ✓                    |
+| Ewe   		   | ✓                    |
 | Faroese   		| ✓                    |
 | Fijian   		| ✓                    |
 | Finnish   		| ✓                    |
 | French   		| ✓                    |
-| French (Canada)   		| ✓                    |
+| French (Canada) | ✓                    |
 | Galician   		| ✓                    |
 | Georgian   		| ✓                    |
 | German   		| ✓                    |
@@ -64,7 +64,7 @@
 | Hebrew   		| ✓                    |
 | Hindi   		| ✓                    |
 | Hindi (Latin)   		| ✓                    |
-| Hindi (Transliteration)
+| Hindi (Transliteration)| ✓                    |
 | Hiri Motu   		| ✓                    |
 | Hungarian   		| ✓                    |
 | Icelandic   		| ✓                    |
@@ -73,6 +73,7 @@
 | Interlingua   		| ✓                    |
 | Inuktitut   		| ✓                    |
 | Irish   		| ✓                    |  
+| Italian | ✓                    | 
 | Javanese   		| ✓                    |
 | Kalaallisut   		| ✓                    |
 | Kannada   		| ✓                    |
@@ -147,7 +148,7 @@
 | Spanish   		| ✓                    |
 | Spanish (Mexico)   		| ✓                    |
 | Spanish (Saudi Arabi)   		| ✓                    |
-| Spanish (United States)   		| ✓                    |
+| Spanish (United States)   		| ✓                    
 | Sundanese   		| ✓                    |
 | Swahili   		| ✓                    |
 | Swati   		| ✓                    |
