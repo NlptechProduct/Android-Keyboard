@@ -1,7 +1,9 @@
 package com.nlptech.function.keyboardrender;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -14,24 +16,25 @@ import com.nlptech.keyboardview.keyboard.internal.KeyDrawParams;
 import com.nlptech.keyboardview.keyboard.render.DefaultKeyboardRender;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RGBKeyboardRender extends DefaultKeyboardRender {
 
-
+    private ColorMatrix hueMatrix;
     /**
      * LinearGradient 的所有顏色
      **/
     private static final int[] COLORS = new int[]{
-            Color.YELLOW,
-            Color.parseColor("#00FFAA"),
-            Color.parseColor("#008888"),
-            Color.BLUE,
-            Color.parseColor("#880088"),
-            Color.parseColor("#FF0088"),
-            Color.RED,
-            Color.parseColor("#FF8800"),
-            Color.parseColor("#888800"),
-            Color.YELLOW,};
+            convert(Color.YELLOW),
+            convert(Color.parseColor("#00FFAA")),
+            convert(Color.parseColor("#008888")),
+            convert(Color.BLUE),
+            convert(Color.parseColor("#880088")),
+            convert(Color.parseColor("#FF0088")),
+            convert(Color.RED),
+            convert(Color.parseColor("#FF8800")),
+            convert(Color.parseColor("#888800")),
+            convert(Color.YELLOW),};
 
     /**
      * LinearGradient 中，顏色的座標值為[0,1]，此值為每個顏色之間的間隔
@@ -72,6 +75,15 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
     private float mDeltaPixel;
     private long mLastDrawCanvasTime;
 
+    private static int convert(int color) {
+        float[] a = new float[3];
+        Color.colorToHSV(color, a);
+        a[1] = 1;
+        a[2] = 1;
+        int c = Color.HSVToColor(a);
+        return c;
+    }
+
     public RGBKeyboardRender() {
         this.mRgbPaint = new Paint();
         this.canvasRect = new Rect();
@@ -83,7 +95,7 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
 
     @Override
     public void afterDrawKeyboard(int keyboardType, @Nonnull Keyboard keyboard, @Nonnull KeyDrawParams keyDrawParams, @Nonnull KeyboardDrawParams keyboardDrawParams, @Nonnull Canvas canvas) {
-        if (keyboardType != KeyboardType.MAIN_KEYBOARD /*&& keyboardType != KeyboardType.EMOJI_PAGE_KEYBOARD*/) {
+        if (keyboardType == KeyboardType.EMOJI_PAGE_KEYBOARD) {
             return;
         }
 
@@ -102,17 +114,17 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         if (deltaTime >= FPS) {
             mLastDrawCanvasTime = currentTime;
             final float addedDeltaPixel = VELOCITY * deltaTime;
-//            mDeltaPixel += addedDeltaPixel;
+            mDeltaPixel += addedDeltaPixel;
 
-            if (mDeltaPixel > width) {
-                mDeltaPixel %= width;
+            float pathLength = height;
+            if (mDeltaPixel > pathLength) {
+                mDeltaPixel %= pathLength;
             }
         }
-
         // draw
         LinearGradient linearGradient = new LinearGradient(
-                0 - mDeltaPixel, 0,
-                width - mDeltaPixel, 0,
+                0 - mDeltaPixel, - mDeltaPixel,
+                height - mDeltaPixel,  height - mDeltaPixel,
                 COLORS,
                 POSITIONS,
                 Shader.TileMode.REPEAT);
@@ -127,7 +139,21 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
     }
 
     @Override
+    public void onDrawKeyPreviewText(@Nonnull Canvas canvas, @Nullable Bitmap textBitmap) {
+        super.onDrawKeyPreviewText(canvas,textBitmap);
+        if (textBitmap != null) {
+            Rect canvasRect = new Rect();
+            canvasRect.left = 0;
+            canvasRect.top = 0;
+            canvasRect.right = textBitmap.getWidth();
+            canvasRect.bottom = textBitmap.getHeight();
+            canvas.drawRect(canvasRect, mRgbPaint);
+
+        }
+    }
+
+    @Override
     public boolean isInvalidationNeeded() {
-        return false;
+        return true;
     }
 }
