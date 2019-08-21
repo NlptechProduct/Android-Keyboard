@@ -26,7 +26,6 @@ With the help of the theme customization framework, it's very easy for you to ma
 ![GitHub Logo](./Led.gif)
 ![GitHub Logo](./Neon.gif)
 
-Large Gifs. Please wait :) 
 
 ## Tutorials
 1. [Building a new software keyboard](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Build%20a%20New%20Virtual%20Keyboard%20Project.md)
@@ -37,3 +36,19 @@ Large Gifs. Please wait :)
 1. [Language list](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Language%20List.md)
 2. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
 3. [Privacy Policy](http://zengine.nlptech.com/privacy.txt)
+
+## License
+
+    Copyright 2019 NLPTech
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

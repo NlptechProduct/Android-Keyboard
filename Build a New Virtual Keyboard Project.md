@@ -8,7 +8,7 @@ You may edit the sample project or use the code from the sample project in your 
 
 ## 2. Replace appkey
 
-Replace the ‘nlptech_appkey’ in the project AndroidManifest.xml with your own appkey. If you do not have your own appkey, please contact zengine@nlptech.com for one and authorization. 
+Replace the ‘nlptech_appkey’ in the project AndroidManifest.xml with your own appkey. If you do not have your own appkey, get it [here](http://zengine.nlptech.com/register). 
 
 AndroidManifest.xml:
     
