@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion 28
@@ -57,8 +58,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
-    implementation "com.nlptech.zengine:keyboardkernel:1.2.1"
-
+    implementation "com.nlptech.zengine:keyboardkernel:1.2.2"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
@@ -70,5 +70,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.google.firebase:firebase-perf:18.0.1'
 }
 
