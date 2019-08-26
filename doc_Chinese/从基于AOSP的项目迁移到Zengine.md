@@ -614,6 +614,10 @@ public View onCreateInputView() {
 # [zengine v1.2]
 -keep class com.nlptech.keyboardview.suggestions.*{ *; } 
 -keep class com.android.inputmethod.pinyin.PinyinDecoderService {*;}
+# [zengine v1.2.3]
+-keep class com.nlptech.inputmethod.latin.ContactsBinaryDictionary { *; }
+-keep class com.nlptech.inputmethod.latin.UserBinaryDictionary { *; }
+-keep class com.nlptech.inputmethod.latin.personalization.UserHistoryDictionary { *; }
 ~~~
 
 ## 9. 新增或修改引用

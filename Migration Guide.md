@@ -613,6 +613,10 @@ If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELa
 # [zengine v1.2]
 -keep class com.nlptech.keyboardview.suggestions.*{ *; } 
 -keep class com.android.inputmethod.pinyin.PinyinDecoderService {*;}
+# [zengine v1.2.3]
+-keep class com.nlptech.inputmethod.latin.ContactsBinaryDictionary { *; }
+-keep class com.nlptech.inputmethod.latin.UserBinaryDictionary { *; }
+-keep class com.nlptech.inputmethod.latin.personalization.UserHistoryDictionary { *; }
 ~~~
 
 ## 9. Resolve remaining import issues
