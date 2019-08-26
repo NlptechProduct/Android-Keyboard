@@ -678,7 +678,22 @@ themes-lxx.xml
 themes-lxx-dark.xml
 themes-lxx-light.xml
 keyboard-icons-lxx-light.xml
+config-common.xml
+config.xml
+keyboard-heights.xml
+~~~
 
+.xml files to be deleted from res/values-land
+
+~~~
+config.xml
+keyboard-heights.xml
+~~~
+
+.xml files to be deleted from res/values-sw600dp-land, /values-sw600dp, values-sw768dp-land and values-sw768dp
+
+~~~
+config.xml
 ~~~
 
 
