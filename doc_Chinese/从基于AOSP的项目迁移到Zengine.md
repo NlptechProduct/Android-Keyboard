@@ -58,7 +58,7 @@ allprojects {
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.2.5'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.2.6'
      … … … … …
 }
 ~~~
@@ -618,6 +618,8 @@ public View onCreateInputView() {
 -keep class com.nlptech.inputmethod.latin.ContactsBinaryDictionary { *; }
 -keep class com.nlptech.inputmethod.latin.UserBinaryDictionary { *; }
 -keep class com.nlptech.inputmethod.latin.personalization.UserHistoryDictionary { *; }
+# [zengine v1.2.6]
+-keep class com.nlptech.keyboardtrace.AgentWorkManagerInitializer {*;}
 ~~~
 
 ## 9. 新增或修改引用
