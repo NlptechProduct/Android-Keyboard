@@ -58,7 +58,7 @@ Add dependencies:
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.2.5'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.2.7'
      … … … … …
 }
 ~~~
@@ -617,6 +617,8 @@ If would like to change layout, call **Agent.getInstance().onLayoutChanged(IMELa
 -keep class com.nlptech.inputmethod.latin.ContactsBinaryDictionary { *; }
 -keep class com.nlptech.inputmethod.latin.UserBinaryDictionary { *; }
 -keep class com.nlptech.inputmethod.latin.personalization.UserHistoryDictionary { *; }
+# [zengine v1.2.6]
+-keep class com.nlptech.keyboardtrace.AgentWorkManagerInitializer {*;}
 ~~~
 
 ## 9. Resolve remaining import issues
