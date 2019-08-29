@@ -58,7 +58,7 @@ allprojects {
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.2.6'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.2.7'
      … … … … …
 }
 ~~~
