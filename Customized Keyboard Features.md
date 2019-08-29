@@ -1,7 +1,37 @@
-## 1.  Add built-in Dictionary
+<br/>
 
-1.Add built-in dictionary and configuration file under the category of assets. Please contact zengine@nlptech.com for dictionary and configuration files.   
-2.Add build.gradle in project, see as follows:  
+## Catalogue
+* [1.  Add Dictionary in APK](#1)
+
+* [2.  Theme Setting](#2)
+    
+* [3.  Custom EmojiView](#3)
+
+* [4.  Custom NeutralStrip and SuggestionStripView](#4)
+    * [NeutralStrip](#4.1)
+    * [SuggestionStripView](#4.2)
+        * [setSuggestionStripViewListener](#4.2.1)
+        * [setSuggestions](#4.2.2)
+    * [ChineseSuggestStripView](#4.3)
+        * [setChineseSuggestStripViewListener](#4.3.1)
+        * [setChineseSuggestion](#4.3.2)
+        * [getMoreSuggestionsList](#4.3.3)
+        * [getSuggestionsList](#4.3.4)
+    * [ChineseComposingTextView](#4.4)
+        * [setComposingText](#4.4.1)
+
+* [5.  InputEvent Callback](#5)
+
+* [6.  CustomThemePreview](#6)
+
+<br/>
+
+
+<h2 id="1">1.  Add built-in Dictionary</h2>
+
+1.Add the built-in dictionary and configuration files under the assets directory. Please contact zengine@nlptech.com for dictionary and configuration files.  
+2.Add the following code into build.gradle file:
+
 **build.gradle**
 
 ~~~
@@ -9,24 +39,25 @@ aaptOptions{
     noCompress 'xz'
 }
 ~~~
-## 2. Set the Theme
 
-To Add Theme **Agent.getInstance().addExternalThemes(context, infos)**  
-To Delete **Agent.getInstance().deleteExternalThemes(context, infos)**  
-To Get New Theme **Agent.getInstance().getExternalThemes(context)**  
-To Apply Theme **Agent.getInstance().loadTheme(context,externalId)**  
+<h2 id="2">2. Theme Setting</h2>
 
-Example: Adding a New Theme
+Add themes by calling **Agent.getInstance().addExternalThemes(context, infos)**.  
+Delete themes by calling **Agent.getInstance().deleteExternalThemes(context, infos)**. 
+Get new themes by calling **Agent.getInstance().getExternalThemes(context)**. 
+Apply themes by calling **Agent.getInstance().loadTheme(context,externalId)**. 
+
+For example, add a theme like this:  
 **ExampleApplication.java:**
 
-~~~
+~~~java
 public class ExampleApplication extends Application {
         @Override
         public void onCreate() {
                 super.onCreate();
                 … … … … …
-                addExternalTheme()
-                Agent.getInstance().loadTheme(this,"my external theme id")
+                addExternalTheme();
+                Agent.getInstance().loadTheme(this,"my external theme id");
                 … … … … …
         }  
 
@@ -60,19 +91,21 @@ public class ExampleApplication extends Application {
     }
 … … … … …
 ~~~
-## 3. Set EmojiView
 
-If the developers would like to customize the display of emojis rather than using the EmojiView integrated in KeyboardView, the developers may implant it through customized EmojiView in onDisplayEmojiKeyboard() and return true at the same time. 
+<h2 id="3">3. Custom EmojiView</h2>
 
-## 4. Customize NeutralStrip and SuggestionStripView
+If you wants to implement your own EmojiView rather than using the default EmojiView provided by SDK, you may implement custom EmojiView in onDisplayEmojiKeyboard() and return True at the same time.
+
+<h2 id="4">4. Custom NeutralStrip and SuggestionStripView</h2>
 
 NeutralStrip, SuggestionStripView, ChineseSuggestStripView and ChineseComposingTextView could be customized after LatinIME extends ZengineInputMethodService.
 
-### NeutralStrip
 
-NeutralStrip,such as toolbar, will appear when SuggestStripView is gone.   
+<h3 id="4.1">NeutralStrip</h3>
 
-Example :   
+NeutralStrip,such as toolbar, will appear when SuggestStripView is gone. 
+
+For example:
 
 **input_view.xml:**
 
@@ -89,7 +122,7 @@ Example :
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>
 
-	// Add customized Neutral Strip
+    // Add a custom Neutral Strip
     <RelativeLayout
         android:id="@+id/customized_strip"
         android:layout_width="match_parent"
@@ -115,33 +148,35 @@ Example :
 
 
 ~~~java
-	// Control customized NeutralStip by overriding onHideCustomizedNeutralStripView() / onShowCustomizedNeutralStripView()
-	@Override
+    // Control customized NeutralStip by overriding onHideCustomizedNeutralStripView() / onShowCustomizedNeutralStripView()
+    @Override
     public void onHideCustomizedNeutralStripView() {
-        // Hide customized NeutralStrip
+        // Hide custom NeutralStrip
         mCustomizedStrip.setVisibility(View.GONE);
     }
 
     @Override
     public void onShowCustomizedNeutralStripView() {
-        // Show customized NeutralStrip
+        // Show custom NeutralStrip
         mCustomizedStrip.setVisibility(View.VISIBLE);
     }
 
 ~~~ 
 
-
-### SuggestionStripView
+<h3 id="4.2">SuggestionStripView</h3>
 
 Zengine provides default SuggestionStripView and its operations.   
 
 And also you could customize SuggestStripView by extending com.nlptech.keyboardview.suggestions.SuggestionStripView.   
-Please implement functions down below if you would like to customize.   
-##### setSuggestionStripViewListener() : 
-Pass SuggestionStripViewListener. You could commit suggested word by using pickSuggestionManually of listner.    
+Please implement functions down below if you would like to customize. 
 
-##### setSuggestions() : 
-Pass suggest words.
+<h4 id="4.2.1">setSuggestionStripViewListener() :</h4>
+
+This method will ba called by ZengineInputMethodService.class. You need to update the SuggestionStripViewListener and make sure the method pickSuggestionManually() will be called when a word is chosen from the SuggestionStripView.
+
+<h4 id="4.2.2">setSuggestions() : </h4>
+
+Update and display suggestion words.
 
 Example :  
 
@@ -152,12 +187,15 @@ public class CustomizedSuggestStripView extends SuggestionStripView {
     … … … …
     @Override
     public void setSuggestionStripViewListener(final SuggestionStripViewListener listener, final View inputView) {
-    	// TODO something
+        //TODO something
+        mSuggestionStripViewListener = listener 
+        // Call this in a proper position
+        // mSuggestionStripViewListener.pickSuggestionManually(index);
     }
     … … … …
     @Override
     public void setSuggestions(final SuggestedWords suggestedWords, final boolean isRtlLanguage) {
-	    // TODO something
+        //TODO something
     }
     … … … …
 }
@@ -170,34 +208,36 @@ public class CustomizedSuggestStripView extends SuggestionStripView {
     //Pass customized SuggestionStripView by overriding getSuggestionView() of LatinIME.java
     @Override
     public SuggestionStripView getSuggestionView() {
-    	return new CustomizedSuggestStripView(getContext());
+        // Return the custom keyboard suggestions bar the developer defined
+        return new CustomizedSuggestStripView(getContext());
     }
 ~~~
 
 
-Control customized SuggestStripView by calling showSuggestionView() / hideSuggestionView() of ZengineInputMethodService
+ZengineInputMethodService provides showSuggestionView() / hideSuggestionView() methods to help the developer to control the display/hide SuggestStripView. 
 
-### ChineseSuggestStripView
+<h3 id="4.3">ChineseSuggestStripView</h3>
 
 When using Chinese Input Method, Zengine also provides default ChineseSuggestStripView and its operations.   
 
-If you would like to customize ChineseSuggestStripView, you need to extend com.nlptech.keyboardview.keyboard.chinese.ChineseSuggestStripView and implement functions down below. 
+If you would like to customize ChineseSuggestStripView, you need to extend com.nlptech.keyboardview.keyboard.chinese.ChineseSuggestStripView and implement functions down below.
 
-##### setChineseSuggestStripViewListener() : 
-Pass ChineseSuggestStripViewListener. You could commit chinese suggested word by using pickSuggestionManually of listner.
+<h4 id="4.3.1">setChineseSuggestStripViewListener() :</h4>
 
+This method will ba called by ZengineInputMethodService.class. You need to update the SuggestionStripViewListener and make sure the method pickSuggestionManually() will be called when a word is chosen from the SuggestionStripView. Due to the data structure designed of the Chinese characters, the parameter of this method is "the index of your chosen word".
 
-##### setChineseSuggestion() : 
-Pass chinese suggest words.
+<h4 id="4.3.2">setChineseSuggestion() : </h4>
 
+Pass candidate words (if there are enough suggestion words, it will provide 10 words at first by default)
 
-##### getMoreSuggestionsList() : 
+<h4 id="4.3.3">getMoreSuggestionsList() : </h4>
+
 If there're enough suggested words, you can get more suggested words by passing fetch size.
 
+<h4 id="4.3.4">getSuggestionsList() : </h4>
 
-##### getSuggestionsList() : 
-Get the total suggested words.
-   
+Return a list of suggestion words that have been retrieved for the current input.  
+  
 Example :  
 
 **CustomizedChineseSuggestStripView:**
@@ -205,11 +245,11 @@ Example :
 ~~~java
 public class CustomizedChineseSuggestStripView extends ChineseSuggestStripView implements View.OnClickListener {
 
-    … … … …
-    @Override
+	 … … … …
+	 @Override
     public void setChineseSuggestStripViewListener(ChineseSuggestStripViewListener chineseSuggestStripViewListener) {
         mChineseSuggestStripViewListener = chineseSuggestStripViewListener;
-        // you can call below method in a appropriate situation
+        // Call this in a proper position
         // mChineseSuggestStripViewListener.pickSuggestionManually(index);
     }
 
@@ -217,7 +257,7 @@ public class CustomizedChineseSuggestStripView extends ChineseSuggestStripView i
     public void setChineseSuggestion(List<String> list, boolean enableActiveHighlight) {
         // only get more 50 items
         getMoreSuggestionsList(50);
-        
+
         // implement related behaviors
     }
     … … … …
@@ -230,29 +270,33 @@ public class CustomizedChineseSuggestStripView extends ChineseSuggestStripView i
     // Pass customized ChineseSuggestStripView by overriding getChineseSuggestionView() of LatinIME.java
     @Override
     public ChineseSuggestStripView getChineseSuggestionView() {
+        // Return the View of of the custom keyboard suggestion bar
         return new CustomizedChineseSuggestionView(getContext());
     }
 ~~~
 
-### ChineseComposingTextView
+
+
+<h3 id="4.4">ChineseComposingTextView</h3>
 
 When using Chinese Input Method, there's a default ChineseSuggestStripView at the upper left corner of the KeyboardView.
 
-If you would like to customize ChineseComposingTextView, you need to extend com.nlptech.keyboardview.keyboard.chinese. ChineseComposingTextView and implement function down below. 
+If you would like to customize ChineseComposingTextView, you need to extend com.nlptech.keyboardview.keyboard.chinese. ChineseComposingTextView and implement function down below.
 
-##### setComposingText() : 
-Pass current composing text.
+<h4 id="4.4.1">setComposingText() : </h4>
 
-Example : 
+Update the corresponding content under the current composing state
+  
+Example :  
 
 **CustomizedChineseComposingTextView.java:**
 
 ~~~java
 public class CustomizedChineseComposingTextView extends ChineseComposingTextView {
-    … … … …
-    @Override
+	 … … … …
+	 @Override
     public void setComposingText(String s) {
-    	// implement related behaviors
+    	  // implement related behaviors
         mComposingTextView.setText(s);
     }
     … … … …
@@ -262,15 +306,17 @@ public class CustomizedChineseComposingTextView extends ChineseComposingTextView
 **LatinIME.java:**
 
 ~~~java
-    // Pass customized ChineseComposingTextView by overriding getChineseComposingTextView() of LatinIME.java    @Override
+    // Pass customized ChineseSuggestStripView by overriding getChineseSuggestionView() of LatinIME.java
+    @Override
     public ChineseComposingTextView getChineseComposingTextView()  {
+        // Return View of suggestion bar customized by the developer
         return new Customized ChineseComposingTextView(getContext());
     }
 ~~~
 
 
 
-## 5.  Setting Input Event Callback
+<h2 id="5">5.  Input Event Callback</h2>
 
 **LatinIME.java:**
 
@@ -287,7 +333,6 @@ public void onCreate() {
         }
     });
    
-
     //Callback for input events (Optional)
     Agent.getInstance().setUserInputCallback(
         new IUserInputCallback() {
@@ -297,7 +342,34 @@ public void onCreate() {
             public void onUserTyped(String text) { }
             @Override
             public void onTextChanged(int direction) { }
-          });
+        });
+    }
+~~~
 
-      }
+<h2 id="6">6.  Custom ThemePreview</h2>
+
+You can get all the Id of Theme through：
+
+~~~java
+Agent.getInstance().getThemeIds(context);
+~~~
+
+To create ThemeContext, build a view container and use Agent to put theme preview in.
+
+~~~java
+Context themeContext = Agent.getInstance().getThemeContext(context, themeId);
+~~~
+
+Example：
+
+~~~java
+View myView = LayoutInflater.from(themeContext).inflate(R.layout.my_view, null);
+ViewGroup myContainer = myView.findViewById(R.id.my_view_preview_container);
+Agent.getInstance().showThemePreview(myContainer, themeId)
+~~~
+
+Last, you can call it in the component's onPause or onDestroy：
+
+~~~java
+Agent.getInstance().dismissThemePreview();
 ~~~

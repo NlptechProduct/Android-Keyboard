@@ -34,8 +34,9 @@ With the help of the theme customization framework, it's very easy for you to ma
 
 ## Other resources
 1. [Language list](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Language%20List.md)
-2. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
-3. [Privacy Policy](http://zengine.nlptech.com/privacy.txt)
+2. [Reference](https://github.com/NlptechProduct/Zengine/blob/master/Reference.md)
+3. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
+4. [Privacy Policy](http://zengine.nlptech.com/privacy.txt)
 
 ## License
 
