@@ -33,8 +33,8 @@ With the help of the theme customization framework, it's very easy for you to ma
 3. [Customization](https://github.com/NlptechProduct/Zengine/blob/master/Customized%20Keyboard%20Features.md)
 
 ## Other resources
-1. [Language list](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Language%20List.md)
-2. [Reference](https://github.com/NlptechProduct/Zengine/blob/master/Reference.md)
+1. [Language supported list](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Language%20List.md)
+2. [API reference](https://github.com/NlptechProduct/Zengine/blob/master/Reference.md)
 3. [FAQ](https://github.com/NlptechProduct/Zengine/blob/master/FAQ.md)
 4. [Privacy Policy](http://zengine.nlptech.com/privacy.txt)
 
