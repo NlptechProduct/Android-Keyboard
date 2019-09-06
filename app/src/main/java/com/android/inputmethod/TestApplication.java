@@ -83,7 +83,7 @@ public class TestApplication extends MultiDexApplication {
         Drawable suggestDivider = new BitmapDrawable(getResources(), bitmap);
         String color = String.format("#%06X", 0xFFFFFF & 0x12f0e5);
         String emojiColor = String.format("#%06X", 0xFFFFFF & 0x048f89);
-        ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder("001", "Test Theme")
+        ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder(TestApplication.getInstance(),"001", "Test Theme")
                 .setKeyboardBackground(keyboardBackgroundDrawable)
                 .setKeyBackground(keyBackgroundDrawable)
                 .setFunctionKeyBackground(functionKeyBackgroundDrawable)
@@ -133,7 +133,7 @@ public class TestApplication extends MultiDexApplication {
     }
 
     private void addExternalThemeRGB() {
-        ExternalThemeInfo.Builder builder = new ExternalThemeInfo.Builder("002", "RGB");
+        ExternalThemeInfo.Builder builder = new ExternalThemeInfo.Builder(TestApplication.getInstance(),"002", "RGB");
         builder.setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.img_external_theme_preview_rgb));
 
         ColorDrawable colorDrawable;
