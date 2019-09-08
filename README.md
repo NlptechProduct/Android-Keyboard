@@ -13,7 +13,8 @@
 * Input by keys, with auto-capitalization on first word of sentence, auto-completion, error-correction, and next-word prediction
 * Input by sliding
 * AI-powered next-word prediction
-* AI-powered Hindi transliteration, using Latin script to type Hindi words
+* AI-powered 10 Indian languages (Hindi, Bengali, Marathi, Tamil, Telugu, Kannada, Gujarati, Punjabi, Malayalam, Urdu) transliteration, using Latin script to type Indian languages words
+* Vietnamese Telex input
 * Chinese input
 * Callbacks for various input event. For example, when the user is typing Good Morning, contents related to Good Morning can be recommended to the user by our API
 
