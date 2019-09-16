@@ -1082,6 +1082,20 @@ shiftKeyShiftedIcon | shift键shifted时的icon
 -----|:--------
 Builder | 返回的Builder
 
+#### setShiftKeyShiftedLockIcon
+```Java
+public Builder setShiftKeyShiftedLockIcon (Drawable shiftKeyShiftedLockIcon)
+```
+设置shift键shifted lock时的icon。
+
+参数 | 参数说明
+-----|:--------
+shiftKeyShiftedLockIcon | shift键shifted lock时的icon
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
 #### setDeleteKeyIcon
 ```Java
 public Builder setDeleteKeyIcon (Drawable deleteKeyIcon)
