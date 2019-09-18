@@ -1002,11 +1002,53 @@ Builder | 返回的Builder
 ```Java
 public Builder setEmojiCategoryPageIndicatorBackground (String emojiCategoryPageIndicatorBackgroundColor)
 ```
-设置Emoji页面下方的分类TabLayout的背景颜色。
+设置Emoji页面下方的分类Indicator的背景颜色。
 
 参数 | 参数说明
 -----|:--------
-emojiCategoryPageIndicatorBackgroundColor | Emoji页面下方的分类TabLayout的背景颜色
+emojiCategoryPageIndicatorBackgroundColor | Emoji页面下方的分类Indicator的背景颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setEmojiCategoryIconBackgroundColor
+```Java
+public Builder setEmojiCategoryIconBackgroundColor (String emojiCategoryIconBackgroundColor)
+```
+设置Emoji页面下方的分类項目的背景颜色。
+
+参数 | 参数说明
+-----|:--------
+emojiCategoryIconBackgroundColor | Emoji页面下方的分类項目的背景颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setEmojiFunctionContainerBackgroundColor
+```Java
+public Builder setEmojiFunctionContainerBackgroundColor (String emojiFunctionContainerBackgroundColor)
+```
+设置Emoji页面下方功能区域的背景颜色。
+
+参数 | 参数说明
+-----|:--------
+emojiFunctionContainerBackgroundColor | Emoji页面下方功能区域的背景颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setEmojiSeparatorColor
+```Java
+public Builder setEmojiSeparatorColor (String emojiSeparatorColor)
+```
+设置Emoji页面中Separator的背景颜色。
+
+参数 | 参数说明
+-----|:--------
+emojiSeparatorColor | Emoji页面中Separator的背景颜色
 
 返回 | 返回说明 | 
 -----|:--------
