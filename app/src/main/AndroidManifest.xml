@@ -43,8 +43,6 @@
                  .setPackage("com.android.inputmethod.latin"));
          }
          </pre> -->
-    <permission android:name="com.nlptech.demo.HIDE_SOFT_INPUT"
-        android:protectionLevel="signature" />
 
     <application
         android:name="com.android.inputmethod.TestApplication"
