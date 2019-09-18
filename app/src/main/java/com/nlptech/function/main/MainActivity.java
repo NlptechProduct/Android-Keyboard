@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
         public void bind(int index, String s) {
             textview.setText(s);
             if (index == 0) {
-                img.setImageResource(R.drawable.ic_keyboard_menu_language);
+                img.setImageResource(R.drawable.ic_icon_language);
             } else if (index == 1) {
-                img.setImageResource(R.drawable.ic_keyboard_menu_theme_manage);
+                img.setImageResource(R.drawable.ic_icon_theme);
             } else {
-                img.setImageResource(R.drawable.ic_keyboard_menu_settings);
+                img.setImageResource(R.drawable.ic_icon_settings);
             }
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

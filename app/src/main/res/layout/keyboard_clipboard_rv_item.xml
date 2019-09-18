@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nlptech.function.keyboardclipboard.SlidingButtonView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textSize="16sp"
+            android:textDirection="locale"
+            android:textAlignment="gravity"/>
+
+
+        <View
+            android:id="@+id/delete_background"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/text"
+            android:layout_centerVertical="true"
+            android:background="@color/colorAccent"/>
+
+        <ImageView
+            android:id="@+id/delete_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/text"
+            android:layout_centerVertical="true"
+            android:layout_alignEnd="@id/delete_background"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_clipboard_trash" />
+    </RelativeLayout>
+
+</com.nlptech.function.keyboardclipboard.SlidingButtonView>

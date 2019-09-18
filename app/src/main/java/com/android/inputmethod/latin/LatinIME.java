@@ -67,6 +67,9 @@ import com.nlptech.common.utils.ApplicationUtils;
 import com.nlptech.common.utils.BuildCompatUtils;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
 import com.nlptech.function.callback.IKeyboardActionCallback;
+import com.nlptech.function.keyboardclipboard.KeyboardClipboardWidget;
+import com.nlptech.function.keyboardmenu.KeyboardMenuWidget;
+import com.nlptech.function.keyboardselector.KeyboardSelectorWidget;
 import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
 import com.nlptech.function.languagesetting.langswitch.SubtypeSwitchDialogView;
 import com.nlptech.inputlogic.ImeUiHandlerInterface;
@@ -96,6 +99,7 @@ import com.nlptech.inputmethod.latin.utils.JniUtils;
 import com.nlptech.inputmethod.latin.utils.StatsUtils;
 import com.nlptech.inputmethod.latin.utils.StatsUtilsManager;
 import com.nlptech.inputmethod.latin.utils.ViewLayoutUtils;
+import com.nlptech.keybaordwidget.KeyboardWidgetManager;
 import com.nlptech.keyboardview.accessibility.AccessibilityUtils;
 import com.nlptech.keyboardview.keyboard.IKeyboardSwitcher;
 import com.nlptech.keyboardview.keyboard.Keyboard;
@@ -193,6 +197,16 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     private final BroadcastReceiver mDictionaryDumpBroadcastReceiver =
             new DictionaryDumpBroadcastReceiver(this);
+
+    private static LatinIME sInstance;
+    public static LatinIME getInstance() {
+        return sInstance;
+    }
+
+    public InputLogic  getInputLogic() {
+        return mInputLogic;
+    }
+
 
     final static class HideSoftInputReceiver extends BroadcastReceiver {
         private final InputMethodService mIms;
@@ -606,6 +620,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         mStatsUtilsManager = StatsUtilsManager.getInstance();
         mIsHardwareAcceleratedDrawingEnabled =
                 InputMethodServiceCompatUtils.enableHardwareAcceleration(this);
+        sInstance = this;
         Log.i(TAG, "Hardware accelerated drawing: " + mIsHardwareAcceleratedDrawingEnabled);
     }
 
@@ -867,14 +882,17 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         // custom strip
         mCustomizedStrip = view.findViewById(R.id.customized_strip);
         view.findViewById(R.id.toolbar_menu).setOnClickListener(v -> {
+            KeyboardWidgetManager.getInstance().open(KeyboardMenuWidget.class);
 
         });
         view.findViewById(R.id.toolbar_selector).setOnClickListener(v -> {
+            KeyboardWidgetManager.getInstance().open(KeyboardSelectorWidget.class);
 
         });
         view.findViewById(R.id.toolbar_clipboard).setOnClickListener(v -> {
-
+            KeyboardWidgetManager.getInstance().open(KeyboardClipboardWidget.class);
         });
+        KeyboardWidgetManager.getInstance().onCreateInputView(mInputView);
     }
 
     @Override
@@ -902,6 +920,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         mHandler.onFinishInputView(finishingInput);
         mStatsUtilsManager.onFinishInputView();
         mGestureConsumer = GestureConsumer.NULL_GESTURE_CONSUMER;
+        KeyboardWidgetManager.getInstance().onFinishInputView(finishingInput);
     }
 
     @Override
@@ -1304,6 +1323,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         outInsets.contentTopInsets = visibleTopY;
         outInsets.visibleTopInsets = visibleTopY;
         mInsetsUpdater.setInsets(outInsets);
+        KeyboardWidgetManager.getInstance().onComputeInsets(outInsets);
     }
 
     public void startShowingInputView(final boolean needsToLoadKeyboard) {
@@ -1615,7 +1635,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     // Outside LatinIME, only used by the {@link InputTestsBase} test suite.
     @UsedForTesting
-    void loadKeyboard() {
+    public void loadKeyboard() {
         // Since we are switching languages, the most urgent thing is to let the keyboard graphics
         // update. LoadKeyboard does that, but we need to wait for buffer flip for it to be on
         // the screen. Anything we do right now will delay this, so wait until the next frame
@@ -2032,5 +2052,11 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     public ChineseComposingTextView getChineseComposingTextView() {
         return super.getChineseComposingTextView();
 //        return (ChineseComposingTextView) LayoutInflater.from(getThemeContext()).inflate(R.layout.customized_chinesed_composing_textview, null);
+    }
+
+    @Override
+    public void onViewClicked(boolean focusChanged) {
+        super.onViewClicked(focusChanged);
+        KeyboardWidgetManager.getInstance().closeFunctionStripWidget();
     }
 }

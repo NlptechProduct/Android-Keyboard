@@ -42,27 +42,35 @@
         <ImageView
             android:id="@+id/toolbar_menu"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_toolbar_menu"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_toolbar_menu" />
 
         <ImageView
             android:id="@+id/toolbar_selector"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_toolbar_selector"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_toolbar_selector" />
 
         <ImageView
             android:id="@+id/toolbar_clipboard"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_toolbar_clipboard"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_toolbar_clipboard" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/input_view_keyboard_widget_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

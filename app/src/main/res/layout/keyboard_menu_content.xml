@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <!-- Language -->
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_language"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_language_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_language" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_language_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_language"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Theme -->
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_theme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_theme_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_theme" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_theme_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_theme"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Settings -->
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_settings"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_settings_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_settings" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_settings_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_settings"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Adjust size -->
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_adjust_size"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_adjust_size_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_adjust_size" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_adjust_size_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_adjust_size"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <include
+        android:visibility="gone"
+        layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Backup -->
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_backup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_backup_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_backup" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_backup_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_backup"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_restore"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_restore_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_restore" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_restore_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_restore"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <!-- Restore -->
+    <include
+        layout="@layout/keyboard_menu_divider_line"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/keyboard_menu_divider_line"
+        android:visibility="gone" />
+
+    <!-- Hide keyboard -->
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content_item_hide_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_hide_keyboard_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_hide_keyboard" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_hide_keyboard_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_hide_keyboard"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </LinearLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Big Divider -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_big_divider_height"
+        android:background="@color/keyboard_menu_big_divider_color" />
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Show suggestions -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_show_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_show_suggestions_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_show_suggestions" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_show_suggestions_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_show_suggestions_iv"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_show_suggestions"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+        <Switch
+            android:id="@+id/keyboard_menu_content_item_show_suggestions_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_widget_switch_height"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+            android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+            android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Auto correction -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_auto_correction"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_auto_correction_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_auto_correction" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_auto_correction_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_auto_correction_iv"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_auto_correction"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+        <Switch
+            android:id="@+id/keyboard_menu_content_item_auto_correction_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_widget_switch_height"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+            android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+            android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Slide input -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_slide_input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_slide_input_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_slide_input" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_slide_input_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_slide_input_iv"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_slide_input"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+        <Switch
+            android:id="@+id/keyboard_menu_content_item_slide_input_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_widget_switch_height"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+            android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+            android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Vibrate -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_vibrate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_vibrate_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_vibrate" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_vibrate_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_vibrate_iv"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_vibrate"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+        <Switch
+            android:id="@+id/keyboard_menu_content_item_vibrate_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_widget_switch_height"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+            android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+            android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Sound -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_sound"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_sound_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_sound" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_sound_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_sound_iv"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_sound"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+        <Switch
+            android:id="@+id/keyboard_menu_content_item_sound_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_widget_switch_height"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+            android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+            android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/keyboard_menu_divider_line"/>
+
+    <!-- Show number row -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_show_number_row"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:visibility="visible"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_show_number_row_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_show_number_row" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_show_number_row_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_show_number_row_iv"
+            android:gravity="center_vertical"
+            android:text="@string/keyboard_menu_show_number_row"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+        <Switch
+            android:id="@+id/keyboard_menu_content_item_show_number_row_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_widget_switch_height"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+            android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+            android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+    </RelativeLayout>
+
+</LinearLayout>
