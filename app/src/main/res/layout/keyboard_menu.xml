@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_red_light">
+
+    <LinearLayout
+        android:id="@+id/keyboard_menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/keyboard_menu_title_layout_height"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:id="@+id/keyboard_menu_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/keyboard_menu_title_margin_start"
+                android:gravity="center_vertical"
+                android:text="@string/keyboard_menu_title"
+                android:textSize="@dimen/keyboard_widget_title_text_size" />
+
+            <ImageButton
+                android:id="@+id/keyboard_menu_top_account_btn"
+                android:layout_width="@dimen/keyboard_widget_top_btn_size"
+                android:layout_height="@dimen/keyboard_widget_top_btn_size"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/keyboard_widget_top_btn_padding"
+                android:visibility="gone"
+                android:layout_toStartOf="@+id/keyboard_menu_top_close_btn"
+                android:background="?android:attr/actionBarItemBackground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_keyboard_menu_account" />
+
+            <ImageButton
+                android:id="@+id/keyboard_menu_top_close_btn"
+                android:layout_width="@dimen/keyboard_widget_top_btn_size"
+                android:layout_height="@dimen/keyboard_widget_top_btn_size"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/keyboard_widget_top_btn_padding"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/keyboard_menu_top_btn_margin_start"
+                android:layout_marginEnd="@dimen/keyboard_menu_top_btn_margin_end"
+                android:background="?android:attr/actionBarItemBackground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_keyboard_menu_close" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/keyboard_menu_divider_line"/>
+
+        <com.nlptech.function.keyboardmenu.KeyboardMenuScrollView
+            android:id="@+id/keyboard_menu_content_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent">
+
+            <include layout="@layout/keyboard_menu_content" />
+
+        </com.nlptech.function.keyboardmenu.KeyboardMenuScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>
