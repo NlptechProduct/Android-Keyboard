@@ -2,7 +2,6 @@ package com.nlptech.function.keyboardselector;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.android.inputmethod.TestApplication;
 import com.android.inputmethod.latin.LatinIME;
@@ -90,7 +88,7 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
         KeyboardThemeManager.getInstance().colorUiModuleTitleText(view.findViewById(R.id.keyboard_selector_title_tv));
 
         ImageButton close = view.findViewById(R.id.keyboard_selector_top_close_btn);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(close, mToolBarItemcolor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(close, mToolBarItemcolor);
         close.setOnClickListener(this);
 
         // set other view's click listener
@@ -100,25 +98,25 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
 
 
         mTop = view.findViewById(R.id.arrow_up);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mTop, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mTop, mOperationEnableColor);
         mTop.setOnClickListener(this);
         mTop.setOnLongClickListener(this);
         mTop.setOnTouchListener(this);
 
         mBottom = view.findViewById(R.id.arrow_down);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mBottom, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mBottom, mOperationEnableColor);
         mBottom.setOnClickListener(this);
         mBottom.setOnLongClickListener(this);
         mBottom.setOnTouchListener(this);
 
         mLeft = view.findViewById(R.id.arrow_left);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mLeft, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mLeft, mOperationEnableColor);
         mLeft.setOnClickListener(this);
         mLeft.setOnLongClickListener(this);
         mLeft.setOnTouchListener(this);
 
         mRight = view.findViewById(R.id.arrow_right);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mRight, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mRight, mOperationEnableColor);
         mRight.setOnClickListener(this);
         mRight.setOnLongClickListener(this);
         mRight.setOnTouchListener(this);
@@ -126,21 +124,21 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
         mCopy = view.findViewById(R.id.copy);
         mCopy.setOnClickListener(this);
         mImgCopy = view.findViewById(R.id.copy_iv);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgCopy, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgCopy, mOperationEnableColor);
         mTextCopy = view.findViewById(R.id.copy_tv);
         KeyboardThemeManager.getInstance().colorUiModuleText(mTextCopy);
 
         mPaste = view.findViewById(R.id.paste);
         mPaste.setOnClickListener(this);
         mImgPaste = view.findViewById(R.id.paste_iv);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgPaste, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgPaste, mOperationEnableColor);
         mTextPaste = view.findViewById(R.id.paste_tv);
         KeyboardThemeManager.getInstance().colorUiModuleText(mTextPaste);
 
         mDelete = view.findViewById(R.id.delete);
         mDelete.setOnClickListener(this);
         mImgDelete = view.findViewById(R.id.delete_iv);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgDelete, mOperationEnableColor);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgDelete, mOperationEnableColor);
         mTextDelete = view.findViewById(R.id.delete_tv);
         KeyboardThemeManager.getInstance().colorUiModuleText(mTextDelete);
 
@@ -164,6 +162,12 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
         cancelSelectWithSelection();
         updateStatus();
         updateSelector();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        cancelSelectWithSelection();
     }
 
     @NonNull
@@ -298,11 +302,11 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
         if (hasSelection) {
             mTextSelectAll.setText(R.string.keyboard_selector_cut);
             mImgSelectAll.setImageResource(R.drawable.ic_selector_cut);
-           KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgSelectAll, mOperationEnableColor);
+            KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgSelectAll, mOperationEnableColor);
         } else {
             mTextSelectAll.setText(R.string.keyboard_selector_select_all);
             mImgSelectAll.setImageResource(R.drawable.ic_selector_select_all);
-           KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgSelectAll, mOperationEnableColor);
+            KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgSelectAll, mOperationEnableColor);
         }
     }
 
@@ -310,21 +314,21 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
         mCopy.setEnabled(enable);
         int color = enable ? mOperationEnableColor : mOperationDisableColor;
         mTextCopy.setTextColor(color);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgCopy, color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgCopy, color);
     }
 
     private void updatePasteStatus(boolean enable) {
         mPaste.setEnabled(enable);
         int color = enable ? mOperationEnableColor : mOperationDisableColor;
         mTextPaste.setTextColor(color);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgPaste, color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgPaste, color);
     }
 
     private void updateDeleteStatus(boolean enable) {
         mDelete.setEnabled(enable);
         int color = enable ? mOperationEnableColor : mOperationDisableColor;
         mTextDelete.setTextColor(color);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgDelete, color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mImgDelete, color);
     }
 
     private void updateSelector() {
