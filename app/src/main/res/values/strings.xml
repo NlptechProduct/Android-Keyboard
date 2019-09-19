@@ -587,4 +587,8 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="gif_sending_main_page_title">Pictures</string>
     <string name="gif_sending_main_page_network_unavailable">No network connection available</string>
     <!-- Gif Sending End-->
+
+    <!-- Gif Search-->
+    <string name="no_result">No result.</string>
+
 </resources>

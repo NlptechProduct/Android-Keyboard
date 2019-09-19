@@ -3,6 +3,7 @@ package com.nlptech.keybaordwidget;
 
 import android.content.Context;
 
+import com.nlptech.function.gifsending.search.GifSearchWidget;
 import com.nlptech.function.keyboardclipboard.KeyboardClipboardWidget;
 import com.nlptech.function.keyboardmenu.KeyboardMenuWidget;
 import com.nlptech.function.keyboardselector.KeyboardSelectorWidget;
@@ -35,6 +36,7 @@ public class KeyboardWidgetManager extends BaseKeyboardWidgetManager {
         close(KeyboardMenuWidget.class);
         close(KeyboardSelectorWidget.class);
         close(KeyboardClipboardWidget.class);
+        close(GifSearchWidget.class);
         //TODO add others
     }
 }

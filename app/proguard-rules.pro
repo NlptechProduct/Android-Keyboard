@@ -67,3 +67,10 @@
 }
 -keep class com.nlptech.keyboardtrace.trace.aether.AetherEvent { *; }
 -keep class com.nlptech.keyboardtrace.trace.tesseract.TesseractEvent { *; }
+
+-keep class com.nlptech.function.gifsending.dataclass.** {*;}
+-keep class com.nlptech.function.gifsending.send.gif.GifItems {*;}
+-keep class com.nlptech.function.gifsending.send.gif.GifItems$* {*;}
+-keep class com.nlptech.function.gifsending.send.gif.GifCategoryItems {*;}
+-keep class com.nlptech.function.gifsending.send.gif.GifCategoryItems$* {*;}
+-keep class com.nlptech.function.gifsending.search.GifSearchResult {*;}

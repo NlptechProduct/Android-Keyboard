@@ -97,4 +97,10 @@
     <color name="gif_send_category_select_color">#333333</color>
     <color name="gif_send_category_unselect_color">#666666</color>
 
+    <!-- Gif Search -->
+    <color name="gif_search_edit_text_layout_background_stroke_color">#FFFFFF</color>
+    <color name="gif_search_edit_text_right_search_background_color">#FFFFFF</color>
+    <color name="gif_search_edit_text_background_color">#FFFFFF</color>
+    <color name="gif_search_clear_button_background_color">#CCCCCC</color>
+
 </resources>
