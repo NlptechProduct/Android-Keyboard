@@ -51,7 +51,6 @@ import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.android.inputmethod.annotations.UsedForTesting;
 import com.android.inputmethod.dictionarypack.DictionaryPackConstants;
@@ -67,6 +66,7 @@ import com.nlptech.common.utils.ApplicationUtils;
 import com.nlptech.common.utils.BuildCompatUtils;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
 import com.nlptech.function.callback.IKeyboardActionCallback;
+import com.nlptech.function.gifsending.search.GifSearchWidget;
 import com.nlptech.function.gifsending.send.GifSendingWidget;
 import com.nlptech.function.keyboardclipboard.KeyboardClipboardWidget;
 import com.nlptech.function.keyboardmenu.KeyboardMenuWidget;
@@ -893,6 +893,9 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         view.findViewById(R.id.toolbar_clipboard).setOnClickListener(v -> {
             KeyboardWidgetManager.getInstance().open(KeyboardClipboardWidget.class);
         });
+        view.findViewById(R.id.toolbar_gif_search).setOnClickListener(v -> {
+            KeyboardWidgetManager.getInstance().open(GifSearchWidget.class);
+        });
         view.findViewById(R.id.toolbar_gif_sending).setOnClickListener(v -> {
             KeyboardWidgetManager.getInstance().open(GifSendingWidget.class);
         });
@@ -935,6 +938,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     @Override
     public void onCurrentInputMethodSubtypeChanged(final InputMethodSubtype subtype) {
+        KeyboardWidgetManager.getInstance().close(GifSearchWidget.class);
         // Note that the calling sequence of onCreate() and onCurrentInputMethodSubtypeChanged()
         // is not guaranteed. It may even be called at the same time on a different thread.
         InputMethodSubtype oldSubtype = mRichImm.getCurrentSubtype().getRawSubtype();
@@ -2062,5 +2066,23 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     public void onViewClicked(boolean focusChanged) {
         super.onViewClicked(focusChanged);
         KeyboardWidgetManager.getInstance().closeFunctionStripWidget();
+    }
+
+    @Override
+    public void showSuggestionView() {
+        super.showSuggestionView();
+        if (KeyboardWidgetManager.getInstance().isShown(GifSearchWidget.class)) {
+            GifSearchWidget gifSearchWidget = (GifSearchWidget) KeyboardWidgetManager.getInstance().get(GifSearchWidget.class);
+            gifSearchWidget.onShowSuggestionView();
+        }
+    }
+
+    @Override
+    public void hideSuggestionView() {
+        super.hideSuggestionView();
+        if (KeyboardWidgetManager.getInstance().isShown(GifSearchWidget.class)) {
+            GifSearchWidget gifSearchWidget = (GifSearchWidget) KeyboardWidgetManager.getInstance().get(GifSearchWidget.class);
+            gifSearchWidget.onHideSuggestionView();
+        }
     }
 }

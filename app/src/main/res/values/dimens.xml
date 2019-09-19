@@ -34,4 +34,24 @@
     <!-- GifSend Start -->
     <dimen name="gif_send_tab_height">42dp</dimen>
     <!-- GifSend End -->
+
+    <!-- GifSearch Start -->
+    <dimen name="gif_search_edit_text_layout_height">40dp</dimen>
+    <dimen name="gif_search_edit_text_layout_background_radius">30dp</dimen>
+    <dimen name="gif_search_edit_text_layout_background_stroke_width">1dp</dimen>
+    <dimen name="gif_search_edit_text_layout_margin_vertical">40dp</dimen>
+    <dimen name="gif_search_edit_text_layout_margin_bottom">40dp</dimen>
+    <dimen name="gif_search_edit_text_background_radius">6dp</dimen>
+    <dimen name="gif_search_edit_text_margin_vertical">20dp</dimen>
+    <dimen name="gif_search_edit_text_padding">6dp</dimen>
+    <dimen name="gif_search_edit_text_padding_end">55dp</dimen>
+    <dimen name="gif_search_edit_text_size">14sp</dimen>
+    <dimen name="gif_search_btn_height">40dp</dimen>
+    <dimen name="gif_search_btn_width">40dp</dimen>
+    <dimen name="gif_search_clear_btn_height">@dimen/gif_search_btn_height</dimen>
+    <dimen name="gif_search_clear_btn_width">30dp</dimen>
+    <dimen name="gif_search_btn_padding">8dp</dimen>
+    <dimen name="gif_search_suggestion_text_size">16sp</dimen>
+    <!-- GifSearch End -->
+    
 </resources>

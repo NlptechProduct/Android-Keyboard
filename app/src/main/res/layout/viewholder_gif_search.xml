@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="position"
+            type="int" />
+
+        <variable
+            name="listener"
+            type="com.nlptech.function.gifsending.search.GifSearchAdapter.Listener" />
+
+        <variable
+            name="item"
+            type="com.nlptech.function.gifsending.dataclass.GifItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+            <RelativeLayout
+                android:id="@+id/viewholder_gif_search_progress_layout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true">
+
+                <include
+                    layout="@layout/loading_page"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <com.nlptech.ui.VtRatioImageView
+                android:id="@+id/viewholder_gif_search_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view) -> listener.onItemClick(view, item, position)}" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/viewholder_gif_search_text_view"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@{item.title}"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:onClick="@{(view) -> listener.onItemClick(view, item, position)}" />-->
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
