@@ -66,6 +66,15 @@
             android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_toolbar_clipboard" />
 
+        <ImageView
+            android:id="@+id/toolbar_gif_sending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_toolbar_gif_sending" />
+
     </LinearLayout>
 
     <FrameLayout

@@ -67,6 +67,7 @@ import com.nlptech.common.utils.ApplicationUtils;
 import com.nlptech.common.utils.BuildCompatUtils;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
 import com.nlptech.function.callback.IKeyboardActionCallback;
+import com.nlptech.function.gifsending.send.GifSendingWidget;
 import com.nlptech.function.keyboardclipboard.KeyboardClipboardWidget;
 import com.nlptech.function.keyboardmenu.KeyboardMenuWidget;
 import com.nlptech.function.keyboardselector.KeyboardSelectorWidget;
@@ -891,6 +892,9 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         });
         view.findViewById(R.id.toolbar_clipboard).setOnClickListener(v -> {
             KeyboardWidgetManager.getInstance().open(KeyboardClipboardWidget.class);
+        });
+        view.findViewById(R.id.toolbar_gif_sending).setOnClickListener(v -> {
+            KeyboardWidgetManager.getInstance().open(GifSendingWidget.class);
         });
         KeyboardWidgetManager.getInstance().onCreateInputView(mInputView);
     }
