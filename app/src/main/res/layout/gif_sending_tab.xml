@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/gif_send_tab_height"
+    android:background="@drawable/keyboard_suggest_strip_lxx_light">
+
+    <TextView
+        android:id="@+id/gif_sending_tab_title"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginStart="13.3dp"
+        android:text="@string/gif_sending_main_page_title"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:textSize="@dimen/keyboard_widget_title_text_size" />
+
+    <ImageButton
+        android:id="@+id/dismiss_btn"
+        android:layout_width="@dimen/keyboard_widget_top_btn_size"
+        android:layout_height="@dimen/keyboard_widget_top_btn_size"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="?android:attr/actionBarItemBackground"
+        android:padding="@dimen/keyboard_widget_top_btn_padding"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_keyboard_menu_close" />
+
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/gif_sending_tab_title"
+        android:layout_toStartOf="@id/dismiss_btn"
+        android:layout_marginEnd="3dp"
+        android:paddingTop="2dp"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabBackground="@android:color/transparent"
+        app:tabRippleColor="@null"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabPaddingBottom="0dp"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp"
+        app:tabPaddingTop="0dp" />
+</RelativeLayout>
+

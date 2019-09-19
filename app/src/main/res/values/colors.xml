@@ -93,4 +93,8 @@
     <color name="keyboard_menu_divider_color">#F2F2F2</color>
     <color name="keyboard_menu_big_divider_color">#F1F1F1</color>
 
+    <!-- Keyboard gif sending -->
+    <color name="gif_send_category_select_color">#333333</color>
+    <color name="gif_send_category_unselect_color">#666666</color>
+
 </resources>

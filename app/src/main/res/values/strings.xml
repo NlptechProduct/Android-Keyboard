@@ -582,4 +582,9 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="setup_wizard_enable_keyboard">Enable %s</string>
     <string name="setup_wizard_select_keyboard">Select %s</string>
     <string name="setup_wizard_go_action">Go</string>
+
+    <!-- Gif Sending Start-->
+    <string name="gif_sending_main_page_title">Pictures</string>
+    <string name="gif_sending_main_page_network_unavailable">No network connection available</string>
+    <!-- Gif Sending End-->
 </resources>

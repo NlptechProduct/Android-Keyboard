@@ -31,4 +31,7 @@
     <dimen name="keyboard_menu_content_item_switch_margin_end">10.7dp</dimen>
     <!-- Keyboard menu End-->
 
+    <!-- GifSend Start -->
+    <dimen name="gif_send_tab_height">42dp</dimen>
+    <!-- GifSend End -->
 </resources>

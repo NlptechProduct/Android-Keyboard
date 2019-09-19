@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+    </data>
+
+    <com.nlptech.function.gifsending.send.gif.GifPage
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gif_send_tab_height"
+            android:background="#f5f5f5"
+            android:layout_toEndOf="@id/title"
+            android:paddingTop="2dp"
+            app:tabIndicatorColor="#ff6f61"
+            app:tabTextColor="#666666"
+            app:tabSelectedTextColor="#333333"
+            app:tabMode="scrollable"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="5dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingTop="0dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/gif_view_pager"
+            android:layout_below="@id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+
+        <RelativeLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent">
+
+            <include
+                layout="@layout/loading_page"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+    </com.nlptech.function.gifsending.send.gif.GifPage>
+
+</layout>
