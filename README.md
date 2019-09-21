@@ -41,7 +41,7 @@ With the help of the theme customization framework, it's very easy for you to ma
 
 ## License
 
-    Copyright 2019 NLPTech
+    Copyright 2019 NLP Tech
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

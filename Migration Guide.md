@@ -81,7 +81,7 @@ Add Zengine appkey into AndroidManifest.xml:
 </application>
 
 ~~~
-If you do not have your own appkey, get it [here](http://zengine.nlptech.com/register).
+If you do not have your own appkey, get it [here](http://zengine.nlptech.com/register). If you have difficulty in getting the appkey, please contact zengine@nlptech.com.
 
 
 ## 3. method.xml
