@@ -27,6 +27,14 @@ With the help of the theme customization framework, it's very easy for you to ma
 ![GitHub Logo](./Led.gif)
 ![GitHub Logo](./Neon.gif)
 
+## Functions
+
+* Keyboard menu
+* Selector control
+* Clipboard
+* Gif search 
+* Gifs sending
+
 
 ## Tutorials
 1. [Building a new software keyboard](https://github.com/NlptechProduct/Android-Keyboard/blob/master/Build%20a%20New%20Virtual%20Keyboard%20Project.md)
