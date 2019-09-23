@@ -1,7 +1,7 @@
 package com.nlptech.function.languagesetting.langadded;
 
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlptech.function.languagesetting.LanguageSettingAdapter;
 

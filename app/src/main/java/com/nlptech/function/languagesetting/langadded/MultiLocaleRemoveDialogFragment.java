@@ -3,9 +3,11 @@ package com.nlptech.function.languagesetting.langadded;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.inputmethod.latin.R;
+import com.nlptech.common.utils.DensityUtil;
 import com.nlptech.language.IMELanguage;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,12 +31,12 @@ public class MultiLocaleRemoveDialogFragment extends DialogFragment {
     protected Activity mActivity;
     protected AlertDialog mDialog;
 
-    private List<IMELanguage> mSubtypeIMES;
+    private List<IMELanguage> mIMELanguages;
 
     private Adapter mAdapter;
 
     public interface MultiLocaleRemoveListener {
-        void onLocaleRemoved(IMELanguage subtypeIME);
+        void onLocaleRemoved(IMELanguage IMELanguage);
     }
     private MultiLocaleRemoveListener mMultiLocaleRemoveListener;
 
@@ -51,8 +54,8 @@ public class MultiLocaleRemoveDialogFragment extends DialogFragment {
         mMultiLocaleRemoveListener = localeRemoveListener;
     }
 
-    public void setSubtypeIMES(List<IMELanguage> subtypeIMES) {
-        mSubtypeIMES = subtypeIMES;
+    public void setSubtypeIMES(List<IMELanguage> IMELanguages) {
+        mIMELanguages = IMELanguages;
     }
 
     @NotNull
@@ -60,44 +63,64 @@ public class MultiLocaleRemoveDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(mActivity).inflate(R.layout.dialogfg_multi_locale_remove, null, false);
         TextView title = view.findViewById(R.id.title);
-        if (mSubtypeIMES != null && mSubtypeIMES.get(0) != null) {
-            title.setText(mSubtypeIMES.get(0).getLayout());
+        if (mIMELanguages != null && mIMELanguages.get(0) != null) {
+            title.setText(mIMELanguages.get(0).getLayoutName());
         }
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        mAdapter = new Adapter(mSubtypeIMES, subtypeIME -> {
-            mSubtypeIMES.remove(subtypeIME);
-            mAdapter.setData(mSubtypeIMES);
+        mAdapter = new Adapter(mIMELanguages, subtypeIME -> {
+            mIMELanguages.remove(subtypeIME);
+            mAdapter.setData(mIMELanguages);
             if (mMultiLocaleRemoveListener != null) mMultiLocaleRemoveListener.onLocaleRemoved(subtypeIME);
-            if (mSubtypeIMES.size() == 0) {
+            if (mIMELanguages.size() == 0) {
                 MultiLocaleRemoveDialogFragment.this.dismiss();
             }
         });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity,RecyclerView.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity, RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
-                .setView(view)
-                .setPositiveButton("OK", (dialog, which) -> {
-                    MultiLocaleRemoveDialogFragment.this.dismiss();
-                });
+                .setView(view);
+
+
         mDialog = builder.create();
         return mDialog;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+
+        Window win = getDialog().getWindow();
+        // 一定要设置Background，如果不设置，windo
+        ViewGroup.LayoutParams params = win.getAttributes();
+        // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
+        params.width = DensityUtil.dp2px(getActivity(),290);
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     private class Adapter extends RecyclerView.Adapter<RemoveViewHolder> {
 
         RemoveViewHolderListener removeViewHolderListener;
-        List<IMELanguage> subtypeIMES;
+        List<IMELanguage> IMELanguages;
 
-        private Adapter(List<IMELanguage> subtypeIMES, RemoveViewHolderListener listener) {
-            this.subtypeIMES = subtypeIMES;
+        private Adapter(List<IMELanguage> IMELanguages, RemoveViewHolderListener listener) {
+            this.IMELanguages = IMELanguages;
             this.removeViewHolderListener = listener;
         }
 
-        public void setData(List<IMELanguage> subtypeIMES) {
-            this.subtypeIMES = subtypeIMES;
+        public void setData(List<IMELanguage> IMELanguages) {
+            this.IMELanguages = IMELanguages;
             notifyDataSetChanged();
         }
 
@@ -110,17 +133,17 @@ public class MultiLocaleRemoveDialogFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull RemoveViewHolder viewHolder, int i) {
-            viewHolder.bind(subtypeIMES.get(i));
+            viewHolder.bind(IMELanguages.get(i));
         }
 
         @Override
         public int getItemCount() {
-            return subtypeIMES == null ? 0 : subtypeIMES.size();
+            return IMELanguages == null ? 0 : IMELanguages.size();
         }
     }
 
     private interface RemoveViewHolderListener {
-        void onClick(IMELanguage subtypeIME);
+        void onClick(IMELanguage IMELanguage);
     }
 
     private class RemoveViewHolder extends RecyclerView.ViewHolder {
@@ -136,9 +159,9 @@ public class MultiLocaleRemoveDialogFragment extends DialogFragment {
             removeViewHolderListener = listener;
         }
 
-        void bind(final IMELanguage subtypeIME) {
-            displayName.setText(subtypeIME.getDisplayName());
-            removeIcon.setOnClickListener(v -> removeViewHolderListener.onClick(subtypeIME));
+        void bind(final IMELanguage IMELanguage) {
+            displayName.setText(IMELanguage.getDisplayName());
+            removeIcon.setOnClickListener(v -> removeViewHolderListener.onClick(IMELanguage));
         }
     }
 }

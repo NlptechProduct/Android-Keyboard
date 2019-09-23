@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.inputmethod.latin.databinding.ViewholderAddedMultiBinding;
 import com.nlptech.function.languagesetting.LangBaseViewHolder;
 import com.nlptech.function.languagesetting.LanguageSettingAdapter;
+import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
+
+import java.util.List;
 
 public class AddedMultiViewHolder extends LangBaseViewHolder<IMELanguageWrapper> {
 
@@ -28,7 +31,7 @@ public class AddedMultiViewHolder extends LangBaseViewHolder<IMELanguageWrapper>
     public void fillView(IMELanguageWrapper entity, int size) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext(), RecyclerView.VERTICAL,false);
         binding.recyclerView.setLayoutManager(layoutManager);
-        binding.layoutSetName.setText(entity.getMultiIMELanguage().getLayoutSet());
+        binding.layoutSetName.setText(entity.getMultiIMELanguage().getLayoutName());
         if(size <= 1){
             binding.removeBtn.setVisibility(View.GONE);
         }else{
@@ -45,8 +48,16 @@ public class AddedMultiViewHolder extends LangBaseViewHolder<IMELanguageWrapper>
             languageListener.onClickRemove(entity);
         });
 
-        binding.layoutSetName.setOnClickListener(v -> {
-            languageListener.onClickChangeLayoutSet(entity.getMultiIMELanguage().getSubtypeIMEList().get(0));
+        binding.recyclerView.setOnTouchListener((v, event) -> itemView.onTouchEvent(event));
+
+        itemView.setOnClickListener(v -> {
+            if(languageListener == null){
+                return;
+            }
+            List<IMELanguage> imeList = entity.getMultiIMELanguage().getSubtypeIMEList();
+            if (imeList.size() > 0) {
+                languageListener.onClickChangeLayoutSet(imeList.get(0));
+            }
         });
     }
 }
