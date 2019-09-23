@@ -2011,7 +2011,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         final AlertDialog.Builder builder = new AlertDialog.Builder(
                 DialogUtils.getPlatformDialogThemeContext(this));
 
-        SubtypeSwitchDialogView dialogView = (SubtypeSwitchDialogView) getLayoutInflater().inflate(R.layout.subtype_switch_dialog_view, null);
+        SubtypeSwitchDialogView dialogView = (SubtypeSwitchDialogView) getLayoutInflater().inflate(R.layout.subtype_switch, null);
         dialogView.setListener(this);
         builder.setView(dialogView);
         final AlertDialog dialog = builder.create();
