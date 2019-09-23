@@ -998,9 +998,24 @@ gestureTrailColor | 滑行轨迹的颜色
 -----|:--------
 Builder | 返回的Builder
 
-#### setEmojiCategoryPageIndicatorBackground
+#### setEmojiCategoryPageIndicatorForegroundColor
 ```Java
-public Builder setEmojiCategoryPageIndicatorBackground (String emojiCategoryPageIndicatorBackgroundColor)
+public Builder setEmojiCategoryPageIndicatorForegroundColor (String emojiCategoryPageIndicatorForegroundColor)
+```
+设置Emoji页面下方的分类Indicator滑块颜色。
+
+参数 | 参数说明
+-----|:--------
+emojiCategoryPageIndicatorForegroundColor | Emoji页面下方的分类Indicator滑块颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+#### setEmojiCategoryPageIndicatorBackgroundColor
+```Java
+public Builder setEmojiCategoryPageIndicatorBackgroundColor (String emojiCategoryPageIndicatorBackgroundColor)
 ```
 设置Emoji页面下方的分类Indicator的背景颜色。
 
