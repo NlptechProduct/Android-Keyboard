@@ -13,9 +13,7 @@ import com.nlptech.common.utils.DisplayUtil
 class ThemeManageAdapter(val context: Context, val listener: Listener) : RecyclerView.Adapter<ThemeManageItemViewHolder>() {
 
     interface Listener {
-        fun onImageClick(view: View, themeManageItem: ThemeManageItem, position: Int)
-        fun onSelectButtonClick(view: View, themeManagerItem: ThemeManageItem, position: Int)
-        fun onDownloadButtonClick(view: View, themeManagerItem: ThemeManageItem, position: Int)
+        fun onItemClick(view: View, themeManageItem: ThemeManageItem, position: Int)
         fun onThemeApply(view: View, position: Int)
         fun onKeyBorderSwitchChanged(buttonView: CompoundButton?, checked: Boolean)
     }

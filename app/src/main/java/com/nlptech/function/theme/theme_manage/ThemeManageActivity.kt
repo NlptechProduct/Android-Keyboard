@@ -21,6 +21,9 @@ import com.nlptech.function.theme.keyboard_preview.ThemeManagerBottomSheetFragme
 import com.nlptech.common.utils.CheckPermissionsUtils
 import com.nlptech.common.utils.LogUtil
 import com.nlptech.common.utils.ViewUtils
+import com.nlptech.inputmethod.latin.InputAttributes
+import com.nlptech.inputmethod.latin.settings.Settings
+import com.nlptech.keyboardview.accessibility.AccessibilityUtils
 import kotlinx.android.synthetic.main.activity_keyboard_theme_manage.*
 
 
@@ -59,30 +62,25 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
         })
 
         activity_keyboard_theme_manage_flbtn.setOnClickListener(this)
+
+        // init something witch will be initialized by LatinIME.
+        if (Settings.getInstance().current == null) {
+            val inputAttributes = InputAttributes(null,
+                    false, packageName)
+            val locale = resources.configuration.locale
+            Settings.getInstance().loadSettings(applicationContext, locale, inputAttributes, null)
+        }
+        AccessibilityUtils.init(applicationContext)
     }
 
-    override fun onImageClick(view: View, themeManageItem: ThemeManageItem, position: Int) {
-        LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onImageClick()")
+    override fun onItemClick(view: View, themeManageItem: ThemeManageItem, position: Int) {
+        LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onItemClick()")
         ViewUtils.disableViewTemp(view)
         val viewModel = ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
         showBottomSheet(themeManageItem, position)
     }
 
     private fun showBottomSheet(themeManagerItem: ThemeManageItem, position: Int) {
-        val fragment = ThemeManagerBottomSheetFragment.newInstance(themeManagerItem.keyboardThemeId, position, this)
-        fragment.show(supportFragmentManager, "ThemeManageBottomSheetFragment")
-    }
-
-    override fun onDownloadButtonClick(view: View, themeManagerItem: ThemeManageItem, position: Int) {
-        LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onDownloadButtonClick()")
-        ViewUtils.disableViewTemp(view)
-        val viewModel = ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
-        viewModel.download(themeManagerItem, position)
-    }
-
-    override fun onSelectButtonClick(view: View, themeManagerItem: ThemeManageItem, position: Int) {
-        LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onSelectButtonClick()")
-        ViewUtils.disableViewTemp(view)
         val fragment = ThemeManagerBottomSheetFragment.newInstance(themeManagerItem.keyboardThemeId, position, this)
         fragment.show(supportFragmentManager, "ThemeManageBottomSheetFragment")
     }

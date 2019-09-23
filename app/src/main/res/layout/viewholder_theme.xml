@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -16,86 +17,103 @@
             type="com.nlptech.function.theme.theme_manage.ThemeManageItem" />
     </data>
 
-    <RelativeLayout
+
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="@dimen/theme_manage_item_background_radius"
+        app:cardElevation="@dimen/theme_manage_item_background_radius">
 
-        <LinearLayout
-            android:id="@+id/viewholder_theme"
-            android:layout_width="100dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
+            android:background="@android:color/transparent">
 
-            <!-- Image -->
+            <LinearLayout
+                android:id="@+id/viewholder_theme"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
+
+                <!-- Image -->
+                <ImageView
+                    android:id="@+id/viewholder_theme_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop" />
+
+                <!-- Name -->
+                <TextView
+                    android:id="@+id/viewholder_theme_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/theme_manage_item_name_padding"
+                    android:text="@{themeManageItem.themeName}"
+                    android:textColor="@color/theme_manage_item_name_text_color"
+                    android:textSize="@dimen/theme_manage_item_name_text_size"
+                    android:visibility="gone" />
+
+                <!-- Selectable -->
+                <RelativeLayout
+                    android:id="@+id/viewholder_theme_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F8F8"
+                    android:visibility="@{themeManageItem.selectable}">
+
+                    <ImageView
+                        android:id="@+id/viewholder_theme_radio_button_ib"
+                        android:layout_width="@dimen/theme_manage_item_button_size"
+                        android:layout_height="@dimen/theme_manage_item_button_size"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/theme_manage_item_button_padding"
+                        android:src="@drawable/ic_theme_manage_radio_button" />
+
+                </RelativeLayout>
+
+                <!-- Downloadable -->
+                <RelativeLayout
+                    android:id="@+id/viewholder_theme_download_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F8F8"
+                    android:visibility="@{themeManageItem.downloadable}">
+
+                    <ImageView
+                        android:id="@+id/viewholder_theme_download_button_ib"
+                        android:layout_width="@dimen/theme_manage_item_button_size"
+                        android:layout_height="@dimen/theme_manage_item_button_size"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/theme_manage_item_button_padding"
+                        android:src="@drawable/ic_theme_manage_download" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- Black stroke and ripple  -->
             <ImageView
-                android:id="@+id/viewholder_theme_iv"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:onClick="@{(view) -> listener.onImageClick(view, themeManageItem, position)}"
-                android:padding="@dimen/theme_manage_item_image_padding"
-                android:scaleType="fitCenter" />
-
-            <!-- Name -->
-            <TextView
-                android:id="@+id/viewholder_theme_name_tv"
+                android:id="@+id/viewholder_theme_top_visual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/theme_manage_item_name_margin"
-                android:background="@android:color/transparent"
-                android:padding="@dimen/theme_manage_item_name_padding"
-                android:text="@{themeManageItem.themeName}"
-                android:textColor="@color/theme_manage_item_name_text_color"
-                android:textSize="@dimen/theme_manage_item_name_text_size"
-                android:visibility="gone" />
+                android:layout_alignStart="@+id/viewholder_theme"
+                android:layout_alignTop="@+id/viewholder_theme"
+                android:layout_alignEnd="@+id/viewholder_theme"
+                android:layout_alignBottom="@+id/viewholder_theme"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:onClick="@{(view) -> listener.onItemClick(view, themeManageItem, position)}"
+                android:focusable="true"
+                android:src="@drawable/bg_theme_manage_item_stroke" />
 
-            <!-- Selectable -->
-            <RelativeLayout
-                android:id="@+id/viewholder_theme_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:onClick="@{(view) -> listener.onSelectButtonClick(view, themeManageItem, position)}"
-                android:visibility="@{themeManageItem.selectable}">
+        </RelativeLayout>
 
-                <ImageButton
-                    android:id="@+id/viewholder_theme_radio_button_ib"
-                    android:layout_width="@dimen/theme_manage_item_button_size"
-                    android:layout_height="@dimen/theme_manage_item_button_size"
-                    android:layout_centerHorizontal="true"
-                    android:background="?android:attr/actionBarItemBackground"
-                    android:onClick="@{(view) -> listener.onSelectButtonClick(view, themeManageItem, position)}"
-                    android:padding="@dimen/theme_manage_item_button_padding"
-                    android:src="@drawable/ic_theme_manage_radio_button" />
-
-            </RelativeLayout>
-
-            <!-- Downloadable -->
-            <RelativeLayout
-                android:id="@+id/viewholder_theme_download_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:onClick="@{(view) -> listener.onDownloadButtonClick(view, themeManageItem, position)}"
-                android:visibility="@{themeManageItem.downloadable}">
-
-                <ImageButton
-                    android:id="@+id/viewholder_theme_download_button_ib"
-                    android:layout_width="@dimen/theme_manage_item_button_size"
-                    android:layout_height="@dimen/theme_manage_item_button_size"
-                    android:layout_centerHorizontal="true"
-                    android:background="?android:attr/actionBarItemBackground"
-                    android:onClick="@{(view) -> listener.onDownloadButtonClick(view, themeManageItem, position)}"
-                    android:padding="@dimen/theme_manage_item_button_padding"
-                    android:src="@drawable/ic_theme_manage_download" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>
