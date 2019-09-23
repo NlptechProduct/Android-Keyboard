@@ -112,7 +112,7 @@ public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSw
     private void initThemeItems() {
 //        KeyboardThemeManager.getInstance().setUiModuleBackground(subtypeLayout);
 //        KeyboardThemeManager.getInstance().setUiModuleBackground(charsetLayout);
-        KeyboardThemeManager.getInstance().colorUiModuleIcon(enterCharsetBtn);
+//        KeyboardThemeManager.getInstance().colorUiModuleIcon(enterCharsetBtn);
         // TODO use other theme's settings : waiting for themeManager definition
     }
 

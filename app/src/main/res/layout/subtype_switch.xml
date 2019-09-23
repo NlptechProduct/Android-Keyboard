@@ -6,16 +6,16 @@
 
     <RelativeLayout
         android:id="@+id/subtype_layout"
-        android:layout_width="280dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/round_img_bg">
+        android:background="@drawable/dialog_select_layoutset_background">
 
         <RelativeLayout
-            android:layout_width="280dp"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="10dp">
+            android:padding="23dp">
 
             <TextView
                 android:id="@+id/title"
@@ -83,7 +83,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/open_language_settings"
-                android:textColor="@android:color/holo_blue_dark"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="17sp"/>
         </RelativeLayout>
@@ -92,30 +92,28 @@
 
     <RelativeLayout
         android:id="@+id/layoutset_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_img_bg"
+        android:background="@drawable/dialog_select_layoutset_background"
         android:layout_centerInParent="true"
-        android:padding="10dp">
+        android:padding="23dp">
 
         <TextView
             android:id="@+id/layoutset_layout_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:text="@string/keyboard_language_choose_layout"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"/>
 
         <com.nlptech.function.languagesetting.langswitch.MaxHeightRecyclerView
             android:id="@+id/charset_recycler"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@id/layoutset_layout_title" />
 
     </RelativeLayout>
-
 
 </com.nlptech.function.languagesetting.langswitch.SubtypeSwitchDialogView>
