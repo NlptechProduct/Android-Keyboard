@@ -22,7 +22,7 @@ class ThemeManageItemViewHolder(
 
     init {
         binding.root.viewholder_theme.layoutParams.width = itemWidth
-        binding.root.viewholder_theme_iv.layoutParams.height = WRAP_CONTENT
+        binding.root.viewholder_theme_iv.layoutParams.height = (itemWidth * 0.7f).toInt()
         binding.executePendingBindings()
     }
 
@@ -37,6 +37,7 @@ class ThemeManageItemViewHolder(
 
     private fun setRadioButtonSelected(isSelected: Boolean) {
         itemView.viewholder_theme_radio_button_ib.isSelected = isSelected
+        itemView.viewholder_theme_top_visual.isSelected = isSelected
     }
 
     private fun setImageDrawable(keyboardThemeId: Int) {

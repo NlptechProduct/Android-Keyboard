@@ -1,93 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data></data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/fragment_theme_manage_keyboard_preview_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" />
+        android:background="@android:color/transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/theme_manage_preview_button_margin"
-            android:layout_marginEnd="@dimen/theme_manage_preview_button_margin"
-            android:layout_marginBottom="@dimen/theme_manage_preview_button_margin"
-            android:background="@android:color/transparent"
+            android:background="@drawable/bg_theme_manage_preview"
             android:orientation="vertical">
 
+            <!-- Preview -->
+            <RelativeLayout
+                android:id="@+id/fragment_theme_manage_card_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@android:color/transparent">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/theme_manage_preview_margin_top"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/theme_manage_item_background_radius"
+                    app:cardElevation="@dimen/theme_manage_item_background_radius">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/fragment_theme_manage_preview_container"
+                            android:layout_width="200dp"
+                            android:layout_height="150dp"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent" />
+
+                        <ImageView
+                            android:id="@+id/fragment_theme_manage_preview_stroke"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignStart="@+id/fragment_theme_manage_preview_container"
+                            android:layout_alignTop="@+id/fragment_theme_manage_preview_container"
+                            android:layout_alignEnd="@+id/fragment_theme_manage_preview_container"
+                            android:layout_alignBottom="@+id/fragment_theme_manage_preview_container"
+                            android:background="@drawable/bg_theme_manage_item_stroke_selected"
+                            android:src="@android:color/transparent" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <!-- Border and delete button -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/theme_manage_preview_switch_margin_horizontal"
-                android:layout_marginBottom="@dimen/theme_manage_preview_switch_margin_horizontal">
+                android:background="@android:color/transparent">
 
                 <TextView
                     android:id="@+id/fragment_theme_manage_preview_show_key_board_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/theme_manage_preview_switch_text_margin_left"
                     android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
-                    android:gravity="center_vertical"
                     android:text="@string/theme_manage_preview_show_key_boarder"
                     android:textSize="@dimen/theme_manage_preview_switch_text_size" />
 
                 <Switch
-                    android:id="@+id/fragment_theme_manage_preview_show_key_board_sw"
+                    android:id="@+id/fragment_theme_manage_preview_switch"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/theme_manage_preview_switch_size"
+                    android:layout_height="@dimen/keyboard_widget_switch_height"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/fragment_theme_manage_preview_show_key_board_tv" />
+                    android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+                    android:layout_toEndOf="@+id/fragment_theme_manage_preview_show_key_board_tv"
+                    android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+                    android:track="@drawable/bg_keyboard_menu_switch_track" />
 
-                <ImageButton
-                    android:id="@+id/fragment_theme_manage_preview_delete_btn"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/theme_manage_preview_delete_size"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_theme_manage_preview_delete" />
+                    android:layout_marginEnd="@dimen/theme_manage_preview_delete_margin_right"
+                    android:background="@drawable/bg_theme_manage_preview_delete_button">
+
+                    <ImageButton
+                        android:id="@+id/fragment_theme_manage_preview_delete_button"
+                        android:layout_width="@dimen/theme_manage_preview_delete_size"
+                        android:layout_height="@dimen/theme_manage_preview_delete_size"
+                        android:background="?android:attr/actionBarItemBackground"
+                        android:padding="5.5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_theme_manage_preview_delete" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
+            <!-- Apply button -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/theme_manage_bottom_sheet_apply_button_background_color">
+                android:layout_marginStart="@dimen/theme_manage_preview_apply_margin_vertical"
+                android:layout_marginTop="@dimen/theme_manage_preview_apply_margin_top"
+                android:layout_marginEnd="@dimen/theme_manage_preview_apply_margin_vertical"
+                android:layout_marginBottom="@dimen/theme_manage_preview_apply_margin_bottom"
+                android:background="@drawable/bg_theme_manage_preview_apply_button">
 
                 <Button
                     android:id="@+id/fragment_theme_manage_preview_apply_button"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/theme_manage_preview_button_height"
+                    android:layout_height="@dimen/theme_manage_preview_apply_height"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="@string/theme_manage_preview_apply_button_text"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/theme_manage_preview_button_text_size" />
+                    android:textSize="@dimen/theme_manage_preview_apply_text_size" />
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/fragment_theme_manage_preview_close_button"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/theme_manage_preview_button_height"
-                android:background="?android:attr/selectableItemBackground"
-                android:gravity="center"
-                android:text="@string/theme_manage_preview_close_button_text"
-                android:textColor="@color/theme_manage_bottom_sheet_close_button_text_color"
-                android:textSize="@dimen/theme_manage_preview_button_text_size" />
-
         </LinearLayout>
 
-    </LinearLayout>
+        <!-- Close -->
+        <ImageButton
+            android:id="@+id/fragment_theme_manage_preview_close_button"
+            android:layout_width="@dimen/theme_manage_preview_close_size"
+            android:layout_height="@dimen/theme_manage_preview_close_size"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/theme_manage_preview_close_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/theme_manage_preview_close_padding"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_theme_manage_preview_close" />
+
+    </RelativeLayout>
 
 </layout>

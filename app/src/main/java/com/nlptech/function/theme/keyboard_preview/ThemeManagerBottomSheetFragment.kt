@@ -1,6 +1,7 @@
 package com.nlptech.function.theme.keyboard_preview
 
 import android.app.Dialog
+import android.content.Context
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.CompoundButton
 import android.widget.ImageButton
+import android.widget.RelativeLayout
 import android.widget.Switch
 import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
 import com.nlptech.keyboardview.theme.KeyboardTheme
@@ -24,6 +26,7 @@ import com.nlptech.common.constant.Constants
 import com.nlptech.function.theme.custom_theme.CreateCustomThemeDialogFragment
 import com.nlptech.function.theme.custom_theme.CustomThemeDeleteTask
 import com.nlptech.function.theme.theme_manage.ThemeManageAdapter
+import com.nlptech.inputmethod.latin.utils.ResourceUtils
 import com.nlptech.keyboardview.theme.KeyboardThemeManager
 
 
@@ -62,8 +65,10 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         val rootView = View.inflate(context, R.layout.fragment_theme_manage_preview_bottom_sheet, null)
         val applyButton = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_apply_button)
         val closeButton = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_close_button)
-        val showKeyBoarderSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_show_key_board_sw)
-        val deleteButton = rootView.findViewById<ImageButton>(R.id.fragment_theme_manage_preview_delete_btn)
+        val showKeyBoarderSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_switch)
+        val deleteButton = rootView.findViewById<ImageButton>(R.id.fragment_theme_manage_preview_delete_button)
+        val cardViewContainer = rootView.findViewById<View>(R.id.fragment_theme_manage_card_view_container)
+        val inputViewContainer = rootView.findViewById<RelativeLayout>(R.id.fragment_theme_manage_preview_container)
 
         applyButton.setOnClickListener(this)
         closeButton.setOnClickListener(this)
@@ -71,19 +76,36 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         showKeyBoarderSwitch.setOnCheckedChangeListener(this)
 
         deleteButton.setOnClickListener(this)
-        deleteButton.visibility = if (KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId).themeType != KeyboardTheme.ThemeType.LOCAL) View.VISIBLE else View.GONE
+        deleteButton.visibility = if (KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId).themeType == KeyboardTheme.ThemeType.CUSTOM) View.VISIBLE else View.GONE
+
+        cardViewContainer.layoutParams.height = getDefaultKeyboardHeight() + getSuggestionStripViewHeight() + resources.getDimensionPixelSize(R.dimen.theme_manage_preview_margin_top) + resources.getDimensionPixelSize(R.dimen.theme_manage_preview_margin_bottom)
+        inputViewContainer.layoutParams.width = getDefaultKeyboardWidth()
+        inputViewContainer.layoutParams.height = getDefaultKeyboardHeight() + getSuggestionStripViewHeight()
 
         dialog!!.setContentView(rootView)
-        mBehavior = BottomSheetBehavior.from<View>(rootView!!.getParent() as View)
+        mBehavior = BottomSheetBehavior.from<View>(rootView!!.parent as View)
         mBehavior!!.isHideable = true
         return dialog as BottomSheetDialog
+    }
+
+
+    private fun getDefaultKeyboardHeight(): Int {
+        return ResourceUtils.getDefaultKeyboardHeight(context) * getDefaultKeyboardWidth() / ResourceUtils.getDefaultKeyboardWidth(context)
+    }
+
+    private fun getDefaultKeyboardWidth(): Int {
+        return ResourceUtils.getDefaultKeyboardWidth(context) - resources.getDimensionPixelSize(com.nlptech.keyboardview.R.dimen.theme_manage_preview_margin_vertical) * 2
+    }
+
+    private fun getSuggestionStripViewHeight(): Int {
+        return ResourceUtils.getSuggestionStripViewHeight(context)
     }
 
     override fun onStart() {
         super.onStart()
         mBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
 
-        val inputViewContainer = dialog!!.findViewById<ViewGroup>(R.id.fragment_theme_manage_keyboard_preview_container)
+        val inputViewContainer = dialog!!.findViewById<ViewGroup>(R.id.fragment_theme_manage_preview_container)
         inputViewContainer!!.removeAllViews()
         val themeContext =  Agent.getInstance().getThemeContext(context,themeId )
         val currentInputView = LayoutInflater.from(themeContext).inflate(
@@ -92,11 +114,6 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         val container = currentInputView.findViewById<ViewGroup>(R.id.kb_container)
         Agent.getInstance().showThemePreview(container, themeId)
         updateThemeAndCreateInputView(container)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Agent.getInstance().dismissThemePreview()
     }
 
     private fun updateThemeAndCreateInputView(inputViewContainer: ViewGroup) {
@@ -113,6 +130,16 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
                 Settings.getInstance().current,
                 Constants.TextUtils.CAP_MODE_OFF,
                 RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        KeyboardThemeManager.getInstance().isInKeyboardThemePreview = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Agent.getInstance().dismissThemePreview()
     }
 
     fun close(isAnimation: Boolean) {
@@ -148,7 +175,7 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
                 close(false)
             }
 
-            R.id.fragment_theme_manage_preview_delete_btn -> {
+            R.id.fragment_theme_manage_preview_delete_button -> {
                 deleteTheme()
             }
         }
