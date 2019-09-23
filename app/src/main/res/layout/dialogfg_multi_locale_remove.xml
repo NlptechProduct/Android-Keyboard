@@ -2,12 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@drawable/dialog_select_layoutset_background"
     android:layout_height="wrap_content">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="23dp">
 
         <TextView
             android:id="@+id/title"
@@ -15,13 +16,26 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:paddingBottom="15dp"/>
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/title"
+            android:layout_marginTop="20dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/multi_btn"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/recyclerView"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:text="@string/keyboard_language_ok"/>
+
+    </RelativeLayout>
 </FrameLayout>

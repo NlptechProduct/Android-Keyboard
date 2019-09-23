@@ -3,17 +3,21 @@ package com.nlptech.function.languagesetting.langadded;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.RadioButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.inputmethod.latin.R;
+import com.nlptech.common.utils.DensityUtil;
 import com.nlptech.language.IMELanguage;
 import com.nlptech.language.LayoutDisplayTable;
 
@@ -31,7 +35,6 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
     private List<String> mLayoutSets;
     private String mCurrentLayoutSet;
     private IMELanguage imeLanguage;
-
     private Adapter mAdapter;
 
     public interface SelectLayoutSetListener {
@@ -47,11 +50,15 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
         mSelectLayoutSetListener = layoutSetListener;
     }
 
+    public void setIMELanguage(IMELanguage imeLanguage) {
+        this.imeLanguage = imeLanguage;
+    }
+
     public void setCharset(String charset) {
         mCharset = charset;
     }
 
-    public void setLayoutSets(List<String> layoutSets) {
+    public void setLayoutSets(List<String>  layoutSets) {
         this.mLayoutSets = layoutSets;
     }
 
@@ -59,14 +66,31 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
         mCurrentLayoutSet = currentLayoutSet;
     }
 
-    public void setIMELanguage(IMELanguage imeLanguage) {
-        this.imeLanguage = imeLanguage;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+
+        Window win = getDialog().getWindow();
+        // 一定要设置Background，如果不设置，windo
+        ViewGroup.LayoutParams params = win.getAttributes();
+        // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
+        params.width = DensityUtil.dp2px(getActivity(),290);
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     @NotNull
@@ -81,7 +105,7 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
             if (mSelectLayoutSetListener != null) mSelectLayoutSetListener.onLayoutSetChanged(imeLanguage, mCurrentLayoutSet);
 
         });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity,RecyclerView.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity, RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
         mDialog = new AlertDialog.Builder(mActivity).setView(view).create();
@@ -90,11 +114,11 @@ public class SelectLayoutSetDialogFragment extends DialogFragment {
 
     private class Adapter extends RecyclerView.Adapter<LayoutSetViewHolder> {
 
-        List<String> layoutSets;
+        List<String>  layoutSets;
         String currentLayoutSet;
         LayoutSetViewHolderListener layoutSetViewHolderListener;
 
-        private Adapter(List<String> layoutSets, String currentLayoutSet, LayoutSetViewHolderListener listener) {
+        private Adapter(List<String>  layoutSets, String currentLayoutSet, LayoutSetViewHolderListener listener) {
             this.layoutSets = layoutSets;
             this.currentLayoutSet = currentLayoutSet;
             this.layoutSetViewHolderListener = listener;

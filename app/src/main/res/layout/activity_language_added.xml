@@ -12,14 +12,14 @@
         <RelativeLayout
             android:background="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
                 android:id="@+id/enable_multilingual_typing"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:background="#f0f0f0">
 
                 <ImageView
@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_enable_multilingual_typing"
+                    android:src="@drawable/language_icon_tips"
                     android:layout_marginStart="10dp"/>
 
                 <TextView
@@ -55,9 +55,9 @@
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="20dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:background="@color/colorPrimary">
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/keyboard_add_language_btn_bg">
 
                 <TextView
                     android:id="@+id/choose"
@@ -67,7 +67,6 @@
                     android:textColor="@android:color/white"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:background="?android:attr/selectableItemBackground"
                     android:text="@string/language_setting_add_language"
                     android:textSize="17sp"/>
 

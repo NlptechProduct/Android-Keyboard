@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loading_container"
+    android:layout_width="match_parent"
+    android:paddingStart="27dp"
+    android:paddingEnd="27dp"
+    android:paddingTop="23dp"
+    android:background="@drawable/dialog_multitype_background"
+    android:paddingBottom="23dp"
+    android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/multi_title"
+        android:layout_width="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_height="wrap_content"
+        android:text="@string/multityping_help_info_title"/>
+
+    <TextView
+        android:id="@+id/multi_info"
+        android:layout_below="@id/multi_title"
+        android:layout_marginTop="20dp"
+        android:textColor="#999999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"
+        android:textSize="12sp"
+        android:text="@string/multityping_help_info"/>
+
+    <TextView
+        android:id="@+id/multi_btn"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/multi_info"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:text="@string/keyboard_language_ok"/>
+</RelativeLayout>
