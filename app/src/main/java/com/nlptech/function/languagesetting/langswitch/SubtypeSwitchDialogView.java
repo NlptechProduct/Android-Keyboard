@@ -83,7 +83,7 @@ public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSw
         });
         localeOrLayoutName = findViewById(R.id.localeOrLayoutName);
         enterCharsetBtn = findViewById(R.id.change_layout);
-        enterCharsetBtn.setOnClickListener(v -> enterCharset(currentSubtype));
+        findViewById(R.id.top_layout).setOnClickListener(v -> enterCharset(currentSubtype));
         layout.setOnClickListener(v -> {
             if (isCharsetShow) {
                 showSubtype();

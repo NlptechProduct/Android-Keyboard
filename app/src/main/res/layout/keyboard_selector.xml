@@ -23,7 +23,7 @@
                 android:id="@+id/keyboard_selector_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="13.3dp"
+                android:layout_marginStart="@dimen/keyboard_menu_title_margin_start"
                 android:gravity="center_vertical"
                 android:paddingTop="10.7dp"
                 android:paddingBottom="10.7dp"

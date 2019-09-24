@@ -17,7 +17,7 @@
             android:id="@+id/keyboard_clipboard_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="@dimen/keyboard_menu_title_margin_start"
             android:gravity="center_vertical"
             android:text="@string/keyboard_clipboard_title"
             android:textColor="@android:color/black"

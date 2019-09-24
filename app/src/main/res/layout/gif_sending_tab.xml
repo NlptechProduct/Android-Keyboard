@@ -8,10 +8,10 @@
 
     <TextView
         android:id="@+id/gif_sending_tab_title"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_marginStart="13.3dp"
+        android:layout_marginStart="@dimen/keyboard_menu_title_margin_start"
         android:text="@string/gif_sending_main_page_title"
         android:textStyle="bold"
         android:textColor="#333333"
