@@ -14,7 +14,8 @@ Zengine SDK需要依赖AndroidX库。如果您的项目尚未迁移到AndroidX�
 
 ## 2. 最低SDK版本、Java编译选项
 
-Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8或以上版本进行编译。将如下代码添加设定至build.gradle (app)：  
+Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8或以上版本进行编译。Zengine SDK支持'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'架构，可在build.gradle(app)对ABI配置进行选择。  
+将如下代码添加设定至build.gradle (app)：  
 **app/build.gradle:**
 
 ~~~
@@ -26,6 +27,12 @@ android {
         minSdkVersion 19
         multiDexEnabled true
         … … … …
+        
+        ndk {
+            // Specifies the ABI configurations of your native
+            // libraries Gradle should build and package with your APK.
+            abiFilters 'armeabi-v7a', 'arm64-v8a'/*, 'x86', 'x86_64'*/
+        }
     }
     … … … …
     compileOptions {
@@ -58,7 +65,7 @@ allprojects {
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.2.13'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.2.14'
      … … … … …
 }
 ~~~
