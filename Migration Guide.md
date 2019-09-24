@@ -14,7 +14,8 @@ Or reference the official document:：[here](https://developer.android.com/jetpa
 
 ## 2. APILevel and Java version
 
-Zengine SDK supports APILevel 19 (Android 4.4) or above, plus Java 1.8. Make sure relevant options are added to build.gradle:  
+Zengine SDK supports API Level 19 (Android 4.4) or above, plus Java 1.8.Zengine SDK supports armeabi-v7a, arm64-v8a, x86 and x86_64. Specifies the ABI configurations of your native libraries in build.gradle(app).
+Make sure relevant options are added to build.gradle:  
 **app/build.gradle:**
 
 ~~~
@@ -26,6 +27,11 @@ android {
         minSdkVersion 19
         multiDexEnabled true
         … … … …
+        ndk {
+            // Specifies the ABI configurations of your native
+            // libraries Gradle should build and package with your APK.
+            abiFilters 'armeabi-v7a', 'arm64-v8a'/*, 'x86', 'x86_64'*/
+        }
     }
     … … … …
     compileOptions {
@@ -58,7 +64,7 @@ Add dependencies:
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.2.13'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.2.14'
      … … … … …
 }
 ~~~
