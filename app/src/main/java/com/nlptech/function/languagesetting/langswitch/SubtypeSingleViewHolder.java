@@ -4,6 +4,7 @@ import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.databinding.ViewholderSubtypeSwitchSingleBinding;
 import com.nlptech.function.languagesetting.LangBaseViewHolder;
 import com.nlptech.language.IMELanguageWrapper;
@@ -29,7 +30,7 @@ public class SubtypeSingleViewHolder extends LangBaseViewHolder<IMELanguageWrapp
                 return;
             }
 
-            binding.btn.setChecked(true);
+            binding.btn.setImageResource(R.drawable.ic_theme_icon_in_use);
             // for fully see the checked effect
             itemView.postDelayed(() -> subtypeSwitchListener.onChangeSubtype(entity), CLICK_ITEM_DELAY);
         });
