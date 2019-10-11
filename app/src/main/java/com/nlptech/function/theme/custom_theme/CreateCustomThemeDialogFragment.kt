@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
-
 import com.android.inputmethod.latin.R
 import com.nlptech.function.theme.theme_manage.ThemeManageViewModel
+import com.nlptech.keyboardview.theme.KeyboardTheme.ThemeId.CAN_NOT_SWITCH
 import com.nlptech.keyboardview.theme.custom.CustomTheme
 import com.nlptech.keyboardview.theme.custom.CustomThemeManager
 import java.io.File
 
 class CreateCustomThemeDialogFragment : androidx.fragment.app.DialogFragment(), CustomThemeBackgroundTask.Listener, CustomThemeSaveTask.Listener, CustomThemeDeleteTask.Listener {
-
     companion object {
         /**
          * 命令型別
@@ -50,7 +49,7 @@ class CreateCustomThemeDialogFragment : androidx.fragment.app.DialogFragment(), 
         }
     }
 
-    private lateinit var customTheme: CustomTheme
+    private lateinit var customThemes: Array<CustomTheme?>
     private var backgroundTask: CustomThemeBackgroundTask? = null
     private var saveTask: CustomThemeSaveTask? = null
     private var deleteTask: CustomThemeDeleteTask? = null
@@ -97,35 +96,44 @@ class CreateCustomThemeDialogFragment : androidx.fragment.app.DialogFragment(), 
             backgroundTask = CustomThemeBackgroundTask(this)
         }
 
-        customTheme = CustomTheme.createTheme(context)
-        backgroundTask!!.execute(backgroundFileUri, customTheme.backgroundFilePath)
+        customThemes = CustomTheme.createTheme(context)
+        backgroundTask!!.execute(
+                backgroundFileUri, customThemes[0]?.backgroundFilePath,
+                backgroundFileUri, customThemes[1]?.backgroundFilePath
+        )
     }
 
     private fun deleteTheme(themeId: Int) {
         if (deleteTask == null || deleteTask!!.status == AsyncTask.Status.FINISHED) {
             deleteTask = CustomThemeDeleteTask(this)
         }
-        customTheme = CustomThemeManager.getInstance().getTheme(context, themeId)
-        deleteTask!!.execute(customTheme)
+        val customTheme = CustomThemeManager.getInstance().getTheme(context, themeId)
+        var another: CustomTheme? = null
+        if (customTheme.mSwitchedModeThemeId != CAN_NOT_SWITCH) {
+            another = CustomThemeManager.getInstance().getTheme(context, customTheme.mSwitchedModeThemeId)
+        }
+        customThemes = arrayOf(customTheme, another)
+        deleteTask!!.execute(customThemes[0], customThemes[1])
     }
 
-    override fun onBackgroundResult(backgroundFile: File?) {
+    override fun onBackgroundResult(backgroundFiles: Array<out File>?) {
         if (saveTask == null || saveTask!!.status == AsyncTask.Status.FINISHED) {
             saveTask = CustomThemeSaveTask(this)
         }
-        saveTask!!.execute(customTheme)
-
+        saveTask!!.execute(customThemes[0], customThemes[1])
     }
 
-    override fun onSaveResult(backgroundFile: File?) {
-        CustomThemeManager.getInstance().onThemeAdded(customTheme)
+    override fun onSaveResult(backgroundFiles: Array<out File>?) {
+        customThemes[0]?.let { CustomThemeManager.getInstance().onThemeAdded(it) }
+        customThemes[1]?.let { CustomThemeManager.getInstance().onThemeAdded(it) }
         val viewModel = ViewModelProviders.of(activity!!).get(ThemeManageViewModel::class.java)
         viewModel.refreshThemes()
         dismiss()
     }
 
     override fun onDeleteResult() {
-        CustomThemeManager.getInstance().onThemeRemoved(customTheme)
+        customThemes[0]?.let { CustomThemeManager.getInstance().onThemeRemoved(it) }
+        customThemes[1]?.let { CustomThemeManager.getInstance().onThemeRemoved(it) }
         val viewModel = ViewModelProviders.of(activity!!).get(ThemeManageViewModel::class.java)
         viewModel.refreshThemes()
         dismiss()

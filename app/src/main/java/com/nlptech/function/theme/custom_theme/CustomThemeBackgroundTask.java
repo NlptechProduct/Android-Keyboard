@@ -1,9 +1,9 @@
 package com.nlptech.function.theme.custom_theme;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
+import com.android.inputmethod.TestApplication;
 import com.bumptech.glide.Glide;
 import com.nlptech.common.utils.FileUtils;
 
@@ -17,12 +17,10 @@ import java.util.concurrent.ExecutionException;
  * <p>
  * 回傳:參數1
  **/
-public class CustomThemeBackgroundTask extends AsyncTask<String, Void, File> {
+public class CustomThemeBackgroundTask extends AsyncTask<String, Void, File[]> {
 
     public interface Listener {
-        void onBackgroundResult(File backgroundFile);
-
-        Context getContext();
+        void onBackgroundResult(File[] backgroundFiles);
     }
 
     private WeakReference<Listener> mListener;
@@ -32,39 +30,38 @@ public class CustomThemeBackgroundTask extends AsyncTask<String, Void, File> {
     }
 
     @Override
-    protected File doInBackground(String... strings) {
-        Uri from = Uri.parse(strings[0]);
-        File to = new File(strings[1]);
-        try {
-            final Listener listener = mListener.get();
-            final Context context;
-            if (listener != null) {
-                context = listener.getContext();
-            } else {
-                return to;
+    protected File[] doInBackground(String... strings) {
+        File[] result = new File[strings.length / 2];
+        int index = 0;
+        for (int i = 0; i <strings.length; i+=2) {
+            Uri from = Uri.parse(strings[i]);
+            File to = new File(strings[i+1]);
+            try {
+                File temp = Glide
+                        .with(TestApplication.getInstance())
+                        .downloadOnly()
+                        .load(from)
+                        .submit()
+                        .get();
+                FileUtils.copy(temp, to);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            File temp = Glide
-                    .with(context)
-                    .downloadOnly()
-                    .load(from)
-                    .submit()
-                    .get();
-            FileUtils.copy(temp, to);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+            result[index++] = to;
         }
 
-        return to;
+        return result;
     }
 
     @Override
-    protected void onPostExecute(File file) {
-        super.onPostExecute(file);
-        final Listener listener = mListener.get();
+    protected void onPostExecute(File[] files) {
+        super.onPostExecute(files);
+        Listener listener = mListener.get();
         if (listener != null) {
-            listener.onBackgroundResult(file);
+            listener.onBackgroundResult(files);
         }
     }
 }

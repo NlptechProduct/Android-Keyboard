@@ -20,15 +20,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.databinding.ActivityLanguageChooseBinding;
 import com.nlptech.Agent;
+import com.nlptech.function.dictionary.DictionaryDownloadManager;
 import com.nlptech.function.dictionary.DictionaryListener;
 import com.nlptech.function.languagesetting.LanguageListener;
 import com.nlptech.function.languagesetting.LanguageSettingAdapter;
 import com.nlptech.function.languagesetting.LanguageSettingViewModel;
 import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
+import com.nlptech.language.VertexInputMethodManager;
 import com.nlptech.ui.ToolBarActivity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LanguageChooserActivity extends ToolBarActivity implements LanguageListener, DictionaryListener {
     public static final int LAYOUT = R.layout.activity_language_choose;
@@ -74,19 +78,23 @@ public class LanguageChooserActivity extends ToolBarActivity implements Language
     @Override
     public void onClickAdd(IMELanguageWrapper item) {
         viewModel.addSubtype(item.getIMELanguage());
-        if (adapter == null) {
-            return;
-        }
-        adapter.notifyDataSetChanged();
+        DictionaryDownloadManager.getInstance().addLocale(item.getIMELanguage().getLocale());
+        DictionaryDownloadManager.getInstance().requestDictionaryConfig(VertexInputMethodManager.getInstance().obtainLocaleStringForDownload());
     }
 
     @Override
     public void onClickRemove(IMELanguageWrapper item) {
         viewModel.removeSubtype(item);
-        if (adapter == null) {
-            return;
+        if(item.getType() == IMELanguageWrapper.TYPE_MULTI){
+            Set<String> localList = new HashSet<>();
+            for(IMELanguage IMELanguage :item.getMultiIMELanguage().getSubtypeIMEList()){
+                localList.add(IMELanguage.getLocale());
+            }
+            DictionaryDownloadManager.getInstance().removeLocaleAll(localList);
+        }else{
+            DictionaryDownloadManager.getInstance().removeLocale(item.getIMELanguage().getLocale());
         }
-        adapter.notifyDataSetChanged();
+        DictionaryDownloadManager.getInstance().requestDictionaryConfig(VertexInputMethodManager.getInstance().obtainLocaleStringForDownload());
     }
 
     @Override
