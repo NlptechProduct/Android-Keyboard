@@ -5,12 +5,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
+        <ImageView
+            android:src="@drawable/ic_theme_icon_not_used_xl"
             android:id="@+id/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:buttonTint="@color/colorAccent"
             android:clickable="false" />
 
         <TextView

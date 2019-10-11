@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.inputmethod.latin.R;
 import com.android.inputmethod.latin.databinding.ViewholderCharsetBinding;
 import com.nlptech.language.IMELanguageWrapper;
 import com.nlptech.language.LayoutDisplayTable;
@@ -35,9 +36,9 @@ public class CharsetViewHolder extends RecyclerView.ViewHolder {
         binding.displayName.setText(LayoutDisplayTable.getInstance().obtainDisplayLayout(entity));
         //当前subtype
         if(currentSub.equalsIgnoreCase(entity)){
-            binding.btn.setChecked(true);
+            binding.btn.setImageResource(R.drawable.ic_theme_icon_in_use);
         }else{
-            binding.btn.setChecked(false);
+            binding.btn.setImageResource(R.drawable.ic_theme_icon_not_used_xl);
         }
 
         binding.layout.setOnClickListener(v ->{

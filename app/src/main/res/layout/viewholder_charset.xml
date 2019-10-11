@@ -5,12 +5,12 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
-        <RadioButton
+        <ImageView
             android:id="@+id/btn"
+            android:src="@drawable/ic_theme_icon_not_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:buttonTint="@color/colorAccent"
             android:clickable="false" />
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_marginStart="10dp"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="12sp"/>
+            android:textColor="#333333"
+            android:textSize="14sp"/>
     </RelativeLayout>
 </layout>
