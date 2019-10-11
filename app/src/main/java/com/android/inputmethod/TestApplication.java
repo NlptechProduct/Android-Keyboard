@@ -35,7 +35,7 @@ public class TestApplication extends MultiDexApplication {
         instance = this;
         Agent.getInstance().init(this);
         addExternalThemeDefault();
-        addExternalThemeRGB();
+        addExternalThemeRBG();
         Agent.getInstance().loadTheme(this, "001");
     }
 
@@ -135,9 +135,10 @@ public class TestApplication extends MultiDexApplication {
         Agent.getInstance().addExternalThemes(this, externalThemeInfo);
     }
 
-    private void addExternalThemeRGB() {
-        ExternalThemeInfo.Builder builder = new ExternalThemeInfo.Builder(TestApplication.getInstance(),"002", "RGB");
-        builder.setThemePreviewImage(ContextCompat.getDrawable(this, R.drawable.img_external_theme_preview_rgb));
+    private void addExternalThemeRBG() {
+        ExternalThemeInfo.Builder builder = new ExternalThemeInfo.Builder(this, "external_theme_id_rgb", "RGB");
+        builder.setThemePreviewImage(R.drawable.img_external_theme_preview_rgb);
+        builder.setThemePreviewImageWithBorder(R.drawable.img_external_theme_preview_rgb_with_border);
 
         ColorDrawable colorDrawable;
         String color;
@@ -146,11 +147,11 @@ public class TestApplication extends MultiDexApplication {
         colorDrawable = new ColorDrawable(Color.BLACK);
         builder.setKeyboardBackground(colorDrawable);
         colorDrawable = new ColorDrawable(Color.TRANSPARENT);
-        builder.setKeyBackground(colorDrawable);
+        builder.setKeyBackground(colorDrawable, colorDrawable);
         colorDrawable = new ColorDrawable(Color.TRANSPARENT);
-        builder.setFunctionKeyBackground(colorDrawable);
+        builder.setFunctionKeyBackground(colorDrawable, colorDrawable);
 
-        builder.setSpacebarBackground(ContextCompat.getDrawable(this, R.drawable.bg_external_theme_rgb_spacebar));
+        builder.setSpacebarBackground(R.drawable.bg_external_theme_rgb_spacebar, R.drawable.bg_external_theme_rgb_spacebar);
 
         colorDrawable = new ColorDrawable(Color.parseColor("#1c2935"));
         builder.setKeyPreviewBackground(colorDrawable);
@@ -160,22 +161,22 @@ public class TestApplication extends MultiDexApplication {
         // more keys keyboard
         colorDrawable = new ColorDrawable(Color.parseColor("#000000"));
         builder.setMoreKeysKeyboardBackground(colorDrawable);
-        builder.setMoreKeysKeyBackground(ContextCompat.getDrawable(this, R.drawable.bg_external_theme_rgb_more_key));
+        builder.setMoreKeysKeyBackground(R.drawable.bg_external_theme_rgb_more_key, R.drawable.bg_external_theme_rgb_more_key);
 
         // Chinese Suggest MorePage
         colorDrawable = new ColorDrawable(Color.parseColor("#3c3c3c"));
         builder.setChineseSuggestionMorePageBackground(colorDrawable);
-        builder.setChineseSuggestionStripOpenMorePageButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_open_moepage));
-        builder.setChineseSuggestionStripCloseMorePageButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_close_moepage));
+        builder.setChineseSuggestionStripOpenMorePageButton(R.drawable.ic_external_theme_rgb_cn_open_moepage);
+        builder.setChineseSuggestionStripCloseMorePageButton(R.drawable.ic_external_theme_rgb_cn_close_moepage);
         colorDrawable = new ColorDrawable(Color.parseColor("#AA000000"));
         builder.setChineseSuggestionComposingViewBackground(colorDrawable);
         builder.setChineseSuggestionComposingTextColor("#ff5151");
-        builder.setChineseSuggestionMorePageUpEnableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_enable));
-        builder.setChineseSuggestionMorePageUpDisableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_disable));
-        builder.setChineseSuggestionMorePageDownEnableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_enable));
-        builder.setChineseSuggestionMorePageDownDisableButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_disable));
-        builder.setChineseSuggestionMorePageDeleteButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_delete));
-        builder.setChineseSuggestionMorePageResetButton(ContextCompat.getDrawable(this, R.drawable.ic_external_theme_rgb_cn_suggest_retransfusion));
+        builder.setChineseSuggestionMorePageUpEnableButton(R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_enable);
+        builder.setChineseSuggestionMorePageUpDisableButton(R.drawable.ic_external_theme_rgb_cn_suggest_up_arrow_disable);
+        builder.setChineseSuggestionMorePageDownEnableButton(R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_enable);
+        builder.setChineseSuggestionMorePageDownDisableButton(R.drawable.ic_external_theme_rgb_cn_suggest_down_arrow_disable);
+        builder.setChineseSuggestionMorePageDeleteButton(R.drawable.ic_external_theme_rgb_cn_suggest_delete);
+        builder.setChineseSuggestionMorePageResetButton(R.drawable.ic_external_theme_rgb_cn_suggest_retransfusion);
 
         // color
         color = String.format("#%06X", 0xFFFFFF & Color.WHITE);
@@ -188,16 +189,21 @@ public class TestApplication extends MultiDexApplication {
         builder.setKeyShiftedLetterHintActivatedColor(color);
         builder.setKeyShiftedLetterHintInactivatedColor(color);
         builder.setKeyPreviewTextColor(color);
-        builder.setKeyBorderColor(color);
+        builder.setEmojiCategoryPageIndicatorForegroundColor(color);
+        builder.setEmojiCategoryPageIndicatorBackgroundColor(color);
         builder.setCreateKeyboardRenderCallback(RGBKeyboardRender::new);
+        builder.setUiIconColor("#c5c5c5");
+        builder.setUiFunctionEntryIconColor("#c5c5c5");
 
         ColorDrawable suggestColor = new ColorDrawable(Color.parseColor("#000000"));
         builder.setSuggestedTextColor("#ffffff");
         builder.setSuggestedAutoCorrectColor("#ffffff");
         builder.setSuggestionStripViewBackground(suggestColor);
-
+        builder.setSuggestedValidTypedWordColor("#ffffff");
+        builder.setSuggestedTypedWordColor("#ffffff");
 
         // add theme
+        builder.setBorderMode(ExternalThemeInfo.Builder.BORDER_MODE_BOTH);
         ExternalThemeInfo info = builder.build();
         Agent.getInstance().addExternalThemes(this, info);
     }

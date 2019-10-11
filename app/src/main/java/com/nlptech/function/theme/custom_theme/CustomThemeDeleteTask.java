@@ -1,6 +1,7 @@
 package com.nlptech.function.theme.custom_theme;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nlptech.common.utils.FileUtils;
 import com.nlptech.keyboardview.theme.custom.CustomTheme;
@@ -22,9 +23,12 @@ public class CustomThemeDeleteTask extends AsyncTask<CustomTheme, Void, Boolean>
 
     @Override
     protected Boolean doInBackground(CustomTheme... customThemes) {
-        CustomTheme customTheme = customThemes[0];
-        File themeDir = new File(customTheme.getThemeDirPath());
-        FileUtils.deleteDir(themeDir);
+        for (CustomTheme customTheme : customThemes) {
+            if (customTheme != null) {
+                File themeDir = new File(customTheme.getThemeDirPath());
+                FileUtils.deleteDir(themeDir);
+            }
+        }
         return true;
     }
 

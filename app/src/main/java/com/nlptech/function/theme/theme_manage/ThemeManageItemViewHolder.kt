@@ -1,15 +1,15 @@
 package com.nlptech.function.theme.theme_manage
 
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inputmethod.TestApplication
 import com.android.inputmethod.latin.databinding.ViewholderThemeBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.nlptech.inputmethod.latin.settings.Settings
 import com.nlptech.keyboardview.theme.KeyboardTheme
 import com.nlptech.keyboardview.theme.KeyboardThemeManager
 import com.nlptech.keyboardview.theme.custom.CustomTheme
 import com.nlptech.keyboardview.theme.external.ExternalTheme
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.viewholder_theme.view.*
 
 class ThemeManageItemViewHolder(
@@ -18,7 +18,10 @@ class ThemeManageItemViewHolder(
         itemHeight: Int
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var previewString = ""
+    /**
+     * 用來記錄當前的preview image為何
+     * **/
+    private var previewTag = ""
 
     init {
         binding.root.viewholder_theme.layoutParams.width = itemWidth
@@ -36,8 +39,8 @@ class ThemeManageItemViewHolder(
     }
 
     private fun setRadioButtonSelected(isSelected: Boolean) {
-        itemView.viewholder_theme_radio_button_ib.isSelected = isSelected
         itemView.viewholder_theme_top_visual.isSelected = isSelected
+        itemView.viewholder_theme_radio_button_ib.isSelected = isSelected
     }
 
     private fun setImageDrawable(keyboardThemeId: Int) {
@@ -46,17 +49,27 @@ class ThemeManageItemViewHolder(
 
         when (keyboardTheme.themeType) {
             KeyboardTheme.ThemeType.LOCAL -> {
-                val previewDrawableResId = KeyboardThemeManager.getInstance().getLocalThemePreviewDrawableResId(TestApplication.getInstance(), keyboardTheme.getStyleId())
-                Glide.with(itemView.context).load(previewDrawableResId).into(itemView.viewholder_theme_iv)
+                val previewDrawableResId = KeyboardThemeManager.getInstance().getLocalThemePreviewDrawableResId(TestApplication.getInstance(), keyboardTheme)
+                val tag = previewDrawableResId.toString()
+                if (tag != previewTag) {
+                    previewTag = tag
+                    Glide.with(itemView.context)
+                            .load(previewDrawableResId)
+                            .transition(withCrossFade())
+                            .into(itemView.viewholder_theme_iv)
+                }
             }
 
             KeyboardTheme.ThemeType.CUSTOM -> {
                 val customTheme = keyboardTheme as CustomTheme
-
                 val previewImageFilePath = customTheme.previewImageFilePath
-                if (!previewImageFilePath.equals(previewString)) {
-                    previewString = previewImageFilePath
-                    Glide.with(itemView.context).load(previewString).into(itemView.viewholder_theme_iv)
+                val tag = previewImageFilePath
+                if (tag != previewTag) {
+                    previewTag = tag
+                    Glide.with(itemView.context)
+                            .load(previewTag)
+                            .transition(withCrossFade())
+                            .into(itemView.viewholder_theme_iv)
                 }
             }
 
@@ -66,7 +79,24 @@ class ThemeManageItemViewHolder(
 
             KeyboardTheme.ThemeType.EXTERNAL -> {
                 val externalTheme = keyboardTheme as ExternalTheme
-                Glide.with(itemView.context).load(externalTheme.info.themePreviewImage).into(itemView.viewholder_theme_iv)
+                val borderShown = Settings.getInstance().current.mKeyBorderShown;
+
+                // external theme tag的生成方式為borderShown+switchedModeThemeId
+                var tag = ""
+                if (externalTheme.mBorderMode == KeyboardTheme.BorderMode.BOTH) {
+                    tag += borderShown.toString()
+                } else {
+                    tag += "noConsiderBorderShown"
+                }
+                tag += externalTheme.switchedModeThemeId
+
+                if (tag != previewTag) {
+                    previewTag = tag
+                    Glide.with(itemView.context)
+                            .load(externalTheme.info.getThemePreviewImage(borderShown))
+                            .transition(withCrossFade())
+                            .into(itemView.viewholder_theme_iv)
+                }
             }
         }
 
