@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
@@ -24,7 +25,10 @@ import com.nlptech.common.utils.ViewUtils
 import com.nlptech.inputmethod.latin.InputAttributes
 import com.nlptech.inputmethod.latin.settings.Settings
 import com.nlptech.keyboardview.accessibility.AccessibilityUtils
+import com.nlptech.keyboardview.theme.KeyboardTheme
+import com.nlptech.keyboardview.theme.KeyboardThemeManager
 import kotlinx.android.synthetic.main.activity_keyboard_theme_manage.*
+import java.util.ArrayList
 
 
 /**
@@ -94,7 +98,15 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
     override fun onKeyBorderSwitchChanged(buttonView: CompoundButton?, checked: Boolean) {
         LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onKeyBorderSwitchChanged()")
         KeyboardPreviewSwitcher.getInstance().onKeyBorderSwitchChanged(checked)
+        val viewModel =  ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
+        viewModel.refreshThemes()
+    }
 
+    override fun onDarkModeChanged(buttonView: CompoundButton, checked: Boolean) {
+        LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onDarkModeChanged()")
+        KeyboardPreviewSwitcher.getInstance().onDarkModeChanged(checked)
+        val viewModel =  ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
+        viewModel.refreshThemes()
     }
 
     /**

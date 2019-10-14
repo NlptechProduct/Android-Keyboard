@@ -1,13 +1,12 @@
 package com.nlptech.function.theme.keyboard_preview
 
 import android.app.Dialog
-import android.content.Context
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.ContextThemeWrapper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import android.widget.CompoundButton
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.Switch
-import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
 import com.nlptech.keyboardview.theme.KeyboardTheme
 import com.android.inputmethod.latin.R
 import com.nlptech.Agent
@@ -65,15 +63,25 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         val rootView = View.inflate(context, R.layout.fragment_theme_manage_preview_bottom_sheet, null)
         val applyButton = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_apply_button)
         val closeButton = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_close_button)
-        val showKeyBoarderSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_switch)
+        val showKeyBoarderSwitchLayout = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_show_key_board_layout)
+        val showKeyBoarderSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_key_border_shown_switch)
+        val darkModeSwitchLauout = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_dark_mode_switch_layout)
+        val darkModeSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_dark_mode_switch)
         val deleteButton = rootView.findViewById<ImageButton>(R.id.fragment_theme_manage_preview_delete_button)
         val cardViewContainer = rootView.findViewById<View>(R.id.fragment_theme_manage_card_view_container)
         val inputViewContainer = rootView.findViewById<RelativeLayout>(R.id.fragment_theme_manage_preview_container)
 
         applyButton.setOnClickListener(this)
         closeButton.setOnClickListener(this)
+
+        val keyboardTheme = KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId)
+        showKeyBoarderSwitchLayout.visibility = if (keyboardTheme.mBorderMode == KeyboardTheme.BorderMode.BOTH) View.VISIBLE else View.GONE
         showKeyBoarderSwitch.isChecked = Settings.readKeyBorderShown(PreferenceManager.getDefaultSharedPreferences(context))
         showKeyBoarderSwitch.setOnCheckedChangeListener(this)
+
+        darkModeSwitchLauout.visibility = if (keyboardTheme.switchedModeThemeId != KeyboardTheme.ThemeId.CAN_NOT_SWITCH) View.VISIBLE else View.GONE
+        darkModeSwitch.isChecked = Settings.readDarkMode(PreferenceManager.getDefaultSharedPreferences(context))
+        darkModeSwitch.setOnCheckedChangeListener(this)
 
         deleteButton.setOnClickListener(this)
         deleteButton.visibility = if (KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId).themeType == KeyboardTheme.ThemeType.CUSTOM) View.VISIBLE else View.GONE
@@ -195,9 +203,18 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        Settings.writeKeyBoarderShown(PreferenceManager.getDefaultSharedPreferences(context), isChecked)
-        listener!!.onKeyBorderSwitchChanged(buttonView, isChecked)
+        when (buttonView!!.id) {
+            R.id.fragment_theme_manage_preview_key_border_shown_switch -> {
+                Settings.writeKeyBoarderShown(PreferenceManager.getDefaultSharedPreferences(context), isChecked)
+                listener!!.onKeyBorderSwitchChanged(buttonView, isChecked)
+            }
+            R.id.fragment_theme_manage_preview_dark_mode_switch -> {
+                Settings.writeDarkMode(PreferenceManager.getDefaultSharedPreferences(context), isChecked)
+                listener!!.onDarkModeChanged(buttonView, isChecked)
+            }
+        }
     }
+
 
     override fun onDeleteResult() {
         close(false)
