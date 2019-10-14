@@ -19,7 +19,7 @@
             <RelativeLayout
                 android:id="@+id/fragment_theme_manage_card_view_container"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent">
 
                 <androidx.cardview.widget.CardView
@@ -45,7 +45,7 @@
                         <ImageView
                             android:id="@+id/fragment_theme_manage_preview_stroke"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_alignStart="@+id/fragment_theme_manage_preview_container"
                             android:layout_alignTop="@+id/fragment_theme_manage_preview_container"
                             android:layout_alignEnd="@+id/fragment_theme_manage_preview_container"
@@ -61,6 +61,7 @@
 
             <!-- Border and delete button -->
             <RelativeLayout
+                android:id="@+id/fragment_theme_manage_preview_show_key_board_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent">
@@ -76,7 +77,7 @@
                     android:textSize="@dimen/theme_manage_preview_switch_text_size" />
 
                 <Switch
-                    android:id="@+id/fragment_theme_manage_preview_switch"
+                    android:id="@+id/fragment_theme_manage_preview_key_border_shown_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/keyboard_widget_switch_height"
                     android:layout_centerVertical="true"
@@ -103,6 +104,38 @@
                         android:src="@drawable/ic_theme_manage_preview_delete" />
 
                 </RelativeLayout>
+
+            </RelativeLayout>
+
+            <!-- Dark mode button-->
+            <RelativeLayout
+                android:id="@+id/fragment_theme_manage_preview_dark_mode_switch_layout"
+                android:layout_width="match_parent"
+                android:clipChildren="false"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+
+                <TextView
+                    android:id="@+id/fragment_theme_manage_preview_dark_mode_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/theme_manage_preview_switch_text_margin_left"
+                    android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
+                    android:text="@string/theme_manage_preview_dark_mode_boarder"
+                    android:textSize="@dimen/theme_manage_preview_switch_text_size" />
+
+                <Switch
+                    android:id="@+id/fragment_theme_manage_preview_dark_mode_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/keyboard_widget_switch_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/theme_manage_preview_delete_margin_swtich_left"
+                    android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+                    android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+                    android:track="@drawable/bg_keyboard_menu_switch_track" />
 
             </RelativeLayout>
 

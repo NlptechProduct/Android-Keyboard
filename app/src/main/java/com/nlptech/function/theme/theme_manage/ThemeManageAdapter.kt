@@ -16,6 +16,7 @@ class ThemeManageAdapter(val context: Context, val listener: Listener) : Recycle
         fun onItemClick(view: View, themeManageItem: ThemeManageItem, position: Int)
         fun onThemeApply(view: View, position: Int)
         fun onKeyBorderSwitchChanged(buttonView: CompoundButton?, checked: Boolean)
+        fun onDarkModeChanged(buttonView: CompoundButton, checked: Boolean)
     }
 
     companion object {

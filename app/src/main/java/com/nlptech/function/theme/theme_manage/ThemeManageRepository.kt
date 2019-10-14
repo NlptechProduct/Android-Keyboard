@@ -27,7 +27,7 @@ class ThemeManageRepository {
         for (keyboardTheme in keyboardThemes) {
             val isSelected = selectedKeyboardTheme == keyboardTheme
             val themeItem = ThemeManageItem(
-                    "https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2017/05/how-to-create-wordpres-child-theme.png",
+                    "https://www.google.com.tw/",
                     keyboardTheme.themeName,
                     keyboardTheme.themeId,
                     ThemeManageItem.STATUS_SELECTABLE
