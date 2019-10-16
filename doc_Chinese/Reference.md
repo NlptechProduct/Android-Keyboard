@@ -352,6 +352,18 @@ public void addExternalThemes (Context context, ExternalThemeInfo infos)
 context | 应用的 ApplicationContext
 info | 主题资讯，通过ExternalThemeInfo.Builder建置
 
+#### addExternalThemeWithDarkTheme
+```Java
+public void addExternalThemeWithDarkTheme (Context context, ExternalThemeInfo lightInfos, ExternalThemeInfo darkInfos)
+```
+新增支持切换light和dark的主题。
+
+参数 | 参数说明
+-----|:--------
+context | 应用的 ApplicationContext
+lightInfos | light主题资讯，通过ExternalThemeInfo.Builder建置
+darkInfos | dark主题资讯，通过ExternalThemeInfo.Builder建置
+
 #### deleteExternalThemes
 ```Java
 public void deleteExternalThemes (Context context, ExternalThemeInfo infos)
@@ -760,6 +772,20 @@ ExternalThemeInfo的建构器。
 externalId | 用户自行给予主题的 unique identification，不能为空
 themeName | 主题的名称，不能为空
 
+#### setBorderMode
+```Java
+public Builder setBorderMode (int borderMode)
+```
+设置主题支持显示边框的模式。
+
+参数 | 参数说明
+-----|:--------
+borderMode | 无边框 Builder#BORDER_MODE_NO_BORDER、有边框 Builder#BORDER_MODE_WITH_BORDER、可切换有无边框 Builder#BORDER_MODE_BOTH
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
 #### setThemePreviewImage
 ```Java
 public Builder setThemePreviewImage (Drawable themePreviewImage)
@@ -769,6 +795,48 @@ public Builder setThemePreviewImage (Drawable themePreviewImage)
 参数 | 参数说明
 -----|:--------
 themePreviewImage | 主题的预载图
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setThemePreviewImageWithBorder
+```Java
+public Builder setThemePreviewImageWithBorder (Drawable themePreviewImageWithBorder)
+```
+设置主题支持边框时的预载图。
+
+参数 | 参数说明
+-----|:--------
+themePreviewImageWithBorder | 主题支持边框时的预载图
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyBackground
+```Java
+public Builder setKeyBackground (Drawable keyBackground)
+```
+设置键的背景。
+
+参数 | 参数说明
+-----|:--------
+keyBackground | 键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyBackgroundWithBorder
+```Java
+public Builder setKeyBackgroundWithBorder (Drawable keyBackgroundWithBorder)
+```
+设置键支持边框时的背景。
+
+参数 | 参数说明
+-----|:--------
+keyBackgroundWithBorder | 键支持边框时的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -788,6 +856,20 @@ functionKeyBackground | 功能键的背景
 -----|:--------
 Builder | 返回的Builder
 
+#### setFunctionKeyBackgroundWithBorder
+```Java
+public Builder setFunctionKeyBackgroundWithBorder (Drawable functionKeyBackgroundWithBorder)
+```
+设置功能键支持边框时的背景。
+
+参数 | 参数说明
+-----|:--------
+functionKeyBackgroundWithBorder | 功能键支持边框时的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
 #### setSpacebarBackground
 ```Java
 public Builder setSpacebarBackground (Drawable spacebarBackground)
@@ -797,6 +879,20 @@ public Builder setSpacebarBackground (Drawable spacebarBackground)
 参数 | 参数说明
 -----|:--------
 spacebarBackground | 空白键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSpacebarBackgroundWithBorder
+```Java
+public Builder setSpacebarBackgroundWithBorder (Drawable spacebarBackgroundWithBorder)
+```
+设置空白键支持边框时的背景。
+
+参数 | 参数说明
+-----|:--------
+spacebarBackgroundWithBorder | 空白键支持边框时的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -839,6 +935,20 @@ public Builder setMoreKeysKeyBackground (Drawable moreKeysKeyBackground)
 参数 | 参数说明
 -----|:--------
 moreKeysKeyBackground | 长按一般键而跳出的more keys键盘的键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setMoreKeysKeyBackgroundWithBorder
+```Java
+public Builder setMoreKeysKeyBackgroundWithBorder (Drawable moreKeysKeyBackgroundWithBorder)
+```
+设置长按一般键而跳出的more keys键盘的键支持边框时的背景。
+
+参数 | 参数说明
+-----|:--------
+moreKeysKeyBackgroundWithBorder | 长按一般键而跳出的more keys键盘的键支持边框时的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -1589,13 +1699,29 @@ Builder | 返回的Builder
 
 #### setKeyLottieBackground
 ```Java
-public Builder setKeyLottieBackground (LottieDrawableInfo... keyLottieBackground)
+public Builder setKeyLottieBackground (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
 ```
 使用LottieDrawable设置键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
 
 参数 | 参数说明
 -----|:--------
-keyLottieBackground | 键的背景
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setKeyLottieBackgroundWithBorder
+```Java
+public Builder setKeyLottieBackground (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
+```
+使用LottieDrawable设置键支持边框时的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -1603,13 +1729,29 @@ Builder | 返回的Builder
 
 #### setFunctionKeyLottieBackground
 ```Java
-public Builder setFunctionKeyLottieBackground (LottieDrawableInfo... functionKeyLottieBackground)
+public Builder setFunctionKeyLottieBackground (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
 ```
 使用LottieDrawable设置功能键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
 
 参数 | 参数说明
 -----|:--------
-functionKeyLottieBackground | 功能键的背景
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setFunctionKeyLottieBackgroundWithBorder
+```Java
+public Builder setFunctionKeyLottieBackgroundWithBorder (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
+```
+使用LottieDrawable设置功能键支持边框时的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -1617,13 +1759,29 @@ Builder | 返回的Builder
 
 #### setSpacebarLottieBackground
 ```Java
-public Builder setSpacebarLottieBackground (LottieDrawableInfo... spacebarLottieBackground)
+public Builder setSpacebarLottieBackground (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
 ```
-使用LottieDrawable设置空白键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+使用LottieDrawable设置空白键支持边框时的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
 
 参数 | 参数说明
 -----|:--------
-spacebarLottieBackground | 空白键的背景
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setSpacebarLottieBackgroundWithBorder
+```Java
+public Builder setSpacebarLottieBackgroundWithBorder (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
+```
+使用LottieDrawable设置空白键支持边框时的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
 
 返回 | 返回说明 | 
 -----|:--------
@@ -1661,13 +1819,29 @@ Builder | 返回的Builder
 
 #### setMoreKeysKeyLottieBackground
 ```Java
-public Builder setMoreKeysKeyLottieBackground (LottieDrawableInfo... moreKeysKeyLottieBackground)
+public Builder setMoreKeysKeyLottieBackground (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
 ```
 设置more keys键盘的键的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
 
 参数 | 参数说明
 -----|:--------
-moreKeysKeyLottieBackground | more keys键盘的背景
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+#### setMoreKeysKeyLottieBackgroundWithBorder
+```Java
+public Builder setMoreKeysKeyLottieBackgroundWithBorder (LottieDrawableInfo lottieDrawableInfoNormal, LottieDrawableInfo lottieDrawableInfoPressed)
+```
+设置more keys键盘的键支持边框时的背景，第一个参数为常态下的背景，第二个参数为按压键时的背景，皆可为null。
+
+参数 | 参数说明
+-----|:--------
+lottieDrawableInfoNormal | 常态下键的背景
+lottieDrawableInfoPressed | 压键时键的背景
 
 返回 | 返回说明 | 
 -----|:--------
