@@ -23,70 +23,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/kb_container"
+    <com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard
+        android:id="@+id/floating_kb"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/customized_strip"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/config_suggestions_strip_height"
-        android:layout_alignTop="@id/kb_container"
-        android:background="@android:color/black"
-        android:layoutDirection="ltr">
-
-        <ImageView
-            android:id="@+id/toolbar_menu"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:id="@+id/kb_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_toolbar_menu" />
+            android:layout_alignParentBottom="true" />
 
-        <ImageView
-            android:id="@+id/toolbar_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_toolbar_selector" />
+        <LinearLayout
+            android:id="@+id/customized_strip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/config_suggestions_strip_height"
+            android:layout_alignTop="@id/kb_container"
+            android:background="@android:color/black"
+            android:layoutDirection="ltr">
 
-        <ImageView
-            android:id="@+id/toolbar_clipboard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_toolbar_clipboard" />
+            <ImageView
+                android:id="@+id/toolbar_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_toolbar_menu" />
 
-        <ImageView
-            android:id="@+id/toolbar_gif_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_toolbar_gif_search" />
+            <ImageView
+                android:id="@+id/toolbar_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_toolbar_selector" />
 
-        <ImageView
-            android:id="@+id/toolbar_gif_sending"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_toolbar_gif_sending" />
+            <ImageView
+                android:id="@+id/toolbar_clipboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_toolbar_clipboard" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/toolbar_gif_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_toolbar_gif_search" />
 
-    <FrameLayout
-        android:id="@+id/input_view_keyboard_widget_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/toolbar_gif_sending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_toolbar_gif_sending" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/input_view_keyboard_widget_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard>
 
 </RelativeLayout>

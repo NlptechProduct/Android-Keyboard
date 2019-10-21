@@ -561,6 +561,12 @@ public void onFloatingKeyboardVisibilityChanged (boolean shown)
 -----|:--------
 shown | true为开启，false为关闭
 
+#### onFloatingKeyboardMoved
+```Java
+public void onFloatingKeyboardMoved ()
+```
+当悬浮键盘移动时回调。
+
 <br/>
 
 <h3 id="2.4">ImeUiHandlerInterface</h3>

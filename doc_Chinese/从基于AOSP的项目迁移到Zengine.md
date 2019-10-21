@@ -441,11 +441,15 @@ public class LatinIME extends ZengineInputMethodService implements
                 if (mInputView == null) {
             return;
         }
+        [zengine v1.3] 
+        // 如果需要支持悬浮键盘，那么请删除以下代码
         f̵i̵n̵a̵l̵ ̵S̵e̵t̵t̵i̵n̵g̵s̵V̵a̵l̵u̵e̵s̵ ̵s̵e̵t̵t̵i̵n̵g̵s̵V̵a̵l̵u̵e̵s̵ ̵=̵ ̵m̵S̵e̵t̵t̵i̵n̵g̵s̵.̵g̵e̵t̵C̵u̵r̵r̵e̵n̵t̵(̵)̵;̵
         final View visibleKeyboardView = KeyboardSwitcher.getInstance().getVisibleKeyboardView();
         if (visibleKeyboardView == null || !hasSuggestionStripView()) {
             return;
         }
+        [zengine v1.3]
+        // 如果需要支持悬浮键盘，那么请删除以下代码
         f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵ ̵=̵ ̵m̵I̵n̵p̵u̵t̵V̵i̵e̵w̵.̵g̵e̵t̵H̵e̵i̵g̵h̵t̵(̵)̵;̵
         i̵f̵ ̵(̵i̵s̵I̵m̵e̵S̵u̵p̵p̵r̵e̵s̵s̵e̵d̵B̵y̵H̵a̵r̵d̵w̵a̵r̵e̵K̵e̵y̵b̵o̵a̵r̵d̵(̵)̵ ̵&̵&̵ ̵!̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵i̵s̵S̵h̵o̵w̵n̵(̵)̵)̵ ̵{̵
             // If there is a hardware keyboard and a visible software keyboard view has been hidden,

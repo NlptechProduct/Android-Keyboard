@@ -11,7 +11,7 @@
     <FrameLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/keyboard_toolbar_height"
+        android:layout_height="@dimen/keyboard_widget_title_layout_height"
         android:background="@android:color/transparent">
 
         <TextView
