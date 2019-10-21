@@ -10,16 +10,16 @@ import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inputmethod.latin.LatinIME
 import com.android.inputmethod.latin.R
 import com.nlptech.common.utils.DisplayUtil
-import com.nlptech.keybaordwidget.KeyboardWidgetManager
+import com.nlptech.inputmethod.latin.utils.ResourceUtils
 import com.nlptech.keybaordwidget.draggable.DraggableKeyboardWidget
 import com.nlptech.keybaordwidget.draggable.DraggableLayout
+import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
 import com.nlptech.keyboardview.theme.KeyboardThemeManager
 
 
@@ -38,13 +38,6 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?): DraggableLayout {
         val context = container!!.context
         val view = super.onCreateView(inflater, container)
-        mScreenHeight = DisplayUtil.getScreenHeight(context)
-        mScreenWidth = DisplayUtil.getScreenWidth(context)
-        if (mScreenWidth > mScreenHeight) {
-            mScreenWidth -= DisplayUtil.getNavigationBarHeight(context)
-        }
-        mTotalKeyboardHeight = KeyboardWidgetManager.getInstance().getTotalKeyboardHeight(context)
-
         return view
     }
 
@@ -72,7 +65,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
 
         // close btn
         val close = view.findViewById<ImageView>(R.id.keyboard_selector_top_close_btn)
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(close, 0xFF000000.toInt())
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(close, 0xFF000000.toInt())
         close.setOnClickListener { close() }
 
         mToolBatHeight = context.resources.getDimensionPixelOffset(R.dimen.keyboard_toolbar_height)
@@ -155,6 +148,10 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
         mRecyclerView.adapter = mAdapter
     }
 
+    override fun isExtendedInFloatingKeyboard(): Boolean {
+        return true
+    }
+
     class Adapter(val context: Context, val screenWidth: Int, var listener: ViewHolderListener) : RecyclerView.Adapter<ViewHolder>() {
 
         private var items = ArrayList<String>()
@@ -214,7 +211,10 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
 
         fun bind(text: String, listener: ViewHolderListener) {
             contentText.text = text
-            contentText.layoutParams.width = screenWidth
+            val isFloatingKeyboard = KeyboardSwitcher.getInstance().isFloatingKeyboard
+            contentText.layoutParams.width =
+                    if (isFloatingKeyboard) KeyboardSwitcher.getInstance().getFloatingKeyboardDefaultKeyboardWidth(ResourceUtils.getDefaultKeyboardWidth(itemView.context, isFloatingKeyboard))
+                    else ResourceUtils.getKeyboardWidthDeductedPadding(itemView.context, isFloatingKeyboard)
             contentText.setOnClickListener {
                 if (menuIsOpen()) {
                     closeMenu()

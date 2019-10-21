@@ -122,4 +122,7 @@ public abstract class KeyboardWidget implements LifecycleOwner {
     public Lifecycle getLifecycle() {
         return mLifecycleRegistry;
     }
+
+    public abstract boolean isExtendedInFloatingKeyboard();
+
 }

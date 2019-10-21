@@ -9,6 +9,7 @@ import com.nlptech.function.keyboardmenu.KeyboardMenuWidget;
 import com.nlptech.function.keyboardselector.KeyboardSelectorWidget;
 import com.nlptech.inputmethod.latin.settings.Settings;
 import com.nlptech.inputmethod.latin.utils.ResourceUtils;
+import com.nlptech.keyboardview.keyboard.KeyboardSwitcher;
 
 public class KeyboardWidgetManager extends BaseKeyboardWidgetManager {
     public static final String TAG = KeyboardWidgetManager.class.getSimpleName();
@@ -23,7 +24,8 @@ public class KeyboardWidgetManager extends BaseKeyboardWidgetManager {
     }
 
     public int getTotalKeyboardHeight(Context context) {
-        int keyboardHeight = ResourceUtils.getKeyboardHeight(context);
+        boolean isFloatingKeyboard = KeyboardSwitcher.getInstance().isFloatingKeyboard();
+        int keyboardHeight = ResourceUtils.getKeyboardHeight(context, isFloatingKeyboard);
         int functionStripViewHeight = ResourceUtils.getSuggestionStripViewHeight(context);
         return keyboardHeight + functionStripViewHeight;
     }

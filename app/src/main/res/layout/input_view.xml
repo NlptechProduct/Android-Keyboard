@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2011, The Android Open Source Project
@@ -19,25 +18,24 @@
 -->
 
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/inputViewStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="?attr/inputViewStyle">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/kb_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
     <LinearLayout
         android:id="@+id/customized_strip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
         android:layout_alignTop="@id/kb_container"
-        android:layoutDirection="ltr"
-        android:background="@android:color/black">
+        android:background="@android:color/black"
+        android:layoutDirection="ltr">
 
         <ImageView
             android:id="@+id/toolbar_menu"
