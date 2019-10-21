@@ -520,6 +520,47 @@ public boolean shouldShowLanguageSwitchKey ()
 -----|:--------
 boolean | 是否显示语言切换按钮
 
+#### getSuggestionView
+```Java
+public SuggestionStripView getSuggestionView ()
+```
+取得自订义的候选词列表()。
+
+返回 | 返回说明 | 
+-----|:--------
+SuggestionStripView | 自订义的候选词列表
+
+#### getChineseSuggestionView
+```Java
+public ChineseSuggestStripView getChineseSuggestionView ()
+```
+取得自订义的中文候选词列表()。
+
+返回 | 返回说明 | 
+-----|:--------
+ChineseSuggestStripView | 自订义的中文候选词列表
+
+#### getChineseComposingTextView
+```Java
+public ChineseComposingTextView getChineseComposingTextView ()
+```
+取得中文组字表()。
+
+返回 | 返回说明 | 
+-----|:--------
+ChineseComposingTextView | 中文组字表
+
+[zengine v1.3]
+#### onFloatingKeyboardVisibilityChanged
+```Java
+public void onFloatingKeyboardVisibilityChanged (boolean shown)
+```
+当悬浮键盘开或关的时候。
+
+参数 | 参数说明
+-----|:--------
+shown | true为开启，false为关闭
+
 <br/>
 
 <h3 id="2.4">ImeUiHandlerInterface</h3>

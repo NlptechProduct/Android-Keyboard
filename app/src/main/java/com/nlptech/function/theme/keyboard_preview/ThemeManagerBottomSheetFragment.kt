@@ -25,6 +25,7 @@ import com.nlptech.function.theme.custom_theme.CreateCustomThemeDialogFragment
 import com.nlptech.function.theme.custom_theme.CustomThemeDeleteTask
 import com.nlptech.function.theme.theme_manage.ThemeManageAdapter
 import com.nlptech.inputmethod.latin.utils.ResourceUtils
+import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
 import com.nlptech.keyboardview.theme.KeyboardThemeManager
 
 
@@ -98,11 +99,11 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
 
 
     private fun getDefaultKeyboardHeight(): Int {
-        return ResourceUtils.getDefaultKeyboardHeight(context) * getDefaultKeyboardWidth() / ResourceUtils.getDefaultKeyboardWidth(context)
+        return ResourceUtils.getDefaultKeyboardHeight(context, KeyboardSwitcher.getInstance().isFloatingKeyboard()) * getDefaultKeyboardWidth() / ResourceUtils.getDefaultKeyboardWidth(context, KeyboardSwitcher.getInstance().isFloatingKeyboard())
     }
 
     private fun getDefaultKeyboardWidth(): Int {
-        return ResourceUtils.getDefaultKeyboardWidth(context) - resources.getDimensionPixelSize(com.nlptech.keyboardview.R.dimen.theme_manage_preview_margin_vertical) * 2
+        return ResourceUtils.getDefaultKeyboardWidth(context, KeyboardSwitcher.getInstance().isFloatingKeyboard()) - resources.getDimensionPixelSize(com.nlptech.keyboardview.R.dimen.theme_manage_preview_margin_vertical) * 2
     }
 
     private fun getSuggestionStripViewHeight(): Int {

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.android.inputmethod.latin.R;
 import com.nlptech.inputmethod.latin.utils.ResourceUtils;
+import com.nlptech.keyboardview.keyboard.KeyboardSwitcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,8 @@ public abstract class BaseKeyboardWidgetManager {
     public void onCreateInputView(View inputView) {
         clear();
         mContainer = inputView.findViewById(R.id.input_view_keyboard_widget_container);
-        setContainerPadding(ResourceUtils.getKeyboardResizeLeftPadding(), ResourceUtils.getKeyboardResizeRightPadding());
+        boolean isFloatingKeyboard = KeyboardSwitcher.getInstance().isFloatingKeyboard();
+        setContainerPadding(ResourceUtils.getKeyboardResizeLeftPadding(isFloatingKeyboard), ResourceUtils.getKeyboardResizeRightPadding(isFloatingKeyboard));
     }
 
     public void onFinishInputView(boolean finishingInput) {
@@ -75,8 +77,14 @@ public abstract class BaseKeyboardWidgetManager {
         }
         String key = widgetClass.getName();
         KeyboardWidget widget = createWidget(widgetClass, intent);
+
         if (widget != null) {
             mWidgetCache.put(key, widget);
+        }
+
+        if (widget != null) {
+            KeyboardSwitcher.getInstance().refreshFloatingKeyboard();
+            widget.onResume();
         }
     }
 
@@ -91,6 +99,8 @@ public abstract class BaseKeyboardWidgetManager {
         destroyWidget(widget);
         String key = widgetClass.getName();
         mWidgetCache.remove(key);
+
+        KeyboardSwitcher.getInstance().refreshFloatingKeyboard();
     }
 
     public void closeAll() {
@@ -99,6 +109,8 @@ public abstract class BaseKeyboardWidgetManager {
             destroyWidget(widget);
         }
         mWidgetCache.clear();
+
+        KeyboardSwitcher.getInstance().refreshFloatingKeyboard();
     }
 
     /**
@@ -175,5 +187,23 @@ public abstract class BaseKeyboardWidgetManager {
         } else {
             widget.onDestroy();
         }
+    }
+
+    public boolean isExtendedInFloatingKeyboard() {
+        List<KeyboardWidget> widgets = get();
+        for (KeyboardWidget widget : widgets) {
+            if (widget.isExtendedInFloatingKeyboard()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updatePadding() {
+        boolean isFloatingKeyboard = KeyboardSwitcher.getInstance().isFloatingKeyboard();
+        setContainerPadding(
+                ResourceUtils.getKeyboardResizeLeftPadding(isFloatingKeyboard),
+                ResourceUtils.getKeyboardResizeRightPadding(isFloatingKeyboard)
+        );
     }
 }

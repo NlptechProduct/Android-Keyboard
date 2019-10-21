@@ -170,6 +170,11 @@ public class KeyboardSelectorWidget extends DraggableKeyboardWidget implements V
         cancelSelectWithSelection();
     }
 
+    @Override
+    public boolean isExtendedInFloatingKeyboard() {
+        return false;
+    }
+
     @NonNull
     @Override
     protected boolean isEnableHeightMode(Context context) {

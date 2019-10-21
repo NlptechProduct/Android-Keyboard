@@ -105,6 +105,42 @@
 
     <include layout="@layout/keyboard_menu_divider_line"/>
 
+    <!--  Floating keyboard  -->
+    <RelativeLayout
+        android:id="@+id/keyboard_menu_content_item_floating_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_menu_content_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
+        android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
+
+        <ImageView
+            android:id="@+id/keyboard_menu_content_item_floating_keyboard_iv"
+            android:layout_width="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_height="@dimen/keyboard_menu_content_item_icon_size"
+            android:layout_marginStart="@dimen/keyboard_menu_content_item_icon_margin_start"
+            android:layout_marginEnd="@dimen/keyboard_menu_content_item_icon_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_menu_show_number_row" />
+
+        <TextView
+            android:id="@+id/keyboard_menu_content_item_floating_keyboard_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/keyboard_menu_content_item_floating_keyboard_iv"
+            android:gravity="center_vertical"
+            android:text="@string/floating_keyboard"
+            android:textSize="@dimen/keyboard_menu_content_item_text_size" />
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/keyboard_menu_content_item_floating_keyboard_divider"
+        layout="@layout/keyboard_menu_divider_line" />
+
     <!-- Adjust size -->
     <LinearLayout
         android:id="@+id/keyboard_menu_content_item_adjust_size"
@@ -115,7 +151,6 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:paddingTop="@dimen/keyboard_menu_content_item_padding_horizontal"
         android:paddingBottom="@dimen/keyboard_menu_content_item_padding_horizontal">
 
@@ -139,7 +174,7 @@
     </LinearLayout>
 
     <include
-        android:visibility="gone"
+        android:id="@+id/keyboard_menu_content_item_adjust_size_divider"
         layout="@layout/keyboard_menu_divider_line"/>
 
     <!-- Backup -->

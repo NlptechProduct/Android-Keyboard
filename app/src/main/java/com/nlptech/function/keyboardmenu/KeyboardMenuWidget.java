@@ -3,7 +3,6 @@ package com.nlptech.function.keyboardmenu;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.NestedScrollView;
 
 import com.android.inputmethod.latin.LatinIME;
@@ -35,6 +33,7 @@ import com.nlptech.keyboardview.theme.KeyboardThemeManager;
 
 import static com.nlptech.inputmethod.latin.settings.Settings.PREF_ADDITIONAL_NUMBER_ROW_SHOWN;
 import static com.nlptech.inputmethod.latin.settings.Settings.PREF_AUTO_CORRECTION;
+import static com.nlptech.inputmethod.latin.settings.Settings.PREF_FLOATING_MODE;
 import static com.nlptech.inputmethod.latin.settings.Settings.PREF_GESTURE_INPUT;
 import static com.nlptech.inputmethod.latin.settings.Settings.PREF_SHOW_SUGGESTIONS;
 import static com.nlptech.inputmethod.latin.settings.Settings.PREF_SOUND_ON;
@@ -66,6 +65,7 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
     private View mLanguage;
     private View mTheme;
     private View mSettings;
+    private View mFloatingKeyboard;
     private View mAdjustSize;
     private View mBackup;
     private View mRestore;
@@ -122,93 +122,112 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
 
         // Top items
         mTopAccountBtn = getView().findViewById(R.id.keyboard_menu_top_account_btn);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mTopAccountBtn, color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mTopAccountBtn, color);
         mTopAccountBtn.setOnClickListener(this);
 
         mTopCloseBtn = getView().findViewById(R.id.keyboard_menu_top_close_btn);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(mTopCloseBtn, color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(mTopCloseBtn, color);
         mTopCloseBtn.setOnClickListener(this);
 
         KeyboardThemeManager.getInstance().colorUiModuleTitleText(getView().findViewById(R.id.keyboard_menu_tv));
 
         // Content items
         mLanguage = getView().findViewById(R.id.keyboard_menu_content_item_language);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_language_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_language_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_language_tv));
         mLanguage.setOnClickListener(this);
 
         mTheme = getView().findViewById(R.id.keyboard_menu_content_item_theme);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_theme_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_theme_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_theme_tv));
 
         mTheme.setOnClickListener(this);
 
         mSettings = getView().findViewById(R.id.keyboard_menu_content_item_settings);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_settings_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_settings_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_settings_tv));
         mSettings.setOnClickListener(this);
 
+        mFloatingKeyboard = getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard);
+        KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard_tv));
+        ImageView floatingKeyboardIcon = getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard_iv);
+        if (Settings.readFloatingMode(PreferenceManager.getDefaultSharedPreferences(getContext()))) {
+            floatingKeyboardIcon.setImageResource(R.drawable.ic_keyboard_menu_floating_keyboard_selected);
+        } else {
+            floatingKeyboardIcon.setImageResource(R.drawable.ic_keyboard_menu_floating_keyboard);
+        }
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard_iv), color);
+        mFloatingKeyboard.setOnClickListener(this);
 
         mAdjustSize = getView().findViewById(R.id.keyboard_menu_content_item_adjust_size);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_adjust_size_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_adjust_size_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_adjust_size_tv));
         mAdjustSize.setOnClickListener(this);
+        View adjustSizeDivider = getView().findViewById(R.id.keyboard_menu_content_item_adjust_size_divider);
+        if (KeyboardSwitcher.getInstance().isFloatingKeyboard()) {
+            mAdjustSize.setVisibility(View.VISIBLE);
+            adjustSizeDivider.setVisibility(View.VISIBLE);
+        } else {
+            mAdjustSize.setVisibility(View.GONE);
+            adjustSizeDivider.setVisibility(View.GONE);
+
+        }
 
         mBackup = getView().findViewById(R.id.keyboard_menu_content_item_backup);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_backup_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_backup_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_backup_tv));
         mBackup.setOnClickListener(this);
         mBackup.setVisibility(View.GONE);
 
         mRestore = getView().findViewById(R.id.keyboard_menu_content_item_restore);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_restore_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_restore_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_restore_tv));
         mRestore.setOnClickListener(this);
         mRestore.setVisibility(View.GONE);
 
         mHideKeyboard = getView().findViewById(R.id.keyboard_menu_content_item_hide_keyboard);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_hide_keyboard_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_hide_keyboard_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_hide_keyboard_tv));
         mHideKeyboard.setOnClickListener(this);
 
         mShowSuggestions = getView().findViewById(R.id.keyboard_menu_content_item_show_suggestions);
         mShowSuggestionsSwitch = getView().findViewById(R.id.keyboard_menu_content_item_show_suggestions_switch);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_show_suggestions_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_show_suggestions_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_show_suggestions_tv));
         mShowSuggestionsSwitch.setChecked(PrefUtil.getBoolean(getContext(), PREF_SHOW_SUGGESTIONS, true));
         mShowSuggestionsSwitch.setOnCheckedChangeListener(this);
 
         mAutoCorrection = getView().findViewById(R.id.keyboard_menu_content_item_auto_correction);
         mAutoCorrectionSwitch = getView().findViewById(R.id.keyboard_menu_content_item_auto_correction_switch);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_auto_correction_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_auto_correction_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_auto_correction_tv));
         mAutoCorrectionSwitch.setChecked(Settings.readAutoCorrectEnabled(PreferenceManager.getDefaultSharedPreferences(getContext()), getResources()));
         mAutoCorrectionSwitch.setOnCheckedChangeListener(this);
 
         mSlideInputS = getView().findViewById(R.id.keyboard_menu_content_item_slide_input);
         mSlideInputSwitch = getView().findViewById(R.id.keyboard_menu_content_item_slide_input_switch);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_slide_input_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_slide_input_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_slide_input_tv));
         mSlideInputSwitch.setChecked(Settings.readGestureInputEnabled(PreferenceManager.getDefaultSharedPreferences(getContext())));
         mSlideInputSwitch.setOnCheckedChangeListener(this);
 
         mVibrate = getView().findViewById(R.id.keyboard_menu_content_item_vibrate);
         mVibrateSwitch = getView().findViewById(R.id.keyboard_menu_content_item_vibrate_switch);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_vibrate_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_vibrate_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_vibrate_tv));
         mVibrateSwitch.setChecked(Settings.readVibrationEnabled(PreferenceManager.getDefaultSharedPreferences(getContext()), getResources()));
         mVibrateSwitch.setOnCheckedChangeListener(this);
 
         mSound = getView().findViewById(R.id.keyboard_menu_content_item_sound);
         mSoundSwitch = getView().findViewById(R.id.keyboard_menu_content_item_sound_switch);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_sound_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_sound_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_sound_tv));
         mSoundSwitch.setChecked(Settings.readKeypressSoundEnabled(PreferenceManager.getDefaultSharedPreferences(getContext()), getResources()));
         mSoundSwitch.setOnCheckedChangeListener(this);
 
         mShowNumberRow = getView().findViewById(R.id.keyboard_menu_content_item_show_number_row);
         mShowNumberRowSwitch = getView().findViewById(R.id.keyboard_menu_content_item_show_number_row_switch);
-       KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_show_number_row_iv), color);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(getView().findViewById(R.id.keyboard_menu_content_item_show_number_row_iv), color);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_show_number_row_tv));
         mShowNumberRowSwitch.setChecked(Settings.readAdditionalNumberRowShown(PreferenceManager.getDefaultSharedPreferences(getContext())));
         mShowNumberRowSwitch.setOnCheckedChangeListener(this);
@@ -216,37 +235,19 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
         if (!DisplayUtil.isOrientationPortrait(getContext())) {
             ViewGroup.LayoutParams lp = mScrollView.getLayoutParams();
             // TODO should calculate the correct height of the area in landscape mode
-            lp.height = ResourceUtils.getKeyboardHeight(getContext());
+            lp.height = ResourceUtils.getKeyboardHeight(getContext(), KeyboardSwitcher.getInstance().isFloatingKeyboard());
             mScrollView.setLayoutParams(lp);
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mGlobalLayoutListener = () -> {
-            mScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(mGlobalLayoutListener);
-            int toolBatHeight = getResources().getDimensionPixelOffset(R.dimen.keyboard_toolbar_height);
-            @SuppressLint("RestrictedApi")
-            int totalContentHeight = mScrollView.computeVerticalScrollRange() + toolBatHeight;
-            int totalKeyboardHeight = KeyboardWidgetManager.getInstance().getTotalKeyboardHeight(getContext());
-            int screenHeight = DisplayUtil.getScreenHeight(getContext()) - 60;
-            if (totalContentHeight > totalKeyboardHeight) {
-                int maxHeight = screenHeight - totalContentHeight;
-                if (maxHeight < 0) maxHeight = 0;
-                setStateHighTranslationY(maxHeight);
-            } else {
-                setEnableHighMode(false);
-            }
-        };
-        mScrollView.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+    public boolean isExtendedInFloatingKeyboard() {
+        return true;
     }
 
     @Override
     public void onScrollChange(NestedScrollView view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         if (scrollY == 0) {
-            mCanScroll = false;
-        } else if (scrollY == (view.getMeasuredHeight() - view.getChildAt(0).getMeasuredHeight())) {
             mCanScroll = false;
         } else {
             mCanScroll = true;
@@ -283,7 +284,12 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
                 break;
             case R.id.keyboard_menu_content_item_adjust_size:
                 KeyboardWidgetManager.getInstance().close(getClass());
+                boolean isFloatingKeyboard = KeyboardSwitcher.getInstance().isFloatingKeyboard();
+                if (isFloatingKeyboard) {
+                    KeyboardSwitcher.getInstance().switchFloatingKeyboardResizeMode(true);
+                } else {
 //                KeyboardWidgetManager.getInstance().open(KeyboardResizeWidget.class);
+                }
                 break;
 
             case R.id.keyboard_menu_content_item_backup:
@@ -302,6 +308,12 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
                 intent = new Intent(getContext(), SettingsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
+                break;
+
+            case R.id.keyboard_menu_content_item_floating_keyboard:
+                KeyboardWidgetManager.getInstance().close(getClass());
+                KeyboardSwitcher.getInstance().switchFloatingKeyboard(getContext());
+                getView().requestLayout();
                 break;
         }
     }

@@ -1,10 +1,31 @@
-# 从基于AOSP的项目迁移到Zengine
+# 目录
+
+* [从基于AOSP的项目迁移到Zengine](#1)
+
+* [集成要求](#2)
+    * [1. AndroidX](#2.1)
+    * [2. 最低SDK版本、Java编译选项](#2.2)
+    
+* [开始集成](#3)
+    * [1. 安裝Zengine SDK](#3.1)
+    * [2. 修改AndroidManifest.xml](#3.2)
+    * [3. 更改method.xml](#3.3)
+    * [4. 使用脚本zengineScript.jar删除特定類和资源文件](#3.4)
+    * [5. 删除so文件](#3.5)
+    * [6. 修改原有AOSP内容](#3.6)
+    * [7. 代码引入](#3.7)
+    * [8. 添加proguard内容](#3.8)
+    * [9. 新增或修改引用](#3.9)
+    
+<br/>
+
+<h1 id="1">从基于AOSP的项目迁移到Zengine</h1>
 
 如果您已经基于AOSP构建了自己的输入法项目，或者您的项目中已经基于AOSP集成了输入法的功能，您可以参考这份文档从AOSP迁移到Zengine来获得更强大的功能和更好的用户体验。
 
-# 集成要求
+<h1 id="2">集成要求</h1>
 
-## 1. AndroidX
+<h2 id="2.1">1. AndroidX</h2>
 
 Zengine SDK需要依赖AndroidX库。如果您的项目尚未迁移到AndroidX，请在Android Studio中执行以下操作：  
 1. Android Studio → Refactor → Migrate to AndroidX  
@@ -12,7 +33,7 @@ Zengine SDK需要依赖AndroidX库。如果您的项目尚未迁移到AndroidX�
 
 亦可参考官方文档：[here](https://developer.android.com/jetpack/androidx/migrate)
 
-## 2. 最低SDK版本、Java编译选项
+<h2 id="2.2">2. 最低SDK版本、Java编译选项</h2>
 
 Zengine SDK要求的最低API Level为19（Android 4.4），需要通过Java 1.8或以上版本进行编译。Zengine SDK支持'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'架构，可在build.gradle(app)对ABI配置进行选择。  
 将如下代码添加设定至build.gradle (app)：  
@@ -44,8 +65,9 @@ android {
 ~~~
 
 # 开始集成
+<h1 id="3">开始集成</h1>
 
-## 1. 安裝Zengine SDK
+<h2 id="3.1">1. 安裝Zengine SDK</h2>
 
 在工程build.gradle配置脚本中allprojects代码段中添加Zengine SDK Maven仓库地址。如下:  
 **build.gradle:**
@@ -70,7 +92,7 @@ dependencies {
 }
 ~~~
 
-## 2. 修改AndroidManifest.xml
+<h2 id="3.2">2. 修改AndroidManifest.xml</h2>
 
 ### 添加appkey
 
@@ -90,7 +112,7 @@ dependencies {
 ~~~
 如果您还没有appkey，请联系zengine@nlptech.com申请appkey和使用授权。
 
-## 3. 更改method.xml
+<h2 id="3.3">3. 更改method.xml</h2>
 
 请更改method.xml中的内容如下 (删除所有subtype)：
 **method.xml:**
@@ -101,7 +123,8 @@ dependencies {
        android:supportsSwitchingToNextInputMethod="false">
 </input-method>
 ~~~
-## 4. 使用脚本zengineScript.jar删除特定類和资源文件
+
+<h2 id="3.4">4. 使用脚本zengineScript.jar删除特定類和资源文件</h2>
 
 zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的冗余类文件和资源文件，并将其删除。zengineScript.jar还会自动修改项目中类的引用变更。
 
@@ -113,12 +136,12 @@ zengineScript.jar可以自动扫描项目目录中集成Zengine SDK后产生的�
 ~~~
 如果您不希望通用此脚本自动删除文件，可参考[常见问题](https://github.com/NlptechProduct/Zengine/blob/master/doc_Chinese/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.md)所列出的文件列表手动删除
 
-## 5. 删除so文件
+<h2 id="3.5">5. 删除so文件</h2>
 
 删除项目创建的so文件:  **libjni_latinime.so**   
 如果您的项目中包含pinyin so文件，请删除： **libejni_pinyinime.so** [zengine v1.2]
 
-## 6. 修改原有AOSP内容
+<h2 id="3.6">6. 修改原有AOSP内容</h2>
 
 ### 6.1 开启Auto Import on the fly的功能
 
@@ -158,11 +181,12 @@ public class LatinIME extends ZengineInputMethodService implements
         … … … … 
     }
 
-    private boolean isImeSuppressedByHardwareKeyboard() {
+    [zengine v1.3]
+    p̶r̶i̶v̶a̶t̶e̶ ̶b̶o̶o̶l̶e̶a̶n̶ ̶i̶s̶I̶m̶e̶S̶u̶p̶p̶r̶e̶s̶s̶e̶d̶B̶y̶H̶a̶r̶d̶w̶a̶r̶e̶K̶e̶y̶b̶o̶a̶r̶d̶(̶)̶ ̶{̶
         // 请将KeyboardSwitcher更改为IKeyboardSwitcher
-        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();             
+        f̵i̵n̵a̵l̵ ̵I̵K̵e̵y̵b̵o̵a̵r̵d̵S̵w̵i̵t̵c̵h̵e̵r̵ ̵s̵w̵i̵t̵c̵h̵e̵r̵ ̵=̵ ̵K̵e̵y̵b̵o̵a̵r̵d̵S̵w̵i̵t̵c̵h̵e̵r̵.̵g̵e̵t̵I̵n̵s̵t̵a̵n̵c̵e̵(̵)̵;̵             
         … … … … 
-    }
+    }̵ 
 
     // 请修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
     @Override
@@ -184,6 +208,18 @@ public class LatinIME extends ZengineInputMethodService implements
         // 请增加对KeyboardSwitcher.requestUpdatingDeformableKeyState()的调用
         KeyboardSwitcher.getInstance()
             .requestUpdatingDeformableKeyState(mInputLogic.getTextBeforeCursor(Constants.DEFORMABLE_KEY_CHECK_TEXT_COUNT_BEFORE_CURSOR));
+        … … … … …
+    }
+    … … … … …
+    [zengine v1.3]
+    @Override
+    public boolean onEvaluateFullscreenMode() {
+        final SettingsValues settingsValues = mSettings.getCurrent();
+        … … … … …
+        // 需增加此条件，在悬浮键盘时disable fullscreen mode
+        if (KeyboardSwitcher.getInstance().isFloatingKeyboard()) {
+            return false;
+        }
         … … … … …
     }
     … … … … …
@@ -257,6 +293,18 @@ public class LatinIME extends ZengineInputMethodService implements
             setNeutralSuggestionStrip();	
         }
     }
+    … … … … …
+    [zengine v1.3]
+    // 实现当悬浮键盘开或关的时候，需要做什么事情
+    @Override
+    public void onFloatingKeyboardVisibilityChanged(boolean shown) {
+         // TODO: 也许你有一些东西需要在此时关闭...
+        … … … … …
+        KeyboardWidgetManager.getInstance().closeAll();
+        KeyboardWidgetManager.getInstance().updatePadding();
+        super.onFloatingKeyboardVisibilityChanged(shown);
+    }
+    … … … … …
 ```
 **LatinIME$UIHandler.java:**
 
@@ -385,7 +433,45 @@ public class LatinIME extends ZengineInputMethodService implements
 	… … … … 
 	
 	public void onComputeInsets(final Insets outInsets) {
-		m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶s̶e̶t̶M̶o̶r̶e̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶H̶e̶i̶g̶h̶t̶(̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶)̶;̶
+        super.onComputeInsets(outInsets);
+        // This method may be called before {@link #setInputView(View)}.
+        if (mInputView == null) {
+            return;
+        }
+                if (mInputView == null) {
+            return;
+        }
+        f̵i̵n̵a̵l̵ ̵S̵e̵t̵t̵i̵n̵g̵s̵V̵a̵l̵u̵e̵s̵ ̵s̵e̵t̵t̵i̵n̵g̵s̵V̵a̵l̵u̵e̵s̵ ̵=̵ ̵m̵S̵e̵t̵t̵i̵n̵g̵s̵.̵g̵e̵t̵C̵u̵r̵r̵e̵n̵t̵(̵)̵;̵
+        final View visibleKeyboardView = KeyboardSwitcher.getInstance().getVisibleKeyboardView();
+        if (visibleKeyboardView == null || !hasSuggestionStripView()) {
+            return;
+        }
+        f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵ ̵=̵ ̵m̵I̵n̵p̵u̵t̵V̵i̵e̵w̵.̵g̵e̵t̵H̵e̵i̵g̵h̵t̵(̵)̵;̵
+        i̵f̵ ̵(̵i̵s̵I̵m̵e̵S̵u̵p̵p̵r̵e̵s̵s̵e̵d̵B̵y̵H̵a̵r̵d̵w̵a̵r̵e̵K̵e̵y̵b̵o̵a̵r̵d̵(̵)̵ ̵&̵&̵ ̵!̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵i̵s̵S̵h̵o̵w̵n̵(̵)̵)̵ ̵{̵
+            // If there is a hardware keyboard and a visible software keyboard view has been hidden,
+            // no visual element will be shown on the screen.
+            o̵u̵t̵I̵n̵s̵e̵t̵s̵.̵c̵o̵n̵t̵e̵n̵t̵T̵o̵p̵I̵n̵s̵e̵t̵s̵ ̵=̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵;̵
+            o̵u̵t̵I̵n̵s̵e̵t̵s̵.̵v̵i̵s̵i̵b̵l̵e̵T̵o̵p̵I̵n̵s̵e̵t̵s̵ ̵=̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵;̵
+            m̵I̵n̵s̵e̵t̵s̵U̵p̵d̵a̵t̵e̵r̵.̵s̵e̵t̵I̵n̵s̵e̵t̵s̵(̵o̵u̵t̵I̵n̵s̵e̵t̵s̵)̵;̵
+            r̵e̵t̵u̵r̵n̵;̵
+        }̵
+        f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵v̵i̵s̵i̵b̵l̵e̵T̵o̵p̵Y̵ ̵=̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵ ̵-̵ ̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵g̵e̵t̵H̵e̵i̵g̵h̵t̵(̵)̵;̵
+        // Need to set expanded touchable region only if a keyboard view is being shown.
+        i̵f̵ ̵(̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵i̵s̵S̵h̵o̵w̵n̵(̵)̵)̵ ̵{̵
+            f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵t̵o̵u̵c̵h̵L̵e̵f̵t̵ ̵=̵ ̵0̵;̵
+            f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵t̵o̵u̵c̵h̵T̵o̵p̵ ̵=̵ ̵K̵e̵y̵b̵o̵a̵r̵d̵S̵w̵i̵t̵c̵h̵e̵r̵.̵g̵e̵t̵I̵n̵s̵t̵a̵n̵c̵e̵(̵)̵.̵i̵s̵S̵h̵o̵w̵i̵n̵g̵M̵o̵r̵e̵K̵e̵y̵s̵P̵a̵n̵e̵l̵(̵)̵ ̵?̵ ̵0̵ ̵:̵ ̵v̵i̵s̵i̵b̵l̵e̵T̵o̵p̵Y̵;̵
+            f̶i̶n̶a̶l̶ ̶i̶n̶t̶ ̶t̶o̶u̶c̶h̶R̶i̶g̶h̶t̶ ̶=̶ ̶v̶i̶s̶i̶b̶l̶e̶K̶e̶y̶b̶o̶a̶r̶d̶V̶i̶e̶w̶.̶g̶e̶t̶W̶i̶d̶t̶h̶(̶)̶;̶
+            f̶i̶n̶a̶l̶ ̶i̶n̶t̶ ̶t̶o̶u̶c̶h̶B̶o̶t̶t̶o̶m̶ ̶=̶ ̶i̶n̶p̶u̶t̶H̶e̶i̶g̶h̶t̶
+                    // Extend touchable region below the keyboard.
+                    +̶ ̶E̶X̶T̶E̶N̶D̶E̶D̶_̶T̶O̶U̶C̶H̶A̶B̶L̶E̶_̶R̶E̶G̶I̶O̶N̶_̶H̶E̶I̶G̶H̶T̶;̶
+            o̶u̶t̶I̶n̶s̶e̶t̶s̶.̶t̶o̶u̶c̶h̶a̶b̶l̶e̶I̶n̶s̶e̶t̶s̶ ̶=̶ ̶I̶n̶s̶e̶t̶s̶.̶T̶O̶U̶C̶H̶A̶B̶L̶E̶_̶I̶N̶S̶E̶T̶S̶_̶R̶E̶G̶I̶O̶N̶;̶
+            ̶o̶u̶t̶I̶n̶s̶e̶t̶s̶.̶t̶o̶u̶c̶h̶a̶b̶l̶e̶R̶e̶g̶i̶o̶n̶.̶s̶e̶t̶(̶t̶o̶u̶c̶h̶L̶e̶f̶t̶,̶ ̶t̶o̶u̶c̶h̶T̶o̶p̶,̶ ̶t̶o̶u̶c̶h̶R̶i̶g̶h̶t̶,̶ ̶t̶o̶u̶c̶h̶B̶o̶t̶t̶o̶m̶)̶;̶
+        }̶
+        o̶u̶t̶I̶n̶s̶e̶t̶s̶.̶c̶o̶n̶t̶e̶n̶t̶T̶o̶p̶I̶n̶s̶e̶t̶s̶ ̶=̶ ̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶;̶
+        o̶u̶t̶I̶n̶s̶e̶t̶s̶.̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶I̶n̶s̶e̶t̶s̶ ̶=̶ ̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶;̶
+        m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶s̶e̶t̶M̶o̶r̶e̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶H̶e̶i̶g̶h̶t̶(̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶)̶;̶
+        mInsetsUpdater.setInsets(outInsets);
+        KeyboardWidgetManager.getInstance().onComputeInsets(outInsets);
 	}
 	
 	… … … … 
@@ -412,8 +498,7 @@ public class LatinIME extends ZengineInputMethodService implements
 <̶c̶o̶m̶.̶a̶n̶d̶r̶o̶i̶d̶.̶i̶n̶p̶u̶t̶m̶e̶t̶h̶o̶d̶.̶l̶a̶t̶i̶n̶.̶s̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶.̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶
 ~~~
 
-
-## 7. 代码引入
+<h2 id="3.7">7. 代码引入</h2>
 
 ### 7.1 Agent引入
 
@@ -532,6 +617,15 @@ Zengine SDK中提供的KeyboardView已经整合了默认的EmojiView,开发者�
 Agent.getInstance().onCreateInputView(ViewGroup container, boolean enable)
 
 ~~~
+
+[zengine v1.3]
+如果需要支持悬浮键盘，那么请改调用：
+
+~~~java
+Agent.getInstance().onCreateInputView(ViewGroup container, FloatingKeyboard floatingKeyboard, boolean enable)
+
+~~~
+
 其中container为开发者提供的容器ViewGroup, SDK会自动将KeybaordView及EmojiView生成并加入此ViewGroup。 代码示例 ：  
 **LatinIME.java:**
 
@@ -541,10 +635,24 @@ public View onCreateInputView() {
     // 开发者自行生成一个xml布局
     View currentInputView =   
         LayoutInflater.from(this).inflate(R.layout.example_input_view, null);
+
     // 布局提供一个容器     
     ViewGroup kbContainer = currentInputView.findViewById(R.id.kb_container);
+    [zengine v1.3]
+    FloatingKeyboard floatingkeyboard = currentInputView.findViewById(R.id.floating_kb);
+
+    [zengine v1.3]
+    // 如果有需要，对悬浮键盘设置是否展开或收起的监听器，否则预设会是收起的。
+    // 在键盘悬浮的状态下，收起代表FloatingKeyboard的高度会与键盘一样高，
+    // 展开代表FloatingKeyboard的高度会比键盘高些，让键盘上方有空间。
+    floatingKeyboard.setExtendableListener(() -> KeyboardWidgetManager.getInstance().isExtendedInFloatingKeyboard());
+
     // 调用Agent.getInstance().onCreateInputView()， 并传入容器
-    Agent.getInstance().onCreateInputView(kbContainer, mIsHardwareAcceleratedDrawingEnabled);
+    [zengine v1.3]
+    Agent.getInstance().onCreateInputView(kbContainer, floatingkeyboard, mIsHardwareAcceleratedDrawingEnabled);
+    // 如果沒有加上 FloatingKeyboard，那麼可以使用 Agent.getInstance().onCreateInputView(kbContainer, mIsHardwareAcceleratedDrawingEnabled)
+    // 或是 Agent.getInstance().onCreateInputView(kbContainer, null, mIsHardwareAcceleratedDrawingEnabled)
+
     // 返回布局
     return currentInputView;
 }
@@ -555,18 +663,29 @@ public View onCreateInputView() {
 
 ~~~
 <RelativeLayout
-   xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"
-   style="?attr/inputViewStyle">
-   … … … … 
-   <!-- 提供給KeybaordView & EmojiView的container -->
-   <FrameLayout
-       android:id="@+id/kb_container"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"/>
-   … … … … 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?attr/inputViewStyle">
+
+    [zengine v1.3]
+    <!-- 这层是为了实现悬浮键盘而使用的，可以选择不加 -->
+    <com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard
+        android:id="@+id/floating_kb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        … … … … 
+        <!-- 提供給KeybaordView & EmojiView的container -->
+        <FrameLayout
+            android:id="@+id/kb_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+        … … … … 
+
+    </com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard>
+
 </RelativeLayout>
 ~~~
 ### 7.3 语言管理
@@ -585,8 +704,7 @@ public View onCreateInputView() {
 
 可通过调用 **Agent.getInstance().onLayoutChanged(IMELanguage imeLanguage,String newLayout)** 方法切换对应语言的layout。通过调用 **Agent.getInstance().obtainLayoutList(IMELanguage imeLanguage)** 方法获取对应语言的所有layout列表。
 
-
-## 8. 添加proguard内容
+<h2 id="3.8">8. 添加proguard内容</h2>
 
 ~~~
 # 基本设定
@@ -629,7 +747,7 @@ public View onCreateInputView() {
 -keep class com.nlptech.keyboardtrace.AgentWorkManagerInitializer {*;}
 ~~~
 
-## 9. 新增或修改引用
+<h2 id="3.9">9. 新增或修改引用</h2>
 
 透过Android Studio → Build → Make Project，得知还有哪些档案有error后，将他们打开并使用Show Intentin Actions → Import Class或触发Auto Import on the fly的方式，快速帮你插入缺少的引用，但少部分引用还是需要手动修改。
 

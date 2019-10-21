@@ -179,6 +179,10 @@ class GifSendingWidget : DraggableKeyboardWidget(),
         return tabView
     }
 
+    override fun isExtendedInFloatingKeyboard(): Boolean {
+        return true
+    }
+
     inner class GifSendingPageAdapter(private val gifPageCallback: GifPage.GifPageCallback
                                       , private val lifecycleOwner: LifecycleOwner
                                       , val viewModel: GifSendingViewModel) : PagerAdapter() {

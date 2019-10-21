@@ -29,8 +29,10 @@
             android:id="@+id/gif_search_edit_text_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gif_search_edit_text_layout_height"
+            android:layout_above="@+id/gif_search_suggestions_layout"
             android:layout_marginStart="@dimen/gif_search_edit_text_layout_margin_vertical"
             android:layout_marginEnd="@dimen/gif_search_edit_text_layout_margin_vertical"
+            android:layout_marginBottom="@dimen/gif_search_edit_text_layout_margin_bottom"
             android:background="@drawable/bg_gif_search_edit_text_layout">
 
             <com.nlptech.ui.VtImeEditText
@@ -45,9 +47,9 @@
                 android:onTextChanged="@{(text, start, before, count) -> viewModel.onSearchKeywordChanged(text)}"
                 android:padding="@dimen/gif_search_edit_text_padding"
                 android:singleLine="true"
-                android:textSize="@dimen/gif_search_edit_text_size"
+                android:textAlignment="gravity"
                 android:textDirection="locale"
-                android:textAlignment="gravity"/>
+                android:textSize="@dimen/gif_search_edit_text_size" />
 
             <!-- 搜尋按鈕 -->
             <RelativeLayout
@@ -101,12 +103,12 @@
         <RelativeLayout
             android:id="@+id/gif_search_suggestions_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/keyboard_widget_title_layout_height"
             android:layout_above="@+id/gif_search_result_list"
-            android:layoutDirection="ltr"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layoutDirection="ltr">
 
             <ImageView
                 android:id="@+id/gif_search_suggestions_background"
@@ -139,14 +141,16 @@
             android:id="@+id/gif_search_progress_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignTop="@+id/gif_search_result_list"
+            android:layout_alignBottom="@+id/gif_search_result_list"
+            android:background="@android:color/white"
             android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/gif_search_progress_sub_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:background="@android:color/white">
+                android:layout_alignParentBottom="true">
 
                 <include
                     layout="@layout/loading_page"

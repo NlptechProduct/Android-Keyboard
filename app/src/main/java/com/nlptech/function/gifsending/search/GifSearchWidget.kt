@@ -59,17 +59,9 @@ class GifSearchWidget : KeyboardWidget(),
     override fun onViewCreated(intent: Intent?) {
         super.onViewCreated(intent)
         view.gif_search_btn.setOnClickListener(this)
-        val screenHeight = DisplayUtil.getScreenHeight(context)
         var keyboardHeight = KeyboardWidgetManager.getInstance().getTotalKeyboardHeight(context)
-        val navigationBarHeight = DisplayUtil.getNavigationBarHeight(context)
-        val miNavigationBarHeight = getMiSupplementHeight(context)
         val suggestionStripViewHeight = KeyboardWidgetManager.getInstance().getSuggestionStripViewHeight(context)
-        val suggestionsLayoutY = screenHeight - keyboardHeight
         val editTextLayoutHeight = resources.getDimensionPixelSize(R.dimen.gif_search_edit_text_layout_height)
-        var editTextLayoutY = suggestionsLayoutY - editTextLayoutHeight - resources.getDimensionPixelSize(R.dimen.gif_search_edit_text_layout_margin_bottom)
-        if (navigationBarHeight == 0 && miNavigationBarHeight > 0) {
-            editTextLayoutY -= miNavigationBarHeight
-        }
 
         val editTextLayoutMarginVertical = resources.getDimensionPixelSize(R.dimen.gif_search_edit_text_layout_margin_vertical)
 
@@ -80,14 +72,16 @@ class GifSearchWidget : KeyboardWidget(),
         view.gif_search_background.setOnClickListener(this)
 
         // Search EditText
-        val editTextLayoutLP = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, editTextLayoutHeight)
-        editTextLayoutLP.marginStart = editTextLayoutMarginVertical
-        editTextLayoutLP.marginEnd = editTextLayoutMarginVertical
-        view.gif_search_edit_text_layout.layoutParams = editTextLayoutLP
-        view.gif_search_edit_text_layout.y = editTextLayoutY.toFloat()
         view.gif_search_edit_text.imeOptions = EditorInfo.IME_ACTION_SEARCH
         view.gif_search_edit_text.setOnEditorActionListener(this)
         view.gif_search_suggestions_background.setOnClickListener(this)
+        KeyboardThemeManager.getInstance().setUiModuleTitleBackground(view.gif_search_suggestions_background)
+        KeyboardThemeManager.getInstance().setUiModuleContentBackground(view.gif_search_result_list)
+        KeyboardThemeManager.getInstance().setUiModuleContentBackground(view.gif_search_no_result_layout)
+        KeyboardThemeManager.getInstance().setUiModuleContentBackground(view.gif_search_fail_result_layout)
+        KeyboardThemeManager.getInstance().setUiModuleContentBackground(view.gif_search_progress_layout)
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(view.gif_search_close_btn)
+
         // Suggestions
         val suggestionsLayoutLP = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, suggestionStripViewHeight)
         suggestionsLayoutLP.addRule(RelativeLayout.ABOVE, R.id.gif_search_result_list)
@@ -190,11 +184,9 @@ class GifSearchWidget : KeyboardWidget(),
         })
         // set view model to binding
         binding!!.viewModel = viewModel
-    }
 
-    override fun onResume() {
-        super.onResume()
         view.gif_search_edit_text.enableImeEditText()
+
     }
 
     override fun onPause() {
@@ -264,6 +256,10 @@ class GifSearchWidget : KeyboardWidget(),
 
     fun onShowSuggestionView() {
         view.gif_search_suggestions_background.visibility = View.GONE
+    }
+
+    override fun isExtendedInFloatingKeyboard(): Boolean {
+        return true
     }
 
     class GifItemsObserver(val viewModel: GifSearchViewModel, val adapter: GifSearchAdapter) : Observer<PagedList<GifItem>> {
