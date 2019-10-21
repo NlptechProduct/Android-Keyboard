@@ -102,6 +102,7 @@ import com.nlptech.inputmethod.latin.utils.StatsUtilsManager;
 import com.nlptech.inputmethod.latin.utils.ViewLayoutUtils;
 import com.nlptech.keybaordwidget.KeyboardWidgetManager;
 import com.nlptech.keyboardview.accessibility.AccessibilityUtils;
+import com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard;
 import com.nlptech.keyboardview.keyboard.IKeyboardSwitcher;
 import com.nlptech.keyboardview.keyboard.Keyboard;
 import com.nlptech.keyboardview.keyboard.KeyboardActionListener;
@@ -830,12 +831,6 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         mInputLogic.recycle();
     }
 
-    private boolean isImeSuppressedByHardwareKeyboard() {
-        final IKeyboardSwitcher switcher = KeyboardSwitcher.getInstance();
-        return !onEvaluateInputViewShown() && switcher.isImeSuppressedByHardwareKeyboard(
-                mSettings.getCurrent(), switcher.getKeyboardSwitchState());
-    }
-
     @Override
     public void onConfigurationChanged(final Configuration conf) {
         SettingsValues settingsValues = mSettings.getCurrent();
@@ -869,7 +864,10 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         Context themeContext = KeyboardSwitcher.getInstance().getThemeContext();
         View currentInputView = LayoutInflater.from(themeContext).inflate(R.layout.input_view, null);
         ViewGroup kbContainer = currentInputView.findViewById(R.id.kb_container);
-        Agent.getInstance().onCreateInputView(kbContainer, mIsHardwareAcceleratedDrawingEnabled);
+
+        FloatingKeyboard floatingKeyboard = currentInputView.findViewById(R.id.floating_kb);
+        floatingKeyboard.setExtendableListener(() -> KeyboardWidgetManager.getInstance().isExtendedInFloatingKeyboard());
+        Agent.getInstance().onCreateInputView(kbContainer, floatingKeyboard, mIsHardwareAcceleratedDrawingEnabled);
 
         return currentInputView;
     }
@@ -1302,34 +1300,10 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         if (mInputView == null) {
             return;
         }
-        final SettingsValues settingsValues = mSettings.getCurrent();
         final View visibleKeyboardView = KeyboardSwitcher.getInstance().getVisibleKeyboardView();
         if (visibleKeyboardView == null || !hasSuggestionStripView()) {
             return;
         }
-        final int inputHeight = mInputView.getHeight();
-        if (isImeSuppressedByHardwareKeyboard() && !visibleKeyboardView.isShown()) {
-            // If there is a hardware keyboard and a visible software keyboard view has been hidden,
-            // no visual element will be shown on the screen.
-            outInsets.contentTopInsets = inputHeight;
-            outInsets.visibleTopInsets = inputHeight;
-            mInsetsUpdater.setInsets(outInsets);
-            return;
-        }
-        final int visibleTopY = inputHeight - visibleKeyboardView.getHeight();
-        // Need to set expanded touchable region only if a keyboard view is being shown.
-        if (visibleKeyboardView.isShown()) {
-            final int touchLeft = 0;
-            final int touchTop = KeyboardSwitcher.getInstance().isShowingMoreKeysPanel() ? 0 : visibleTopY;
-            final int touchRight = visibleKeyboardView.getWidth();
-            final int touchBottom = inputHeight
-                    // Extend touchable region below the keyboard.
-                    + EXTENDED_TOUCHABLE_REGION_HEIGHT;
-            outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION;
-            outInsets.touchableRegion.set(touchLeft, touchTop, touchRight, touchBottom);
-        }
-        outInsets.contentTopInsets = visibleTopY;
-        outInsets.visibleTopInsets = visibleTopY;
         mInsetsUpdater.setInsets(outInsets);
         KeyboardWidgetManager.getInstance().onComputeInsets(outInsets);
     }
@@ -1372,6 +1346,11 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             // If there is a hardware keyboard, disable full screen mode.
             return false;
         }
+
+        if (KeyboardSwitcher.getInstance().isFloatingKeyboard()) {
+            return false;
+        }
+
         // Reread resource value here, because this method is called by the framework as needed.
         final boolean isFullscreenModeAllowed = Settings.readUseFullscreenMode(getResources());
         if (super.onEvaluateFullscreenMode() && isFullscreenModeAllowed) {
@@ -2084,5 +2063,12 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             GifSearchWidget gifSearchWidget = (GifSearchWidget) KeyboardWidgetManager.getInstance().get(GifSearchWidget.class);
             gifSearchWidget.onHideSuggestionView();
         }
+    }
+
+    @Override
+    public void onFloatingKeyboardVisibilityChanged(boolean shown) {
+        KeyboardWidgetManager.getInstance().closeAll();
+        KeyboardWidgetManager.getInstance().updatePadding();
+        super.onFloatingKeyboardVisibilityChanged(shown);
     }
 }

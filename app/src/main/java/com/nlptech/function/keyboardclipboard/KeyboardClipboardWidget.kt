@@ -68,7 +68,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
         KeyboardThemeManager.getInstance().colorUiModuleIcon(close, 0xFF000000.toInt())
         close.setOnClickListener { close() }
 
-        mToolBatHeight = context.resources.getDimensionPixelOffset(R.dimen.keyboard_toolbar_height)
+        mToolBatHeight = context.resources.getDimensionPixelOffset(R.dimen.keyboard_widget_title_layout_height)
         mAdapter = Adapter(context, mScreenWidth, listener = object : ViewHolderListener {
             override fun onItemMenuOpened(vh: ViewHolder) {
                 if (vh != mAdapter.menuOpenedVH) {
