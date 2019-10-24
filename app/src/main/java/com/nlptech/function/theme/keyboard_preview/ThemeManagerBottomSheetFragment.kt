@@ -1,6 +1,7 @@
 package com.nlptech.function.theme.keyboard_preview
 
 import android.app.Dialog
+import android.content.Context
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -64,7 +65,7 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         val rootView = View.inflate(context, R.layout.fragment_theme_manage_preview_bottom_sheet, null)
         val applyButton = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_apply_button)
         val closeButton = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_close_button)
-        val showKeyBoarderSwitchLayout = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_show_key_board_layout)
+        val showKeyBoarderSwitchLauout = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_show_key_board_layout)
         val showKeyBoarderSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_key_border_shown_switch)
         val darkModeSwitchLauout = rootView.findViewById<View>(R.id.fragment_theme_manage_preview_dark_mode_switch_layout)
         val darkModeSwitch: Switch = rootView.findViewById<Switch>(R.id.fragment_theme_manage_preview_dark_mode_switch)
@@ -76,7 +77,7 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         closeButton.setOnClickListener(this)
 
         val keyboardTheme = KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId)
-        showKeyBoarderSwitchLayout.visibility = if (keyboardTheme.mBorderMode == KeyboardTheme.BorderMode.BOTH) View.VISIBLE else View.GONE
+        showKeyBoarderSwitchLauout.visibility = if (keyboardTheme.mBorderMode == KeyboardTheme.BorderMode.BOTH) View.VISIBLE else View.GONE
         showKeyBoarderSwitch.isChecked = Settings.readKeyBorderShown(PreferenceManager.getDefaultSharedPreferences(context))
         showKeyBoarderSwitch.setOnCheckedChangeListener(this)
 
@@ -87,9 +88,7 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         deleteButton.setOnClickListener(this)
         deleteButton.visibility = if (KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId).themeType == KeyboardTheme.ThemeType.CUSTOM) View.VISIBLE else View.GONE
 
-        cardViewContainer.layoutParams.height = getDefaultKeyboardHeight() + getSuggestionStripViewHeight() + resources.getDimensionPixelSize(R.dimen.theme_manage_preview_margin_top) + resources.getDimensionPixelSize(R.dimen.theme_manage_preview_margin_bottom)
         inputViewContainer.layoutParams.width = getDefaultKeyboardWidth()
-        inputViewContainer.layoutParams.height = getDefaultKeyboardHeight() + getSuggestionStripViewHeight()
 
         dialog!!.setContentView(rootView)
         mBehavior = BottomSheetBehavior.from<View>(rootView!!.parent as View)
@@ -114,32 +113,32 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         super.onStart()
         mBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
 
-        val inputViewContainer = dialog!!.findViewById<ViewGroup>(R.id.fragment_theme_manage_preview_container)
+        val inputViewContainer = dialog!!.findViewById<RelativeLayout>(R.id.fragment_theme_manage_preview_container)
         inputViewContainer!!.removeAllViews()
-        val themeContext =  Agent.getInstance().getThemeContext(context,themeId )
+        val themeContext: Context = Agent.getInstance().getThemeContext(context, themeId)
         val currentInputView = LayoutInflater.from(themeContext).inflate(
                 R.layout.fragment_theme_manage_preview_input_view, null)
         inputViewContainer.addView(currentInputView)
         val container = currentInputView.findViewById<ViewGroup>(R.id.kb_container)
         Agent.getInstance().showThemePreview(container, themeId)
-        updateThemeAndCreateInputView(container)
+//        updateThemeAndCreateInputView(container)
     }
 
-    private fun updateThemeAndCreateInputView(inputViewContainer: ViewGroup) {
-        KeyboardThemeManager.getInstance().isInKeyboardThemePreview = true
-        val keyboardTheme = KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId)
-        val switcher = KeyboardPreviewSwitcher.getInstance() as KeyboardPreviewSwitcher
-
-        // 在KeyboardPreviewSwitcher中建立ThemeContext和InputView
-        switcher.updateKeyboardTheme(inputViewContainer, keyboardTheme)
-
-        KeyboardPreviewSwitcher.getInstance().updateKeyboardAdditionalNumberRow()
-        KeyboardPreviewSwitcher.getInstance().loadKeyboard(
-                EditorInfo(),
-                Settings.getInstance().current,
-                Constants.TextUtils.CAP_MODE_OFF,
-                RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE)
-    }
+//    private fun updateThemeAndCreateInputView(inputViewContainer: ViewGroup) {
+//        KeyboardThemeManager.getInstance().isInKeyboardThemePreview = true
+//        val keyboardTheme = KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId)
+//        val switcher = KeyboardPreviewSwitcher.getInstance() as KeyboardPreviewSwitcher
+//
+//        // 在KeyboardPreviewSwitcher中建立ThemeContext和InputView
+//        switcher.updateKeyboardTheme(inputViewContainer, keyboardTheme)
+//
+//        KeyboardPreviewSwitcher.getInstance().updateKeyboardAdditionalNumberRow()
+//        KeyboardPreviewSwitcher.getInstance().loadKeyboard(
+//                EditorInfo(),
+//                Settings.getInstance().current,
+//                Constants.TextUtils.CAP_MODE_OFF,
+//                RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE)
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -215,7 +214,6 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
             }
         }
     }
-
 
     override fun onDeleteResult() {
         close(false)

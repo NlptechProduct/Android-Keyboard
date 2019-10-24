@@ -17,6 +17,7 @@
 package com.android.inputmethod.latin;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -64,6 +65,7 @@ import com.nlptech.ZengineInputMethodService;
 import com.nlptech.common.constant.Constants;
 import com.nlptech.common.utils.ApplicationUtils;
 import com.nlptech.common.utils.BuildCompatUtils;
+import com.nlptech.common.utils.DisplayUtil;
 import com.nlptech.common.utils.LeakGuardHandlerWrapper;
 import com.nlptech.function.callback.IKeyboardActionCallback;
 import com.nlptech.function.gifsending.search.GifSearchWidget;
@@ -230,7 +232,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
     final HideSoftInputReceiver mHideSoftInputReceiver = new HideSoftInputReceiver(this);
 
     private AlertDialog mOptionsDialog;
-    private AlertDialog mSubtypeSwitchDialog;
+    private Dialog mSubtypeSwitchDialog;
 
     private final boolean mIsHardwareAcceleratedDrawingEnabled;
 
@@ -894,6 +896,9 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         view.findViewById(R.id.toolbar_gif_search).setOnClickListener(v -> {
             KeyboardWidgetManager.getInstance().open(GifSearchWidget.class);
         });
+        if (!DisplayUtil.isOrientationPortrait(this)) {
+            view.findViewById(R.id.toolbar_gif_search).setVisibility(View.GONE);
+        }
         view.findViewById(R.id.toolbar_gif_sending).setOnClickListener(v -> {
             KeyboardWidgetManager.getInstance().open(GifSendingWidget.class);
         });
@@ -1987,13 +1992,13 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
 
     private void showSubtypeSwitchDialog() {
         // prepare dialog
-        final AlertDialog.Builder builder = new AlertDialog.Builder(
-                DialogUtils.getPlatformDialogThemeContext(this));
-
+        final Dialog dialog = new Dialog(
+                DialogUtils.getPlatformDialogThemeContext(this),
+                R.style.CustomDialogTheme
+        );
         SubtypeSwitchDialogView dialogView = (SubtypeSwitchDialogView) getLayoutInflater().inflate(R.layout.subtype_switch, null);
         dialogView.setListener(this);
-        builder.setView(dialogView);
-        final AlertDialog dialog = builder.create();
+        dialog.setContentView(dialogView);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -2005,11 +2010,20 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         }
 
         final Window window = dialog.getWindow();
-        final WindowManager.LayoutParams lp = window.getAttributes();
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
+
+        WindowManager.LayoutParams lp = window.getAttributes();
         lp.token = windowToken;
         lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
-        window.setAttributes(lp);
-        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
         mSubtypeSwitchDialog = dialog;
         dialog.show();

@@ -3,9 +3,9 @@ package com.nlptech.function.languagesetting.langswitch;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.inputmethod.latin.R;
+import com.nlptech.common.utils.DisplayUtil;
 import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
-import com.nlptech.keyboardview.theme.KeyboardThemeManager;
 import com.nlptech.language.CharsetTable;
 import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
@@ -24,6 +24,8 @@ import com.nlptech.language.VertexInputMethodManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.nlptech.common.utils.DensityUtil.dp2px;
 
 public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSwitchListener {
 
@@ -69,8 +71,8 @@ public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSw
         RelativeLayout layout = findViewById(R.id.subtype_switch_layout);
         subtypeLayout = findViewById(R.id.subtype_layout);
         charsetLayout = findViewById(R.id.layoutset_layout);
-        RecyclerView charsetRecycler = findViewById(R.id.charset_recycler);
-        RecyclerView subtypeRecycler = findViewById(R.id.recyclerView);
+        MaxHeightRecyclerView charsetRecycler = findViewById(R.id.charset_recycler);
+        MaxHeightRecyclerView subtypeRecycler = findViewById(R.id.recyclerView);
         displayName = findViewById(R.id.displayName);
         TextView openLanguageSettings = findViewById(R.id.open_language_settings);
         openLanguageSettings.setOnClickListener(v -> {
@@ -83,7 +85,8 @@ public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSw
         });
         localeOrLayoutName = findViewById(R.id.localeOrLayoutName);
         enterCharsetBtn = findViewById(R.id.change_layout);
-        findViewById(R.id.top_layout).setOnClickListener(v -> enterCharset(currentSubtype));
+        View topLayout = findViewById(R.id.top_layout);
+        topLayout.setOnClickListener(v -> enterCharset(currentSubtype));
         layout.setOnClickListener(v -> {
             if (isCharsetShow) {
                 showSubtype();
@@ -94,6 +97,16 @@ public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSw
             }
         });
         divider = findViewById(R.id.divider);
+
+        boolean isOrientationPortrait = DisplayUtil.isOrientationPortrait(getContext());
+        if (!isOrientationPortrait) {
+            ((RelativeLayout.LayoutParams) localeOrLayoutName.getLayoutParams()).topMargin = 0;
+            ((RelativeLayout.LayoutParams) topLayout.getLayoutParams()).topMargin = 0;
+            ((RelativeLayout.LayoutParams) subtypeRecycler.getLayoutParams()).topMargin = 0;
+            ((RelativeLayout.LayoutParams) openLanguageSettings.getLayoutParams()).bottomMargin = dp2px(getContext(), 5);
+            float subtypeRecyclerM = isOrientationPortrait ? 0.2f : 0.15f;
+            subtypeRecycler.setMaxHeight((int) (DisplayUtil.getScreenHeight(getContext()) * subtypeRecyclerM));
+        }
 
         subtypeAdapter = new SubtypeSwitchAdapter(this);
         subtypeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
