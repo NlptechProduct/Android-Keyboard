@@ -242,7 +242,7 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
 
     @Override
     public boolean isExtendedInFloatingKeyboard() {
-        return true;
+        return false;
     }
 
     @Override

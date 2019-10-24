@@ -180,7 +180,7 @@ class GifSendingWidget : DraggableKeyboardWidget(),
     }
 
     override fun isExtendedInFloatingKeyboard(): Boolean {
-        return true
+        return false
     }
 
     inner class GifSendingPageAdapter(private val gifPageCallback: GifPage.GifPageCallback

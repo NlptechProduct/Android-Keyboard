@@ -149,7 +149,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
     }
 
     override fun isExtendedInFloatingKeyboard(): Boolean {
-        return true
+        return false
     }
 
     class Adapter(val context: Context, val screenWidth: Int, var listener: ViewHolderListener) : RecyclerView.Adapter<ViewHolder>() {
