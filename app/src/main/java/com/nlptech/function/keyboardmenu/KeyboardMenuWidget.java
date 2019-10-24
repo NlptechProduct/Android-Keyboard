@@ -274,7 +274,7 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
             case R.id.keyboard_menu_content_item_language:
                 KeyboardWidgetManager.getInstance().close(getClass());
 //                KeyboardWidgetManager.getInstance().open(SubtypeSwitchWidget.class);
-                LatinIME.getInstance().onCustomRequest(Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER);
+                LatinIME.getInstance().showSubtypeSwitchDialog();
                 break;
 
             case R.id.keyboard_menu_content_item_theme:

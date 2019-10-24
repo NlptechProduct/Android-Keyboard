@@ -1990,7 +1990,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
         mCustomizedStrip.setVisibility(View.GONE);
     }
 
-    private void showSubtypeSwitchDialog() {
+    public void showSubtypeSwitchDialog() {
         // prepare dialog
         final Dialog dialog = new Dialog(
                 DialogUtils.getPlatformDialogThemeContext(this),

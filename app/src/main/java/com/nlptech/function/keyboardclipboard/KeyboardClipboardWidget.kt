@@ -10,13 +10,13 @@ import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inputmethod.latin.LatinIME
 import com.android.inputmethod.latin.R
 import com.nlptech.common.utils.DisplayUtil
 import com.nlptech.inputmethod.latin.utils.ResourceUtils
+import com.nlptech.keybaordwidget.KeyboardWidgetManager
 import com.nlptech.keybaordwidget.draggable.DraggableKeyboardWidget
 import com.nlptech.keybaordwidget.draggable.DraggableLayout
 import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
@@ -24,13 +24,13 @@ import com.nlptech.keyboardview.theme.KeyboardThemeManager
 
 
 class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callback {
+
     lateinit var mAdapter: Adapter
     lateinit var mRecyclerView: RecyclerView
     lateinit var mTips: LinearLayout
     var mToolBatHeight: Int = 0
     var mTotalKeyboardHeight: Int = 0
     var mScreenHeight: Int = 0
-    var mScreenWidth: Int = 0
     var mRecyclerViewAtTop: Boolean = true
 
     lateinit var listener: ViewTreeObserver.OnGlobalLayoutListener
@@ -38,13 +38,13 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?): DraggableLayout {
         val context = container!!.context
         val view = super.onCreateView(inflater, container)
+        mScreenHeight = DisplayUtil.getScreenHeight(context)
+        mTotalKeyboardHeight = KeyboardWidgetManager.getInstance().getTotalKeyboardHeight(context)
         return view
     }
 
     override fun onCreateContentView(inflater: LayoutInflater?): View {
         val view = inflater!!.inflate(R.layout.keyboard_clipboard, null)
-        // background
-        KeyboardThemeManager.getInstance().setUiModuleBackground(view)
         return view
     }
 
@@ -60,8 +60,13 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
     override fun onViewCreated(intent: Intent?) {
         super.onViewCreated(intent)
 
+        // background
+        val rootView: View = view.findViewById(R.id.keyboard_clipboard)
+        KeyboardThemeManager.getInstance().setUiModuleBackground(rootView)
+
         // title
         KeyboardThemeManager.getInstance().colorUiModuleTitleText(view.findViewById(R.id.keyboard_clipboard_tv))
+        KeyboardThemeManager.getInstance().setUiModuleTitleBackground(view.findViewById<View>(R.id.toolbar))
 
         // close btn
         val close = view.findViewById<ImageView>(R.id.keyboard_selector_top_close_btn)
@@ -69,7 +74,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
         close.setOnClickListener { close() }
 
         mToolBatHeight = context.resources.getDimensionPixelOffset(R.dimen.keyboard_widget_title_layout_height)
-        mAdapter = Adapter(context, mScreenWidth, listener = object : ViewHolderListener {
+        mAdapter = Adapter(context, listener = object : ViewHolderListener {
             override fun onItemMenuOpened(vh: ViewHolder) {
                 if (vh != mAdapter.menuOpenedVH) {
                     mAdapter.closeMenuOpenedVH()
@@ -79,6 +84,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
 
             override fun onItemClick(s: String) {
                 LatinIME.getInstance().inputLogic.commitText(s, true)
+
             }
 
             override fun onItemDelete(position: Int) {
@@ -91,12 +97,12 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
                 }
             }
         })
+
         mRecyclerView = view.findViewById(R.id.recyclerView)
 
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         mRecyclerView.layoutManager = linearLayoutManager
-        mRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -131,19 +137,6 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
 
     override fun onResume() {
         super.onResume()
-        listener = ViewTreeObserver.OnGlobalLayoutListener {
-            mRecyclerView.viewTreeObserver.removeOnGlobalLayoutListener(listener)
-            // setStateHighTranslationY by content
-            val totalContentHeight = mRecyclerView.computeVerticalScrollRange() + 2 * mToolBatHeight
-            if (totalContentHeight > mTotalKeyboardHeight) {
-                var maxHeight = mScreenHeight - totalContentHeight
-                if (maxHeight < 0) maxHeight = 0
-                setStateHighTranslationY(maxHeight)
-            } else {
-                setEnableHighMode(false)
-            }
-        }
-        mRecyclerView.viewTreeObserver.addOnGlobalLayoutListener(listener)
         reloadData()
         mRecyclerView.adapter = mAdapter
     }
@@ -152,7 +145,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
         return false
     }
 
-    class Adapter(val context: Context, val screenWidth: Int, var listener: ViewHolderListener) : RecyclerView.Adapter<ViewHolder>() {
+    class Adapter(val context: Context, var listener: ViewHolderListener) : RecyclerView.Adapter<ViewHolder>() {
 
         private var items = ArrayList<String>()
         var menuOpenedVH: ViewHolder? = null
@@ -172,7 +165,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
         override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
             val li = LayoutInflater.from(context)
             val view = li.inflate(R.layout.keyboard_clipboard_rv_item, parent, false)
-            return ViewHolder(view, screenWidth)
+            return ViewHolder(view)
         }
 
         override fun getItemCount(): Int {
@@ -194,7 +187,7 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
         fun onItemMenuOpened(vh: ViewHolder)
     }
 
-    class ViewHolder(view: View, private val screenWidth: Int) : RecyclerView.ViewHolder(view), SlidingButtonView.IonSlidingButtonListener {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view), SlidingButtonView.IonSlidingButtonListener {
 
         private var slidingButtonView: SlidingButtonView = view as SlidingButtonView
         lateinit var listener: ViewHolderListener
@@ -207,6 +200,8 @@ class KeyboardClipboardWidget : DraggableKeyboardWidget(), DraggableLayout.Callb
             contentText = slidingButtonView.findViewById(R.id.text)
             KeyboardThemeManager.getInstance().colorUiModuleText(contentText)
             deleteItem = slidingButtonView.findViewById(R.id.delete_icon)
+            KeyboardThemeManager.getInstance().setUiModuleContentBackground(slidingButtonView)
+            KeyboardThemeManager.getInstance().colorUiModuleBottomLine(slidingButtonView.findViewById<View>(R.id.divider))
         }
 
         fun bind(text: String, listener: ViewHolderListener) {

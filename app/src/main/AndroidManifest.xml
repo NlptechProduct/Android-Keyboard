@@ -86,6 +86,7 @@
         <activity android:name=".setup.SetupActivity"
             android:theme="@style/platformActivityTheme"
             android:label="@string/english_ime_name"
+            android:screenOrientation="portrait"
             android:icon="@drawable/ic_launcher_keyboard"
             android:launchMode="singleTask"
             android:noHistory="true">
@@ -97,29 +98,34 @@
 
         <activity android:name=".setup.SetupWizardActivity"
             android:theme="@style/platformActivityTheme"
+            android:screenOrientation="portrait"
             android:label="@string/english_ime_name"
             android:clearTaskOnLaunch="true">
         </activity>
 
         <activity android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/platformSettingsTheme"
             android:label="@string/english_ime_settings">
         </activity>
 
         <activity android:name="com.nlptech.function.languagesetting.langadded.LanguageAddedActivity"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:label="@string/english_ime_settings">
         </activity>
 
         <activity android:name="com.nlptech.function.languagesetting.langchooser.LanguageChooserActivity"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:label="@string/english_ime_settings">
         </activity>
 
         <activity
             android:name="com.nlptech.function.main.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:launchMode="singleTask"
             android:label="@string/english_ime_settings" />
@@ -151,10 +157,12 @@
 
         <!-- Unexported activity used for tests. -->
         <activity android:name=".settings.TestFragmentActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name="com.nlptech.function.theme.theme_manage.ThemeManageActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:label="@string/label_theme"
             android:theme="@style/AppTheme" />
