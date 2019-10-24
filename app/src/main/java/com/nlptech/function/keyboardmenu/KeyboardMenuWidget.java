@@ -337,6 +337,7 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
                 PrefUtil.putBoolean(getContext(), PREF_GESTURE_INPUT, isChecked);
                 KeyboardTrace.onAttributeChangeEvent(OP_GESTURE_INPUT
                         , Settings.readGestureInputEnabled(PreferenceManager.getDefaultSharedPreferences(getContext())));
+                KeyboardSwitcher.getInstance().reLoadKeyboard();
                 break;
 
             case R.id.keyboard_menu_content_item_vibrate_switch:
