@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.inputmethod.latin.R;
 import com.nlptech.common.utils.DisplayUtil;
 import com.nlptech.function.languagesetting.langadded.LanguageAddedActivity;
+import com.nlptech.keyboardview.theme.KeyboardThemeManager;
 import com.nlptech.language.CharsetTable;
 import com.nlptech.language.IMELanguage;
 import com.nlptech.language.IMELanguageWrapper;
@@ -125,7 +126,7 @@ public class SubtypeSwitchDialogView extends RelativeLayout implements SubtypeSw
     private void initThemeItems() {
 //        KeyboardThemeManager.getInstance().setUiModuleBackground(subtypeLayout);
 //        KeyboardThemeManager.getInstance().setUiModuleBackground(charsetLayout);
-//        KeyboardThemeManager.getInstance().colorUiModuleIcon(enterCharsetBtn);
+        KeyboardThemeManager.getInstance().colorUiModuleIcon(enterCharsetBtn, 0xff000000);
         // TODO use other theme's settings : waiting for themeManager definition
     }
 
