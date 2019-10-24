@@ -151,7 +151,7 @@ public class KeyboardMenuWidget extends DraggableKeyboardWidget implements View.
         mFloatingKeyboard = getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard);
         KeyboardThemeManager.getInstance().colorUiModuleText(getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard_tv));
         ImageView floatingKeyboardIcon = getView().findViewById(R.id.keyboard_menu_content_item_floating_keyboard_iv);
-        if (Settings.readFloatingMode(PreferenceManager.getDefaultSharedPreferences(getContext()))) {
+        if (Settings.readFloatingMode(getContext())) {
             floatingKeyboardIcon.setImageResource(R.drawable.ic_keyboard_menu_floating_keyboard_selected);
         } else {
             floatingKeyboardIcon.setImageResource(R.drawable.ic_keyboard_menu_floating_keyboard);

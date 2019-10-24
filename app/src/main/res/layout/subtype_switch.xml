@@ -2,7 +2,8 @@
 <com.nlptech.function.languagesetting.langswitch.SubtypeSwitchDialogView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/subtype_switch_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="#55000000">
 
     <RelativeLayout
         android:id="@+id/subtype_layout"
@@ -22,30 +23,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/change_language"
+                android:textColor="@android:color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/top_layout"
-                android:layout_below="@id/title"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/displayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/localeOrLayoutName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/displayName"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/change_layout"
@@ -63,29 +64,29 @@
                 android:layout_height="1dp"
                 android:layout_below="@id/top_layout"
                 android:layout_marginTop="15dp"
-                android:background="#d0d0d0"/>
+                android:background="#d0d0d0" />
 
 
             <com.nlptech.function.languagesetting.langswitch.MaxHeightRecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/divider" />
+                android:layout_below="@id/divider"
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:id="@+id/open_language_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_below="@id/recyclerView"
-                android:layout_marginBottom="5dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="@string/open_language_settings"
                 android:textColor="@color/colorAccent"
-                android:textStyle="bold"
-                android:textSize="17sp"/>
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -94,8 +95,8 @@
         android:id="@+id/layoutset_layout"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/dialog_select_layoutset_background"
         android:layout_centerInParent="true"
+        android:background="@drawable/dialog_select_layoutset_background"
         android:padding="23dp">
 
         <TextView
@@ -103,16 +104,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/keyboard_language_choose_layout"
+            android:textColor="@android:color/black"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"/>
+            android:textStyle="bold" />
 
         <com.nlptech.function.languagesetting.langswitch.MaxHeightRecyclerView
             android:id="@+id/charset_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/layoutset_layout_title" />
+            android:layout_below="@id/layoutset_layout_title"
+            android:layout_marginTop="10dp" />
 
     </RelativeLayout>
 

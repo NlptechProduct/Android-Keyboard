@@ -88,6 +88,11 @@ public class CustomizedSuggestStripView extends SuggestionStripView implements V
     }
 
     @Override
+    public void dismissMoreSuggestionsPanel() {
+
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.left :
