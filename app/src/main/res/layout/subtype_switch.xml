@@ -7,13 +7,17 @@
 
     <RelativeLayout
         android:id="@+id/subtype_layout"
-        android:layout_width="290dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/dialog_select_layoutset_background">
 
         <RelativeLayout
-            android:layout_width="290dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:padding="23dp">
@@ -56,6 +60,7 @@
                     android:layout_centerVertical="true"
                     android:scaleType="center"
                     android:src="@drawable/ic_keyboard_arrow_right" />
+
             </RelativeLayout>
 
             <View
@@ -93,9 +98,13 @@
 
     <RelativeLayout
         android:id="@+id/layoutset_layout"
-        android:layout_width="290dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/dialog_select_layoutset_background"
         android:padding="23dp">
 
