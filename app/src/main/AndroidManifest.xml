@@ -98,7 +98,6 @@
 
         <activity android:name=".setup.SetupWizardActivity"
             android:theme="@style/platformActivityTheme"
-            android:screenOrientation="portrait"
             android:label="@string/english_ime_name"
             android:clearTaskOnLaunch="true">
         </activity>
