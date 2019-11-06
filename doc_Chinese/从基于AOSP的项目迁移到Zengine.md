@@ -181,13 +181,6 @@ public class LatinIME extends ZengineInputMethodService implements
         … … … … 
     }
 
-    [zengine v1.3]
-    p̶r̶i̶v̶a̶t̶e̶ ̶b̶o̶o̶l̶e̶a̶n̶ ̶i̶s̶I̶m̶e̶S̶u̶p̶p̶r̶e̶s̶s̶e̶d̶B̶y̶H̶a̶r̶d̶w̶a̶r̶e̶K̶e̶y̶b̶o̶a̶r̶d̶(̶)̶ ̶{̶
-        // 请将KeyboardSwitcher更改为IKeyboardSwitcher
-        f̵i̵n̵a̵l̵ ̵I̵K̵e̵y̵b̵o̵a̵r̵d̵S̵w̵i̵t̵c̵h̵e̵r̵ ̵s̵w̵i̵t̵c̵h̵e̵r̵ ̵=̵ ̵K̵e̵y̵b̵o̵a̵r̵d̵S̵w̵i̵t̵c̵h̵e̵r̵.̵g̵e̵t̵I̵n̵s̵t̵a̵n̵c̵e̵(̵)̵;̵             
-        … … … … 
-    }̵ 
-
     // 请修改LatinIME.shouldShowLanguageSwitchKey()的代码，如下
     @Override
   	public boolean shouldShowLanguageSwitchKey() {
@@ -295,13 +288,11 @@ public class LatinIME extends ZengineInputMethodService implements
     }
     … … … … …
     [zengine v1.3]
-    // 实现当悬浮键盘开或关的时候，需要做什么事情
+    // 实现当悬浮键盘开或关的时候，需要做什么事情，如果没有，可以不需要覆写此方法
     @Override
     public void onFloatingKeyboardVisibilityChanged(boolean shown) {
          // TODO: 也许你有一些东西需要在此时关闭...
         … … … … …
-        KeyboardWidgetManager.getInstance().closeAll();
-        KeyboardWidgetManager.getInstance().updatePadding();
         super.onFloatingKeyboardVisibilityChanged(shown);
     }
     … … … … …
@@ -442,14 +433,14 @@ public class LatinIME extends ZengineInputMethodService implements
             return;
         }
         [zengine v1.3] 
-        // 如果需要支持悬浮键盘，那么请删除以下代码
+        // 请删除以下代码
         f̵i̵n̵a̵l̵ ̵S̵e̵t̵t̵i̵n̵g̵s̵V̵a̵l̵u̵e̵s̵ ̵s̵e̵t̵t̵i̵n̵g̵s̵V̵a̵l̵u̵e̵s̵ ̵=̵ ̵m̵S̵e̵t̵t̵i̵n̵g̵s̵.̵g̵e̵t̵C̵u̵r̵r̵e̵n̵t̵(̵)̵;̵
         final View visibleKeyboardView = KeyboardSwitcher.getInstance().getVisibleKeyboardView();
         if (visibleKeyboardView == null || !hasSuggestionStripView()) {
             return;
         }
         [zengine v1.3]
-        // 如果需要支持悬浮键盘，那么请删除以下代码
+        // 请删除以下代码
         f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵ ̵=̵ ̵m̵I̵n̵p̵u̵t̵V̵i̵e̵w̵.̵g̵e̵t̵H̵e̵i̵g̵h̵t̵(̵)̵;̵
         i̵f̵ ̵(̵i̵s̵I̵m̵e̵S̵u̵p̵p̵r̵e̵s̵s̵e̵d̵B̵y̵H̵a̵r̵d̵w̵a̵r̵e̵K̵e̵y̵b̵o̵a̵r̵d̵(̵)̵ ̵&̵&̵ ̵!̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵i̵s̵S̵h̵o̵w̵n̵(̵)̵)̵ ̵{̵
             // If there is a hardware keyboard and a visible software keyboard view has been hidden,
@@ -459,6 +450,8 @@ public class LatinIME extends ZengineInputMethodService implements
             m̵I̵n̵s̵e̵t̵s̵U̵p̵d̵a̵t̵e̵r̵.̵s̵e̵t̵I̵n̵s̵e̵t̵s̵(̵o̵u̵t̵I̵n̵s̵e̵t̵s̵)̵;̵
             r̵e̵t̵u̵r̵n̵;̵
         }̵
+        [zengine v1.3]
+        // 请删除以下代码
         f̵i̵n̵a̵l̵ ̵i̵n̵t̵ ̵v̵i̵s̵i̵b̵l̵e̵T̵o̵p̵Y̵ ̵=̵ ̵i̵n̵p̵u̵t̵H̵e̵i̵g̵h̵t̵ ̵-̵ ̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵g̵e̵t̵H̵e̵i̵g̵h̵t̵(̵)̵;̵
         // Need to set expanded touchable region only if a keyboard view is being shown.
         i̵f̵ ̵(̵v̵i̵s̵i̵b̵l̵e̵K̵e̵y̵b̵o̵a̵r̵d̵V̵i̵e̵w̵.̵i̵s̵S̵h̵o̵w̵n̵(̵)̵)̵ ̵{̵
@@ -474,8 +467,21 @@ public class LatinIME extends ZengineInputMethodService implements
         o̶u̶t̶I̶n̶s̶e̶t̶s̶.̶c̶o̶n̶t̶e̶n̶t̶T̶o̶p̶I̶n̶s̶e̶t̶s̶ ̶=̶ ̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶;̶
         o̶u̶t̶I̶n̶s̶e̶t̶s̶.̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶I̶n̶s̶e̶t̶s̶ ̶=̶ ̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶;̶
         m̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶V̶i̶e̶w̶.̶s̶e̶t̶M̶o̶r̶e̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶s̶H̶e̶i̶g̶h̶t̶(̶v̶i̶s̶i̶b̶l̶e̶T̶o̶p̶Y̶)̶;̶
+        
+        [zengine v1.3]
+        // 如果有view在keyboard container上方，你可以透过：
+        // outInsets.contentTopInsent -= your_view_height;
+        // outInsets.visibleTopInsent -= your_view_height;
+        //  Rect your_view_rect =  your_view.getViewTouchableRect();
+        //  outInsets.touchableRegion.op(
+        //      your_view_rect.left,
+        //      your_view_rect.top,
+        //      your_view_rect.right,
+        //      your_view_rect.bottom,
+        //      Region.Op.UNION);
+        // 让键盘与应用的可视与触控范围是正确的
+
         mInsetsUpdater.setInsets(outInsets);
-        KeyboardWidgetManager.getInstance().onComputeInsets(outInsets);
 	}
 	
 	… … … … 
@@ -488,6 +494,10 @@ public class LatinIME extends ZengineInputMethodService implements
 	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶e̶t̶N̶e̶u̶t̶r̶a̶l̶S̶u̶g̶g̶e̶s̶t̶i̶o̶n̶S̶t̶r̶i̶p̶(̶)̶
 	p̶u̶b̶l̶i̶c̶ ̶v̶o̶i̶d̶ ̶s̶h̶o̶w̶I̶m̶p̶o̶r̶t̶a̶n̶t̶N̶o̶t̶i̶c̶e̶C̶o̶n̶t̶e̶n̶t̶s̶(̶)̶
 	
+    [zengine v1.3]
+    // 删除以下方法 : ̶i̶s̶I̶m̶e̶S̶u̶p̶p̶r̶e̶s̶s̶e̶d̶B̶y̶H̶a̶r̶d̶w̶a̶r̶e̶K̶e̶y̶b̶o̶a̶r̶d̶(̶)
+    p̶r̶i̶v̶a̶t̶e̶ ̶b̶o̶o̶l̶e̶a̶n̶ ̶i̶s̶I̶m̶e̶S̶u̶p̶p̶r̶e̶s̶s̶e̶d̶B̶y̶H̶a̶r̶d̶w̶a̶r̶e̶K̶e̶y̶b̶o̶a̶r̶d̶(̶)
+
 	… … … … 
 	// 删除ImportantNoticeUtils相关代码
 	public void onRequestPermissionsResult(boolean allGranted) {
@@ -674,6 +684,7 @@ public View onCreateInputView() {
 
     [zengine v1.3]
     <!-- 这层是为了实现悬浮键盘而使用的，可以选择不加 -->
+    <!-- 本身是一个RelativeLayout，它需要包覆你的键盘布局的内容 -->
     <com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard
         android:id="@+id/floating_kb"
         android:layout_width="match_parent"
@@ -692,6 +703,7 @@ public View onCreateInputView() {
 
 </RelativeLayout>
 ~~~
+
 ### 7.3 语言管理
 可通过 **Agent.getInstance().getAvailableIMELanguageList()** 方法获取Zengine支持的语言列表，使用 **Agent.getInstance().addIMELanguage()** 和 **Agent.getInstance().removeIMELanguage()** 方法对语言进行添加和删除的操作。词典基于已添加语言进行下载，可通过 **Agent.getInstance().getAddedIMELanguageList()** 查看已添加语言列表。
 
