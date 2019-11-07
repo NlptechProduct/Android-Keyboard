@@ -138,7 +138,7 @@ class GifSendingViewModel(application: Application) : AndroidViewModel(applicati
     private fun queryRecentGifListFromFile(context: Context) : List<GifItem> {
         synchronized(mObject) {
             val file = FileUtils.getPrivateFile(context, FILE_STORE_NAME)
-            var data: List<GifItem> = ArrayList()
+            var data: List<GifItem>? = null
             if (FileUtils.isFileExist(file)) {
                 val fileReader = FileReader(file.path)
                 try {
@@ -149,6 +149,9 @@ class GifSendingViewModel(application: Application) : AndroidViewModel(applicati
                 } finally {
                     fileReader.close()
                 }
+            }
+            if (data == null) {
+                return ArrayList()
             }
             return data
         }
