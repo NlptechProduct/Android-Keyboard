@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDexApplication;
@@ -19,6 +20,8 @@ import com.nlptech.Agent;
 import com.nlptech.common.utils.DensityUtil;
 import com.nlptech.function.keyboardrender.RGBKeyboardRender;
 import com.nlptech.keyboardview.theme.external.ExternalThemeInfo;
+
+import io.reactivex.plugins.RxJavaPlugins;
 
 
 public class TestApplication extends MultiDexApplication {
@@ -36,7 +39,12 @@ public class TestApplication extends MultiDexApplication {
         Agent.getInstance().init(this);
         addExternalThemeDefault();
         addExternalThemeRBG();
+        setRxJavaErrorHandler();
         Agent.getInstance().loadTheme(this, "001");
+    }
+
+    private void setRxJavaErrorHandler() {
+        RxJavaPlugins.setErrorHandler(throwable -> Log.e("vertex", "throw test"));
     }
 
     private void addExternalThemeDefault() {
