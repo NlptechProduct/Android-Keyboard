@@ -19,8 +19,6 @@ import com.android.inputmethod.latin.R;
 import com.nlptech.Agent;
 import com.nlptech.common.utils.DensityUtil;
 import com.nlptech.function.keyboardrender.RGBKeyboardRender;
-import com.nlptech.function.theme.download_theme.DownloadThemeDataFetcher;
-import com.nlptech.keyboardview.theme.download.DownloadThemeManager;
 import com.nlptech.keyboardview.theme.external.ExternalThemeInfo;
 
 import io.reactivex.plugins.RxJavaPlugins;
@@ -43,8 +41,6 @@ public class TestApplication extends MultiDexApplication {
         addExternalThemeDefault();
         addExternalThemeRBG();
         Agent.getInstance().loadTheme(this, "001");
-        DownloadThemeManager.getInstance().setDownloadThemeDataListener(new DownloadThemeDataFetcher());
-        DownloadThemeManager.getInstance().triggerFetchData(this);
     }
 
     private void setRxJavaErrorHandler() {
