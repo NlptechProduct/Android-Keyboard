@@ -74,3 +74,9 @@
 -keep class com.nlptech.function.gifsending.send.gif.GifCategoryItems {*;}
 -keep class com.nlptech.function.gifsending.send.gif.GifCategoryItems$* {*;}
 -keep class com.nlptech.function.gifsending.search.GifSearchResult {*;}
+-keep class com.nlptech.function.theme.download_theme.DownloadThemeApiItem {*;}
+
+-keep class com.nlptech.keyboardview.theme.download.DownloadThemeDomainData {*;}
+-keep class com.nlptech.keyboardview.theme.download.ThemeDownloadInfoBundle {*;}
+-keep class com.nlptech.keyboardview.theme.download.ThemeDownloadInfo {*;}
+-keep class com.nlptech.keyboardview.theme.download.DownloadThemeInfo {*;}

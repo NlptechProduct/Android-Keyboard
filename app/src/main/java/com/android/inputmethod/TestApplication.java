@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDexApplication;
@@ -18,7 +19,11 @@ import com.android.inputmethod.latin.R;
 import com.nlptech.Agent;
 import com.nlptech.common.utils.DensityUtil;
 import com.nlptech.function.keyboardrender.RGBKeyboardRender;
+import com.nlptech.function.theme.download_theme.DownloadThemeDataFetcher;
+import com.nlptech.keyboardview.theme.download.DownloadThemeManager;
 import com.nlptech.keyboardview.theme.external.ExternalThemeInfo;
+
+import io.reactivex.plugins.RxJavaPlugins;
 
 
 public class TestApplication extends MultiDexApplication {
@@ -33,10 +38,17 @@ public class TestApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        setRxJavaErrorHandler();
         Agent.getInstance().init(this);
         addExternalThemeDefault();
         addExternalThemeRBG();
         Agent.getInstance().loadTheme(this, "001");
+        DownloadThemeManager.getInstance().setDownloadThemeDataListener(new DownloadThemeDataFetcher());
+        DownloadThemeManager.getInstance().triggerFetchData(this);
+    }
+
+    private void setRxJavaErrorHandler() {
+        RxJavaPlugins.setErrorHandler(throwable -> Log.e("vertex", "RxJavaError: " + throwable));
     }
 
     private void addExternalThemeDefault() {
@@ -83,7 +95,7 @@ public class TestApplication extends MultiDexApplication {
         Drawable suggestDivider = new BitmapDrawable(getResources(), bitmap);
         String color = String.format("#%06X", 0xFFFFFF & 0x12f0e5);
         String emojiColor = String.format("#%06X", 0xFFFFFF & 0x048f89);
-        ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder(TestApplication.getInstance(),"001", "Test Theme")
+        ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder(TestApplication.getInstance(), "001", "Test Theme")
                 .setKeyboardBackground(keyboardBackgroundDrawable)
                 .setKeyBackground(keyBackgroundDrawable)
                 .setFunctionKeyBackground(functionKeyBackgroundDrawable)
