@@ -114,6 +114,7 @@ import com.nlptech.keyboardview.keyboard.MainKeyboardView;
 import com.nlptech.keyboardview.keyboard.chinese.ChineseComposingTextView;
 import com.nlptech.keyboardview.keyboard.chinese.ChineseSuggestStripView;
 import com.nlptech.keyboardview.suggestions.SuggestionStripView;
+import com.nlptech.keyboardview.theme.download.DownloadThemeManager;
 import com.nlptech.language.LanguageCallback;
 import com.nlptech.language.RichInputMethodManager;
 import com.nlptech.language.utils.SubtypeLocaleUtils;
@@ -1160,6 +1161,7 @@ public class LatinIME extends ZengineInputMethodService implements KeyboardActio
             mainKeyboardView.closing();
         }
         setNavigationBarVisibility(false);
+        DownloadThemeManager.getInstance().triggerFetchData(this);
     }
 
     void onFinishInputInternal() {
