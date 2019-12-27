@@ -42,6 +42,5 @@ public final class AppearanceSettingsFragment extends SubScreenFragment {
         super.onResume();
         CustomInputStyleSettingsFragment.updateCustomInputStylesSummary(
                 findPreference(Settings.PREF_CUSTOM_INPUT_STYLES));
-        ThemeSettingsFragment.updateKeyboardThemeSummary(findPreference(Settings.SCREEN_THEME));
     }
 }

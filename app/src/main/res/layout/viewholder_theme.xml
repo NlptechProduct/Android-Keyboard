@@ -95,6 +95,24 @@
 
                 </RelativeLayout>
 
+                <!-- Downloading -->
+                <RelativeLayout
+                    android:id="@+id/viewholder_theme_downloading_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F8F8"
+                    android:visibility="@{themeManageItem.downloading}">
+
+                    <ProgressBar
+                        android:id="@+id/viewholder_theme_downloading_button_progress"
+                        android:layout_width="@dimen/theme_manage_item_button_size"
+                        android:layout_height="@dimen/theme_manage_item_button_size"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/theme_manage_item_button_padding" />
+
+                </RelativeLayout>
+
             </LinearLayout>
 
             <!-- Black stroke and ripple  -->
