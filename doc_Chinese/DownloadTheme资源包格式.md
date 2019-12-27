@@ -17,6 +17,10 @@
 
 <br/>
 
+![alt text](https://github.com/NlptechProduct/Android-Keyboard/blob/zengine-dev1.3.9/doc_Chinese/download_theme_res_dir_struction.png)
+
+<br/>
+
 资源包的档案夹
 |- data
 |- icon 
@@ -43,6 +47,10 @@ Float未定义|1.4e-45
 <h2 id="2">打包</h2>
 
 <br/>
+
+mac打包时，请这样打包，避免资料夹层级错误：
+
+![alt text](https://github.com/NlptechProduct/Android-Keyboard/blob/zengine-dev1.3.9/doc_Chinese/create_download_theme_res_zip.png)
 
 <br/>
 
@@ -107,26 +115,26 @@ json内容：
 
 档名，以下副档名必须是.png或.9.png：
 - ic_shift
-	- ic_shifted
-	- ic_shifted_lock
-	- ic_delete
-	- ic_settings
-	- ic_space
-	- ic_enter
-	- ic_go
-	- ic_search
-	- ic_send
-	- ic_next
-	- ic_done
-	- ic_previous
-	- ic_tab
-	- ic_shortcut
-	- ic_space_for_number_layout
-	- ic_language_switch
-	- ic_zwnj
-	- ic_zwjK
-	- ic_emoji
-	- ic_keyboard_menu
+    - ic_shifted
+    - ic_shifted_lock
+    - ic_delete
+    - ic_settings
+    - ic_space
+    - ic_enter
+    - ic_go
+    - ic_search
+    - ic_send
+    - ic_next
+    - ic_done
+    - ic_previous
+    - ic_tab
+    - ic_shortcut
+    - ic_space_for_number_layout
+    - ic_language_switch
+    - ic_zwnj
+    - ic_zwjK
+    - ic_emoji
+    - ic_keyboard_menu
 
 <br/>
 
@@ -240,4 +248,3 @@ json内容：
 - keyboard_clicked_effect
 
 <br/>
-
