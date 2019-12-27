@@ -749,6 +749,11 @@ public View onCreateInputView() {
 -keep class com.nlptech.inputmethod.latin.personalization.UserHistoryDictionary { *; }
 # [zengine v1.2.6]
 -keep class com.nlptech.keyboardtrace.AgentWorkManagerInitializer {*;}
+# [zengine v1.3.9]
+-keep class com.nlptech.keyboardview.theme.download.DownloadThemeDomainData {*;}
+-keep class com.nlptech.keyboardview.theme.download.ThemeDownloadInfoBundle {*;}
+-keep class com.nlptech.keyboardview.theme.download.ThemeDownloadInfo {*;}
+-keep class com.nlptech.keyboardview.theme.download.DownloadThemeInfo {*;}
 ~~~
 
 <h2 id="3.9">9. 新增或修改引用</h2>
