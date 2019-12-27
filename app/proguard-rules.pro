@@ -80,3 +80,4 @@
 -keep class com.nlptech.keyboardview.theme.download.ThemeDownloadInfoBundle {*;}
 -keep class com.nlptech.keyboardview.theme.download.ThemeDownloadInfo {*;}
 -keep class com.nlptech.keyboardview.theme.download.DownloadThemeInfo {*;}
+-keep class com.nlptech.keyboardview.theme.download.api.DownloadThemeApiItem {*;}
