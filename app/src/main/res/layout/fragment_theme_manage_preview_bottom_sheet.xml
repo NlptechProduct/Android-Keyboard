@@ -21,13 +21,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent">
+                android:background="@android:color/white">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/theme_manage_preview_margin_top"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/theme_manage_preview_margin_top"
                     app:cardBackgroundColor="@android:color/white"
                     app:cardCornerRadius="@dimen/theme_manage_item_background_radius"
                     app:cardElevation="@dimen/theme_manage_item_background_radius">
@@ -60,42 +60,50 @@
 
             </RelativeLayout>
 
-            <!-- Border and delete button -->
             <RelativeLayout
-                android:id="@+id/fragment_theme_manage_preview_show_key_board_layout"
                 android:layout_width="match_parent"
-                android:clipChildren="false"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:clipChildren="false">
 
-                <TextView
-                    android:id="@+id/fragment_theme_manage_preview_show_key_board_tv"
+                <!-- Border button -->
+                <RelativeLayout
+                    android:id="@+id/fragment_theme_manage_preview_show_key_board_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/theme_manage_preview_switch_text_margin_left"
-                    android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
-                    android:text="@string/theme_manage_preview_show_key_boarder"
-                    android:textSize="@dimen/theme_manage_preview_switch_text_size" />
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-                <Switch
-                    android:id="@+id/fragment_theme_manage_preview_key_border_shown_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/keyboard_widget_switch_height"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
-                    android:layout_marginStart="@dimen/theme_manage_preview_delete_margin_swtich_left"
-                    android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
-                    android:track="@drawable/bg_keyboard_menu_switch_track" />
+                    <TextView
+                        android:id="@+id/fragment_theme_manage_preview_show_key_board_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/theme_manage_preview_switch_text_margin_left"
+                        android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
+                        android:text="@string/theme_manage_preview_show_key_boarder"
+                        android:textSize="@dimen/theme_manage_preview_switch_text_size" />
 
+                    <Switch
+                        android:id="@+id/fragment_theme_manage_preview_key_border_shown_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/keyboard_widget_switch_height"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/theme_manage_preview_delete_margin_swtich_left"
+                        android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+                        android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+                        android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+                </RelativeLayout>
+
+                <!-- Delete button -->
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/theme_manage_preview_delete_margin_right"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_theme_manage_preview_delete_button">
 
                     <ImageButton
@@ -109,37 +117,38 @@
 
                 </RelativeLayout>
 
-            </RelativeLayout>
-
-            <!-- Dark mode button-->
-            <RelativeLayout
-                android:id="@+id/fragment_theme_manage_preview_dark_mode_switch_layout"
-                android:layout_width="match_parent"
-                android:clipChildren="false"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent">
-
-                <TextView
-                    android:id="@+id/fragment_theme_manage_preview_dark_mode_tv"
-                    android:layout_width="wrap_content"
+                <!-- Dark mode button-->
+                <RelativeLayout
+                    android:id="@+id/fragment_theme_manage_preview_dark_mode_switch_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/theme_manage_preview_switch_text_margin_left"
-                    android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
-                    android:text="@string/theme_manage_preview_dark_mode_boarder"
-                    android:textSize="@dimen/theme_manage_preview_switch_text_size" />
+                    android:layout_below="@+id/fragment_theme_manage_preview_show_key_board_layout"
+                    android:background="@android:color/transparent"
+                    android:clipChildren="false"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-                <Switch
-                    android:id="@+id/fragment_theme_manage_preview_dark_mode_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/keyboard_widget_switch_height"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/theme_manage_preview_delete_margin_swtich_left"
-                    android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
-                    android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
-                    android:track="@drawable/bg_keyboard_menu_switch_track" />
+                    <TextView
+                        android:id="@+id/fragment_theme_manage_preview_dark_mode_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/theme_manage_preview_switch_text_margin_left"
+                        android:layout_marginEnd="@dimen/theme_manage_preview_switch_text_margin_right"
+                        android:text="@string/theme_manage_preview_dark_mode_boarder"
+                        android:textSize="@dimen/theme_manage_preview_switch_text_size" />
+
+                    <Switch
+                        android:id="@+id/fragment_theme_manage_preview_dark_mode_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/keyboard_widget_switch_height"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/theme_manage_preview_delete_margin_swtich_left"
+                        android:layout_marginEnd="@dimen/keyboard_menu_content_item_switch_margin_end"
+                        android:thumb="@drawable/bg_keyboard_menu_switch_thumb"
+                        android:track="@drawable/bg_keyboard_menu_switch_track" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 

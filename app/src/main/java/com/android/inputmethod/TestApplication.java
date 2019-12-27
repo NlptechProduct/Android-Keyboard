@@ -36,15 +36,15 @@ public class TestApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        setRxJavaErrorHandler();
         Agent.getInstance().init(this);
         addExternalThemeDefault();
         addExternalThemeRBG();
-        setRxJavaErrorHandler();
         Agent.getInstance().loadTheme(this, "001");
     }
 
     private void setRxJavaErrorHandler() {
-        RxJavaPlugins.setErrorHandler(throwable -> Log.e("vertex", "throw test"));
+        RxJavaPlugins.setErrorHandler(throwable -> Log.e("vertex", "RxJavaError: " + throwable));
     }
 
     private void addExternalThemeDefault() {
@@ -91,7 +91,7 @@ public class TestApplication extends MultiDexApplication {
         Drawable suggestDivider = new BitmapDrawable(getResources(), bitmap);
         String color = String.format("#%06X", 0xFFFFFF & 0x12f0e5);
         String emojiColor = String.format("#%06X", 0xFFFFFF & 0x048f89);
-        ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder(TestApplication.getInstance(),"001", "Test Theme")
+        ExternalThemeInfo externalThemeInfo = new ExternalThemeInfo.Builder(TestApplication.getInstance(), "001", "Test Theme")
                 .setKeyboardBackground(keyboardBackgroundDrawable)
                 .setKeyBackground(keyBackgroundDrawable)
                 .setFunctionKeyBackground(functionKeyBackgroundDrawable)
