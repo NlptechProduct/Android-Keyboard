@@ -115,26 +115,26 @@ json内容：
 
 档名，以下副档名必须是.png或.9.png：
 - ic_shift
-    - ic_shifted
-    - ic_shifted_lock
-    - ic_delete
-    - ic_settings
-    - ic_space
-    - ic_enter
-    - ic_go
-    - ic_search
-    - ic_send
-    - ic_next
-    - ic_done
-    - ic_previous
-    - ic_tab
-    - ic_shortcut
-    - ic_space_for_number_layout
-    - ic_language_switch
-    - ic_zwnj
-    - ic_zwjK
-    - ic_emoji
-    - ic_keyboard_menu
+- ic_shifted
+- ic_shifted_lock
+- ic_delete
+- ic_settings
+- ic_space
+- ic_enter
+- ic_go
+- ic_search
+- ic_send
+- ic_next
+- ic_done
+- ic_previous
+- ic_tab
+- ic_shortcut
+- ic_space_for_number_layout
+- ic_language_switch
+- ic_zwnj
+- ic_zwjK
+- ic_emoji
+- ic_keyboard_menu
 
 <br/>
 
