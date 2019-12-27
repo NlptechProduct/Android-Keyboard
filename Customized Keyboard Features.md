@@ -24,6 +24,17 @@
 
 * [6.  CustomThemePreview](#6)
 
+
+* [7.  Floating Keyboard[zengine v1.3]](#7)
+
+* [8.  Download Theme[zengine v1.3.9]](#8)
+    * [Get Download Theme and Status](#8.1)
+    * [Download and Delete](#8.2)
+    * [Resource Format](#8.3)
+    * [Theme Download Info](#8.4)
+    * [Fetch Theme Download Info](#8.5)
+    * [Trigger Theme Download Info](#8.6)
+
 <br/>
 
 
@@ -372,4 +383,231 @@ Last, you can call it in the component's onPause or onDestroy：
 
 ~~~java
 Agent.getInstance().dismissThemePreview();
+~~~
+
+[zengine v1.3]
+<h2 id="7">7.  Floating Keyboard</h2>
+
+First, you need add FloatingKeyboard layout in your input_view.xml, for example：
+~~~
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/inputViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- This is the FloatingKeyboard layout, wrapping up your keyboard layout content. -->
+    <com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard
+        android:id="@+id/floating_kb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/kb_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+        <LinearLayout
+            android:id="@+id/toolbar_items_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/config_suggestions_strip_height"
+            android:layout_alignTop="@id/kb_container"
+            android:background="@android:color/black"
+            android:layoutDirection="ltr" />
+
+        <FrameLayout
+            android:id="@+id/keyboard_widget_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.nlptech.keyboardview.floatingkeyboard.FloatingKeyboard>
+
+</RelativeLayout>
+~~~
+
+Add this code in the InputMethodService.onCreateInputView()：
+~~~java
+Agent.getInstance().onCreateInputView(kbContainer, floatinKeyboard, mIsHardwareAcceleratedDrawingEnabled);
+~~~
+
+You can use those code to:
+
+Control the floating keyboard switch：
+~~~java
+KeyboardSwitcher.getInstance().switchFloatingKeyboard(context);
+~~~
+
+Get the floating keyboard switch on or off：
+~~~java
+KeyboardSwitcher.getInstance().isFloatingKeyboard();
+~~~
+
+Enter the floating keyboard resize mode：
+~~~java
+KeyboardSwitcher.getInstance().switchFloatingKeyboardResizeMode(shown);
+~~~
+
+[zengine v1.3.9]
+<h2 id="8">8.  Download theme</h2>
+
+
+<h3 id="8.1">Get Download Theme and Status</h4>
+
+The SDK can automatically get all of download theme 's downlaod info. You can use this code to get DownloadTheme as a KeyboardTheme：
+~~~java
+KeyboardThemeManager.getInstance().getAvailableThemeArray(context)
+~~~
+
+The DownloadTheme 's themeType is KeyboardTheme.ThemeType.DOWNLOAD.
+
+You can use this code to get the DownloadTheme 's status：
+~~~java
+DownloadTheme downloadTheme = (DownloadTheme) keyboarTheme;
+int status = downloadTheme.getDownloadStatus();
+~~~
+
+The status value will be：
+
+Status | Description
+-----|:-----
+DownloadTheme.DOWNLOAD_STATUS_DOWNLOADABLE|可下載
+DownloadTheme.DOWNLOAD_STATUS_DOWNLOADING|下載中
+DownloadTheme.DOWNLOAD_STATUS_DOWNLOADED|已下載的
+
+<h3 id="8.2">Download and Delete</h4>
+
+You can use this code to download the theme 's resource：
+~~~java
+ThemeDownloadInfo themeDownloadInfo = downloadTheme.getDownloadInfo();
+DownloadThemeManager.getInstance().downloadTheme(context, themeDownloadInfo);
+~~~
+
+You can use this code to delete the theme 's resource：：
+~~~java
+DownloadThemeManager.getInstance().deleteTheme(context, downloadTheme);
+~~~
+
+Make a BroadcastReceiver to listen the DownloadTheme 's status be changed：
+~~~java
+private DownloadThemeReceiver receiver = new DownloadThemeReceiver();
+
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+    ......
+    IntentFilter intentFilter = new IntentFilter(DownloadThemeManager.ACTION_UPDATE_DOWNLOAD_THEME);
+    registerReceiver(receiver, intentFilter);
+}
+
+@Override
+protected void onDestroy() {
+    ......
+    unregisterReceiver(receiver);
+}
+
+public static class DownloadThemeReceiver : BroadcastReceiver() {
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+            if (DownloadThemeManager.ACTION_UPDATE_DOWNLOAD_THEME != intent.action) {
+                return
+            }
+
+            String  themeId = intent.getStringExtra(DownloadThemeManager.KEY_DOWNLOAD_THEME_ID);
+            // The themeId is by user call setThemeId() when creating ThemeDownloadInfo
+            if(themeId == null){
+                return
+            }
+            int status = intent.getIntExtra(DownloadThemeManager.KEY_DOWNLOAD_THEME_STATUS, -1);
+            // status:
+            // THEME_DOWNLOAD_STATUS_DOWNLOADABLE
+            // THEME_DOWNLOAD_STATUS_DOWNLOADING
+            // THEME_DOWNLOAD_STATUS_DOWNLOADED
+            // THEME_DOWNLOAD_STATUS_DELETED
+            if (status == -1) {
+                return
+            }
+            
+            // TODO: You can refresh your theme list here.
+        }
+    }
+~~~
+
+If you want to create your DownloadTheme 's resource on your server, please follow [8.3](#8.3) ~ [8.6](#8.6)
+
+<h3 id="8.3">Resource Format</h4>
+
+Every download theme must have a resource, the format is in [Resource Format](https://github.com/NlptechProduct/Android-Keyboard/blob/2f34ff3c76d95b249c2ff21698cb012345d504a3/doc_Chinese/DownloadTheme%E8%B5%84%E6%BA%90%E5%8C%85%E6%A0%BC%E5%BC%8F.md). You can create your resource as zip  and upload to your server.
+
+<h3 id="8.4">Theme Download Info</h4>
+
+Your server need to provide API for APP witch implements  DownloadThemeManager.Listener to fetch all of the download theme 's download info。
+
+Download theme 's download info has those fields：
+
+field | type | description
+-----|:-----|:-----
+themeId|String|You can defind yourself.
+themeName|String|Theme name.
+themeUrl|String|Theme resource zip 's download url.
+themeCover|String|Theme 's placeholder.
+themeCoverWithBorder|String|Theme 's placeholder with border, can be null if none.
+mode|Integer|0: Light、1: Dark，When the theme ids are same and mode are different , you can let yoyr user switch Light/Dark mode.
+md5|String|resource zip 's md5.
+size|Integer|resource zip 's file size.
+version|Integer|resource version, according to version, SDK will update theme resource or not.
+
+<h3 id="8.5">Fetch Theme Download Info</h4>
+
+APP implements DownloadThemeManager.Listener, for example：
+~~~java
+public class DownloadThemeDataFetcher implements DownloadThemeManager.Listener {
+    private static final String TAG = DownloadThemeDataFetcher.class.getSimpleName();
+
+    @Override
+    @WorkerThread
+    public ArrayList<ThemeDownloadInfo> onFetchThemeDownloadInfo() {
+        ArrayList<ThemeDownloadInfo> result = new ArrayList<>();
+        // Fetch download theme 's download info from your server.
+        ......
+        ......
+        ......
+
+        // Create the ThemeDownloadInfo.
+        for (YourDataObject item : items) {
+                ThemeDownloadInfo downloadInfo = new ThemeDownloadInfo();
+                downloadInfo.setThemeId(item.getTheme_id());
+                downloadInfo.setThemeName(item.getTheme_name());
+                downloadInfo.setThemeUrl(item.getTheme_url());
+                downloadInfo.setThemeCover(item.getTheme_cover()); // url
+                downloadInfo.setThemeCoverWithBorder(item.getTheme_cover_with_border()); // url
+                downloadInfo.setMode(Integer.parseInt(item.getMode()));
+                downloadInfo.setMd5(item.getMd5());
+                downloadInfo.setSize(item.getSize());
+                downloadInfo.setVersion(item.getVersion());
+                result.add(downloadInfo);
+        }
+
+        return result;
+    }
+}
+~~~
+
+Call this code to set DownloadThemeDataFetcher(recommend in Application.onCreate())：
+~~~java
+DownloadThemeManager.getInstance().setDownloadThemeDataListener(new DownloadThemeDataFetcher());
+~~~
+
+<h3 id="8.6">Trigger Theme Download Info</h4>
+
+SDK will trigger to fetch theme 's download info at the Application.onCreate() and InputMethodService.onWindowHide().
+
+But you can trigger on demand：
+~~~java
+DownloadThemeManager.getInstance().triggerFetchData(context);
+~~~
+
+If it is first time or cache is time out, SDK will use DownloadThemeDataFetcher to fetch theme 's download info.
+
+You can also use this code to set cache timeout duration, default is 12 hour：
+~~~java
+DownloadThemeManager.getInstance().setFetchDownloadThemeDataDuration(duration);
 ~~~
