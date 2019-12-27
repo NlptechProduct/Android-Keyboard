@@ -2,32 +2,30 @@ package com.nlptech.function.theme.keyboard_preview
 
 import android.app.Dialog
 import android.content.Context
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.CompoundButton
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.Switch
-import com.nlptech.keyboardview.theme.KeyboardTheme
 import com.android.inputmethod.latin.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nlptech.Agent
-import com.nlptech.inputmethod.latin.settings.Settings
-import com.nlptech.inputmethod.latin.utils.RecapitalizeStatus
-import com.nlptech.common.constant.Constants
 import com.nlptech.function.theme.custom_theme.CreateCustomThemeDialogFragment
 import com.nlptech.function.theme.custom_theme.CustomThemeDeleteTask
 import com.nlptech.function.theme.theme_manage.ThemeManageAdapter
+import com.nlptech.inputmethod.latin.settings.Settings
 import com.nlptech.inputmethod.latin.utils.ResourceUtils
 import com.nlptech.keyboardview.keyboard.KeyboardSwitcher
+import com.nlptech.keyboardview.theme.KeyboardTheme
 import com.nlptech.keyboardview.theme.KeyboardThemeManager
+import com.nlptech.keyboardview.theme.download.DownloadTheme
+import com.nlptech.keyboardview.theme.download.DownloadThemeManager
 
 
 /**
@@ -86,7 +84,13 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
         darkModeSwitch.setOnCheckedChangeListener(this)
 
         deleteButton.setOnClickListener(this)
-        deleteButton.visibility = if (KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId).themeType == KeyboardTheme.ThemeType.CUSTOM) View.VISIBLE else View.GONE
+        val themeType = KeyboardThemeManager.getInstance().getKeyboardTheme(context, themeId).themeType
+        deleteButton.visibility =
+                if (themeType == KeyboardTheme.ThemeType.CUSTOM
+                        || themeType == KeyboardTheme.ThemeType.DOWNLOAD)
+                    View.VISIBLE
+                else
+                    View.GONE
 
         inputViewContainer.layoutParams.width = getDefaultKeyboardWidth()
 
@@ -198,6 +202,8 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
             }
 
             KeyboardTheme.ThemeType.DOWNLOAD -> {
+                DownloadThemeManager.getInstance().deleteTheme(context, keyboardTheme as DownloadTheme?)
+                onDeleteResult()
             }
         }
     }
@@ -216,6 +222,7 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
     }
 
     override fun onDeleteResult() {
+        KeyboardThemeManager.getInstance().clearLastUsedKeyboardTheme(context)
         close(false)
     }
 }

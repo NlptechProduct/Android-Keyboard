@@ -1,14 +1,22 @@
 package com.nlptech.function.theme.theme_manage
 
+import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inputmethod.TestApplication
+import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.ViewholderThemeBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.nlptech.inputmethod.latin.settings.Settings
 import com.nlptech.keyboardview.theme.KeyboardTheme
 import com.nlptech.keyboardview.theme.KeyboardThemeManager
 import com.nlptech.keyboardview.theme.custom.CustomTheme
+import com.nlptech.keyboardview.theme.download.DownloadTheme
 import com.nlptech.keyboardview.theme.external.ExternalTheme
 import kotlinx.android.synthetic.main.viewholder_theme.view.*
 
@@ -17,11 +25,6 @@ class ThemeManageItemViewHolder(
         itemWidth: Int,
         itemHeight: Int
 ) : RecyclerView.ViewHolder(binding.root) {
-
-    /**
-     * 用來記錄當前的preview image為何
-     * **/
-    private var previewTag = ""
 
     init {
         binding.root.viewholder_theme.layoutParams.width = itemWidth
@@ -50,56 +53,67 @@ class ThemeManageItemViewHolder(
         when (keyboardTheme.themeType) {
             KeyboardTheme.ThemeType.LOCAL -> {
                 val previewDrawableResId = KeyboardThemeManager.getInstance().getLocalThemePreviewDrawableResId(TestApplication.getInstance(), keyboardTheme)
-                val tag = previewDrawableResId.toString()
-                if (tag != previewTag) {
-                    previewTag = tag
-                    Glide.with(itemView.context)
-                            .load(previewDrawableResId)
-                            .transition(withCrossFade())
-                            .into(itemView.viewholder_theme_iv)
-                }
+                Glide.with(itemView.context)
+                        .load(previewDrawableResId)
+                        .placeholder(R.drawable.img_download_theme_default_preview)
+                        .transition(withCrossFade())
+                        .into(itemView.viewholder_theme_iv)
             }
 
             KeyboardTheme.ThemeType.CUSTOM -> {
                 val customTheme = keyboardTheme as CustomTheme
                 val previewImageFilePath = customTheme.previewImageFilePath
-                val tag = previewImageFilePath
-                if (tag != previewTag) {
-                    previewTag = tag
-                    Glide.with(itemView.context)
-                            .load(previewTag)
-                            .transition(withCrossFade())
-                            .into(itemView.viewholder_theme_iv)
-                }
+                Glide.with(itemView.context)
+                        .load(previewImageFilePath)
+                        .placeholder(R.drawable.img_download_theme_default_preview)
+                        .transition(withCrossFade())
+                        .into(itemView.viewholder_theme_iv)
             }
 
             KeyboardTheme.ThemeType.DOWNLOAD -> {
-                // TODO
+                val downloadTheme = keyboardTheme as DownloadTheme
+                val borderShown = Settings.getInstance().current.mKeyBorderShown
+                var url = downloadTheme.downloadInfo.themeCover
+                if (borderShown && !TextUtils.isEmpty(downloadTheme.downloadInfo.themeCoverWithBorder)) {
+                    url = downloadTheme.downloadInfo.themeCoverWithBorder
+                }
+                Glide.with(itemView.context)
+                        .load(url)
+                        .placeholder(R.drawable.img_download_theme_default_preview)
+                        .transition(withCrossFade())
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                itemView.viewholder_theme_iv.setImageResource(R.drawable.img_download_theme_default_preview)
+                                return true
+                            }
+
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                return false
+                            }
+
+                        })
+                        .into(itemView.viewholder_theme_iv)
             }
 
             KeyboardTheme.ThemeType.EXTERNAL -> {
                 val externalTheme = keyboardTheme as ExternalTheme
-                val borderShown = Settings.getInstance().current.mKeyBorderShown;
-
-                // external theme tag的生成方式為borderShown+switchedModeThemeId
-                var tag = ""
-                if (externalTheme.mBorderMode == KeyboardTheme.BorderMode.BOTH) {
-                    tag += borderShown.toString()
-                } else {
-                    tag += "noConsiderBorderShown"
-                }
-                tag += externalTheme.switchedModeThemeId
-
-                if (tag != previewTag) {
-                    previewTag = tag
+                val borderShown = Settings.getInstance().current.mKeyBorderShown
+                val o = externalTheme.info.getThemePreviewImage(borderShown)
+                if (o is Drawable) {
                     Glide.with(itemView.context)
-                            .load(externalTheme.info.getThemePreviewImage(borderShown))
+                            .load(o)
+                            .placeholder(R.drawable.img_download_theme_default_preview)
+                            .transition(withCrossFade())
+                            .into(itemView.viewholder_theme_iv)
+                } else {
+                    Glide.with(itemView.context)
+                            .load(o as Int)
+                            .placeholder(R.drawable.img_download_theme_default_preview)
                             .transition(withCrossFade())
                             .into(itemView.viewholder_theme_iv)
                 }
+
             }
         }
-
-
     }
 }

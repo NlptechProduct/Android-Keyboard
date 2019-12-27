@@ -2,33 +2,36 @@ package com.nlptech.function.theme.theme_manage
 
 import android.Manifest
 import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
-import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.inputmethod.latin.R
+import com.nlptech.common.utils.CheckPermissionsUtils
+import com.nlptech.common.utils.LogUtil
+import com.nlptech.common.utils.NetworkUtil
+import com.nlptech.common.utils.ViewUtils
 import com.nlptech.function.theme.custom_theme.CreateCustomThemeDialogFragment
 import com.nlptech.function.theme.keyboard_preview.KeyboardPreviewSwitcher
 import com.nlptech.function.theme.keyboard_preview.ThemeManagerBottomSheetFragment
-import com.nlptech.common.utils.CheckPermissionsUtils
-import com.nlptech.common.utils.LogUtil
-import com.nlptech.common.utils.ViewUtils
 import com.nlptech.inputmethod.latin.InputAttributes
 import com.nlptech.inputmethod.latin.settings.Settings
 import com.nlptech.keyboardview.accessibility.AccessibilityUtils
-import com.nlptech.keyboardview.theme.KeyboardTheme
-import com.nlptech.keyboardview.theme.KeyboardThemeManager
+import com.nlptech.keyboardview.theme.download.DownloadThemeManager
 import kotlinx.android.synthetic.main.activity_keyboard_theme_manage.*
-import java.util.ArrayList
 
 
 /**
@@ -42,6 +45,10 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
         const val REQ_GET_PERMISSION = 1
         const val REQ_PICK_IMAGE = 2
     }
+
+    private val showDialogHandler = Handler()
+    private val receiver = DownloadThemeReceiver()
+    private lateinit var viewModel: ThemeManageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +65,7 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
         activity_keyboard_theme_manage_rv.adapter = adapter
 
         // TODO use factory to create custom view model
-        val viewModel = ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
         viewModel.getThemes().observe(this, Observer { themes ->
             if (themes != null) {
                 adapter.setData(themes)
@@ -75,37 +82,68 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
             Settings.getInstance().loadSettings(applicationContext, locale, inputAttributes, null)
         }
         AccessibilityUtils.init(applicationContext)
+
+        val intentFilter = IntentFilter(DownloadThemeManager.ACTION_UPDATE_DOWNLOAD_THEME)
+        registerReceiver(receiver, intentFilter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        DownloadThemeManager.getInstance().triggerFetchData(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        showDialogHandler.removeCallbacksAndMessages(null)
+        unregisterReceiver(receiver)
     }
 
     override fun onItemClick(view: View, themeManageItem: ThemeManageItem, position: Int) {
         LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onItemClick()")
         ViewUtils.disableViewTemp(view)
-        val viewModel = ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
-        showBottomSheet(themeManageItem, position)
+        when (themeManageItem.status) {
+            ThemeManageItem.STATUS_SELECTABLE -> {
+                showBottomSheet(themeManageItem, position)
+            }
+            ThemeManageItem.STATUS_DOWNLOADABLE -> {
+                if (NetworkUtil.isNetworkConnected(applicationContext)) {
+                    DownloadThemeManager.getInstance().downloadTheme(this, themeManageItem.downloadInfo)
+                } else {
+                    Toast.makeText(applicationContext, "Network unavailable.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            ThemeManageItem.STATUS_DOWNLOADING -> {
+            }
+        }
     }
 
     private fun showBottomSheet(themeManagerItem: ThemeManageItem, position: Int) {
         val fragment = ThemeManagerBottomSheetFragment.newInstance(themeManagerItem.keyboardThemeId, position, this)
-        fragment.show(supportFragmentManager, "ThemeManageBottomSheetFragment")
+        showDialogHandler.post(object : Runnable {
+            override fun run() {
+                if (isFinishing) {
+                    return
+                }
+                fragment.show(supportFragmentManager, "ThemeManagerBottomSheetFragment")
+            }
+        })
     }
 
     override fun onThemeApply(view: View, position: Int) {
         LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onThemeApply()")
-        val viewModel = ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
-        viewModel.selectTheme(viewModel.getThemes().value!![position], position)
+        val themeManageItem = viewModel.getThemes().value!![position]
+        viewModel.selectTheme(themeManageItem, position)
     }
 
     override fun onKeyBorderSwitchChanged(buttonView: CompoundButton?, checked: Boolean) {
         LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onKeyBorderSwitchChanged()")
         KeyboardPreviewSwitcher.getInstance().onKeyBorderSwitchChanged(checked)
-        val viewModel =  ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
         viewModel.refreshThemes()
     }
 
     override fun onDarkModeChanged(buttonView: CompoundButton, checked: Boolean) {
         LogUtil.i("ThemeManageActivity", "ThemeManageActivity.onDarkModeChanged()")
         KeyboardPreviewSwitcher.getInstance().onDarkModeChanged(checked)
-        val viewModel =  ViewModelProviders.of(this).get(ThemeManageViewModel::class.java)
         viewModel.refreshThemes()
     }
 
@@ -164,10 +202,25 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
             REQ_PICK_IMAGE ->
                 if (resultCode == Activity.RESULT_OK) {
                     val imageUri = data!!.data
-                    val dialog = CreateCustomThemeDialogFragment.newCopyBgAndSaveThemeInstance(imageUri)
-                    dialog.show(supportFragmentManager, "CreateCustomThemeDialogFragment")
+                    val fragment = CreateCustomThemeDialogFragment.newCopyBgAndSaveThemeInstance(imageUri)
+                    showDialogHandler.post(object : Runnable {
+                        override fun run() {
+                            if (isFinishing) {
+                                return
+                            }
+                            fragment.show(supportFragmentManager, "CreateCustomThemeDialogFragment")
+                        }
+                    })
                 }
         }
     }
 
+    inner class DownloadThemeReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (DownloadThemeManager.ACTION_UPDATE_DOWNLOAD_THEME != intent.action) {
+                return
+            }
+            viewModel.refreshThemes()
+        }
+    }
 }
