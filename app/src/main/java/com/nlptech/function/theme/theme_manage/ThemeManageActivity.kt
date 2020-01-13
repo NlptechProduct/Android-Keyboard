@@ -49,6 +49,7 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
     private val showDialogHandler = Handler()
     private val receiver = DownloadThemeReceiver()
     private lateinit var viewModel: ThemeManageViewModel
+    private var bottomSheetFragment : ThemeManagerBottomSheetFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +93,11 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
         DownloadThemeManager.getInstance().triggerFetchData(this)
     }
 
+    override fun onPause() {
+        super.onPause()
+        dismissBottomSheet()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         showDialogHandler.removeCallbacksAndMessages(null)
@@ -118,15 +124,21 @@ class ThemeManageActivity : FragmentActivity(), ThemeManageAdapter.Listener, Vie
     }
 
     private fun showBottomSheet(themeManagerItem: ThemeManageItem, position: Int) {
-        val fragment = ThemeManagerBottomSheetFragment.newInstance(themeManagerItem.keyboardThemeId, position, this)
+        dismissBottomSheet()
+        bottomSheetFragment = ThemeManagerBottomSheetFragment.newInstance(themeManagerItem.keyboardThemeId, position, this)
         showDialogHandler.post(object : Runnable {
             override fun run() {
                 if (isFinishing) {
                     return
                 }
-                fragment.show(supportFragmentManager, "ThemeManagerBottomSheetFragment")
+                bottomSheetFragment!!.show(supportFragmentManager, "ThemeManagerBottomSheetFragment")
             }
         })
+    }
+
+    private fun dismissBottomSheet(){
+        if(bottomSheetFragment== null)return
+        bottomSheetFragment!!.close(false)
     }
 
     override fun onThemeApply(view: View, position: Int) {

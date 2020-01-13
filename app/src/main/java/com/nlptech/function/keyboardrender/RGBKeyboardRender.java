@@ -9,8 +9,12 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 
+import com.nlptech.inputmethod.latin.settings.Settings;
+import com.nlptech.keyboardview.keyboard.Key;
 import com.nlptech.keyboardview.keyboard.Keyboard;
 import com.nlptech.keyboardview.keyboard.internal.KeyDrawParams;
 import com.nlptech.keyboardview.keyboard.render.DefaultKeyboardRender;
@@ -77,6 +81,14 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
     private long mLastDrawCanvasTime;
     private long mLastDrawCanvasTimeMore;
 
+    /**
+     * for draw border
+     **/
+    @Nonnull
+    private final Paint mBorderPaint;
+    @Nonnull
+    private final RectF mBorderRectF;
+
     private static int convert(int color) {
         float[] a = new float[3];
         Color.colorToHSV(color, a);
@@ -95,6 +107,45 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         mDeltaPixelMore = 0f;
         mLastDrawCanvasTime = 0L;
         mLastDrawCanvasTimeMore = 0L;
+        mBorderPaint = new Paint();
+        mBorderRectF = new RectF();
+    }
+
+    @Override
+    public void onDrawKeyBackground(int keyboardType, @Nonnull Key key, int keyStatus, @Nonnull KeyDrawParams keyDrawParams, @Nonnull KeyboardDrawParams keyboardDrawParams, @Nonnull Drawable keyBackground, @Nonnull Canvas canvas, @Nonnull Paint paint) {
+        super.onDrawKeyBackground(keyboardType, key, keyStatus, keyDrawParams, keyboardDrawParams, keyBackground, canvas, paint);
+        final Rect padding = keyboardDrawParams.keyBackgroundPadding;
+        final int bgWidth, bgHeight, bgX, bgY;
+        final int keyWidth = key.getDrawWidth();
+        final int keyHeight = key.getHeight();
+        bgWidth = keyWidth + padding.left + padding.right;
+        bgHeight = keyHeight + padding.top + padding.bottom;
+        bgX = -padding.left;
+        bgY = -padding.top;
+        canvas.translate(bgX, bgY);
+        onDrawKeyBorder(key, canvas, keyDrawParams, bgWidth, bgHeight);
+        canvas.translate(-bgX, -bgY);
+
+    }
+
+    /**
+     * Key border
+     **/
+    private void onDrawKeyBorder(Key key, Canvas canvas, KeyDrawParams params, int bgWidth, int bgHeight) {
+        if (!Settings.getInstance().getCurrent().mKeyBorderShown) {
+            return;
+        }
+        if (key.isSpacebarKey()) {
+            return;
+        }
+        mBorderPaint.setStrokeWidth(params.mKeyBorderWidth);
+        mBorderPaint.setColor(Color.WHITE);
+        mBorderPaint.setStyle(Paint.Style.STROKE);
+        mBorderRectF.left = 0;
+        mBorderRectF.top = 0;
+        mBorderRectF.right = bgWidth;
+        mBorderRectF.bottom = bgHeight;
+        canvas.drawRoundRect(mBorderRectF, params.mKeyBorderRadius, params.mKeyBorderRadius, mBorderPaint);
     }
 
     @Override
@@ -112,7 +163,7 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
 
     @Override
     public void onDrawKeyPreviewText(@Nonnull Canvas canvas, @Nullable Bitmap textBitmap) {
-        super.onDrawKeyPreviewText(canvas,textBitmap);
+        super.onDrawKeyPreviewText(canvas, textBitmap);
         if (textBitmap != null) {
             Rect canvasRect = new Rect();
             canvasRect.left = 0;
@@ -129,7 +180,7 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         return true;
     }
 
-    private void drawMorekeyBackground(Canvas canvas){
+    private void drawMorekeyBackground(Canvas canvas) {
         final long currentTime = System.currentTimeMillis();
         final int width = canvas.getWidth();
         final int height = canvas.getHeight();
@@ -153,8 +204,8 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         }
         // draw
         LinearGradient linearGradient = new LinearGradient(
-                0 - mDeltaPixelMore, - mDeltaPixelMore,
-                height - mDeltaPixelMore,  height - mDeltaPixelMore,
+                0 - mDeltaPixelMore, -mDeltaPixelMore,
+                height - mDeltaPixelMore, height - mDeltaPixelMore,
                 COLORS,
                 POSITIONS,
                 Shader.TileMode.REPEAT);
@@ -167,7 +218,7 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         canvas.drawRect(canvasRect, mRgbPaint);
     }
 
-    private void drawBackground(Canvas canvas){
+    private void drawBackground(Canvas canvas) {
         final long currentTime = System.currentTimeMillis();
         final int width = canvas.getWidth();
         final int height = canvas.getHeight();
@@ -191,8 +242,8 @@ public class RGBKeyboardRender extends DefaultKeyboardRender {
         }
         // draw
         LinearGradient linearGradient = new LinearGradient(
-                0 - mDeltaPixel, - mDeltaPixel,
-                height - mDeltaPixel,  height - mDeltaPixel,
+                0 - mDeltaPixel, -mDeltaPixel,
+                height - mDeltaPixel, height - mDeltaPixel,
                 COLORS,
                 POSITIONS,
                 Shader.TileMode.REPEAT);

@@ -2,6 +2,7 @@ package com.nlptech.function.theme.keyboard_preview
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -144,13 +145,8 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
 //                RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE)
 //    }
 
-    override fun onResume() {
-        super.onResume()
-        KeyboardThemeManager.getInstance().isInKeyboardThemePreview = true
-    }
-
-    override fun onPause() {
-        super.onPause()
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
         Agent.getInstance().dismissThemePreview()
     }
 
@@ -159,7 +155,9 @@ class ThemeManagerBottomSheetFragment : BottomSheetDialogFragment(), View.OnClic
             if (mBehavior != null)
                 mBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
         } else {
-            dismiss()
+            if (activity != null && !activity!!.isFinishing && isAdded) {
+                dismiss()
+            }
         }
     }
 
