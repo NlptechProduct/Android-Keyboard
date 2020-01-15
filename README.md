@@ -16,7 +16,7 @@
 * AI-powered 10 Indian languages (Hindi, Bengali, Marathi, Tamil, Telugu, Kannada, Gujarati, Punjabi, Malayalam, Urdu) transliteration, using Latin script to type Indian languages words
 * Vietnamese Telex input
 * Chinese input
-* Callbacks for various input event. For example, when the user is typing Good Morning, contents related to Good Morning can be recommended to the user by our API
+* Callbacks for various input event. For example, when the user is typing Good Morning, contents related to Good Morning can be recommended to the user through our API
 
 ## Theme support
 
@@ -27,6 +27,8 @@ With the help of the theme customization framework, it's very easy for you to ma
 ![GitHub Logo](./Led.gif)
 ![GitHub Logo](./Neon.gif)
 
+Plenty of beautiful theme packs can be downloaded from server. 
+
 ## Functions
 
 * Keyboard menu
@@ -34,6 +36,8 @@ With the help of the theme customization framework, it's very easy for you to ma
 * Clipboard
 * Gif search 
 * Gifs sending
+* Floating keyboard
+
 
 
 ## Tutorials
