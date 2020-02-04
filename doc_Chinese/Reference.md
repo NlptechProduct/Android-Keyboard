@@ -897,7 +897,7 @@ public Builder setFunctionKeyBackground (Drawable functionKeyBackground)
 
 参数 | 参数说明
 -----|:--------
-functionKeyBackground | 功能键的背景
+functionKeyBackground | 功能键的背景<br><br>[zengine v1.3.11]<br>支持设置StateListDrawable, 透过 R.attr.state_functional_key_shift、R.attr.state_functional_key_go_to_number、R.attr.state_functional_key_delete 和 R.attr.state_functional_key_enter 等状态，来设置部分功能键的背景。
 
 返回 | 返回说明 | 
 -----|:--------
@@ -911,7 +911,7 @@ public Builder setFunctionKeyBackgroundWithBorder (Drawable functionKeyBackgroun
 
 参数 | 参数说明
 -----|:--------
-functionKeyBackgroundWithBorder | 功能键支持边框时的背景
+functionKeyBackgroundWithBorder | 功能键支持边框时的背景<br><br>[zengine v1.3.11]<br>支持设置StateListDrawable, 透过 R.attr.state_functional_key_shift、R.attr.state_functional_key_go_to_number、R.attr.state_functional_key_delete 和 R.attr.state_functional_key_enter 等状态，来设置部分功能键的背景。
 
 返回 | 返回说明 | 
 -----|:--------
@@ -2094,12 +2094,38 @@ chineseSuggestionComposingTextColor | ComposingView文字颜色
 -----|:--------
 Builder | 返回的Builder
 
+[zengine v1.3.11]
+#### setGesturePreviewColor
+```Java
+public Builder setGesturePreviewColor (String gesturePreviewColor)
+```
+设置滑行输入文字预览的背景颜色。
 
+参数 | 参数说明
+-----|:--------
+gesturePreviewColor | 滑行输入文字预览的背景颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
+
+
+#### setGesturePreviewTextColor
+```Java
+public Builder setGesturePreviewTextColor (String gesturePreviewTextColor)
+```
+设置滑行输入文字预览的文字颜色。
+
+参数 | 参数说明
+-----|:--------
+gesturePreviewTextColor | 滑行输入文字预览的文字颜色
+
+返回 | 返回说明 | 
+-----|:--------
+Builder | 返回的Builder
 
 
 <br/>
-
-
 
 
 <h3 id="3.2">CustomFunctionalKeyInfo</h3>

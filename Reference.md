@@ -846,6 +846,49 @@ Return | Return Description |
 -----|:--------
 Builder | Returned Builder 
 
+#### setThemePreviewImageWithBorder
+
+```Java
+public Builder setThemePreviewImageWithBorder (Drawable themePreviewImageWithBorder)
+```
+The preview image with border when setting the theme.
+
+Parameter | Parameter Description
+-----|:--------
+themePreviewImageWithBorder | The preview image with border of the theme.
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder 
+
+#### setKeyBackground
+```Java
+public Builder setKeyBackground (Drawable keyBackground)
+```
+Set the background of the keys.
+
+Parameter | Parameter Description
+-----|:--------
+keyBackground | The background of the keys
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder 
+
+#### setKeyBackgroundWithBorder
+```Java
+public Builder setKeyBackgroundWithBorder (Drawable keyBackgroundWithBorder)
+```
+Set the background with border of the keys.
+
+Parameter | Parameter Description
+-----|:--------
+keyBackgroundWithBorder | The background with border of the keys
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder 
+
 #### setFunctionKeyBackground
 
 ```Java
@@ -855,7 +898,22 @@ Set the background of the function keys.
 
 Parameter | Parameter Description
 -----|:--------
-functionKeyBackground | The background of the function keys
+functionKeyBackground | The background of the function keys<br><br>[zengine v1.3.11]<br>Support setting the StateListDrawable to set some functional keys with R.attr.state_functional_key_shift, R.attr.state_functional_key_go_to_number, R.attr.state_functional_key_delete and R.attr.state_functional_key_enter.
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder
+
+#### setFunctionKeyBackgroundWithBorder
+
+```Java
+public Builder setFunctionKeyBackgroundWithBorder (Drawable functionKeyBackgroundWithBorder)
+```
+Set the background with border of the function keys.
+
+Parameter | Parameter Description
+-----|:--------
+functionKeyBackgroundWithBorder | The background with border of the function keys<br><br>[zengine v1.3.11]<br>Support setting the StateListDrawable to set some functional keys with R.attr.state_functional_key_shift, R.attr.state_functional_key_go_to_number, R.attr.state_functional_key_delete and R.attr.state_functional_key_enter.
 
 Return | Return Description | 
 -----|:--------
@@ -871,6 +929,21 @@ Set background of spacebar.
 Parameter | Parameter Description
 -----|:--------
 spacebarBackground | The background of spacebar
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder
+
+#### setSpacebarBackgroundWithBorder
+
+```Java
+public Builder setSpacebarBackgroundWithBorder (Drawable spacebarBackgroundWithBorder)
+```
+Set background with border of spacebar.
+
+Parameter | Parameter Description
+-----|:--------
+spacebarBackgroundWithBorder | The background with border of spacebar
 
 Return | Return Description | 
 -----|:--------
@@ -916,6 +989,21 @@ Set the background of the more keys keyboard that pops up by pressing the normal
 Parameter | Parameter Description
 -----|:--------
 moreKeysKeyBackground | The background of key when long pressing the key.
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder
+
+#### setMoreKeysKeyBackgroundWithBorder
+
+```Java
+public Builder setMoreKeysKeyBackgroundWithBorder (Drawable moreKeysKeyBackgroundWithBorder)
+```
+Set the background with border of the more keys keyboard that pops up by pressing the normal key.
+
+Parameter | Parameter Description
+-----|:--------
+moreKeysKeyBackgroundWithBorder | The background with border of key when long pressing the key.
 
 Return | Return Description | 
 -----|:--------
@@ -1655,6 +1743,22 @@ Return | Return Descriptions |
 -----|:--------
 Builder |Returned Builder
 
+
+#### setKeyLottieBackgroundWithBorder
+
+```Java
+public Builder setKeyLottieBackgroundWithBorder (LottieDrawableInfo... keyLottieBackgroundWithBorder)
+```
+Use LottieDrawable to set the background with border of key. The first parameter is the background of keyboard, and the second parameter is the background when the key is pressed. Both can be null.
+
+Parameter | Parameter Description
+-----|:--------
+keyLottieBackgroundWithBorder | the background with border of the key
+
+Return | Return Descriptions | 
+-----|:--------
+Builder |Returned Builder
+
 #### setFunctionKeyLottieBackground
 
 ```Java
@@ -1670,6 +1774,21 @@ Return | Return Descriptions |
 -----|:--------
 Builder | Returned Builder
 
+#### setFunctionKeyLottieBackgroundWithBorder
+
+```Java
+public Builder setFunctionKeyLottieBackgroundWithBorder (LottieDrawableInfo... functionKeyLottieBackgroundWithBorder)
+```
+Use the LottieDrawable to set the background with border of the function keys. The first parameter is the background in the normal state, and the second parameter is the background when the key is pressed. Both can be null.
+
+Parameter | Parameter Description
+-----|:--------
+functionKeyLottieBackgroundWithBorder | the background with border of the function keys
+
+Return | Return Descriptions | 
+-----|:--------
+Builder | Returned Builder
+
 #### setSpacebarLottieBackground
 
 ```Java
@@ -1680,6 +1799,21 @@ Use the LottieDrawable to set the background of the blank key. The first paramet
 Parameter | Parameter Description
 -----|:--------
 spacebarLottieBackground | the background of the blank key
+
+Return | Return Descriptions | 
+-----|:--------
+Builder | Returned Builder
+
+#### setSpacebarLottieBackgroundWithBorder
+
+```Java
+public Builder setSpacebarLottieBackgroundWithBorder (LottieDrawableInfo... spacebarLottieBackgroundWithBorder)
+```
+Use the LottieDrawable to set the background with border of the blank key. The first parameter is the background under normal state, and the second parameter is the background when the key is pressed. Both can be null.
+
+Parameter | Parameter Description
+-----|:--------
+spacebarLottieBackgroundWithBorder | the background with border of the blank key
 
 Return | Return Descriptions | 
 -----|:--------
@@ -1727,6 +1861,21 @@ Set the background of the more keys keyboard. The first parameter is the backgro
 Parameter | Parameter Description
 -----|:--------
 moreKeysKeyLottieBackground | the background of the more keys keyboard
+
+Return | Return Description | 
+-----|:--------
+Builder | Returned Builder
+
+#### setMoreKeysKeyLottieBackgroundWithBorder
+
+```Java
+public Builder setMoreKeysKeyLottieBackgroundWithBorder (LottieDrawableInfo... moreKeysKeyLottieBackgroundWithBorder)
+```
+Set the background with border of the more keys keyboard. The first parameter is the background under normal state, and the second parameter is the background when the key is pressed. Both can be null.
+
+Parameter | Parameter Description
+-----|:--------
+moreKeysKeyLottieBackgroundWithBorder | the background with border of the more keys keyboard
 
 Return | Return Description | 
 -----|:--------
@@ -1948,11 +2097,38 @@ Return | Return Descriptions |
 Builder | Returned Builder
 
 
+[zengine v1.3.11]
+#### setGesturePreviewColor
+```Java
+public Builder setGesturePreviewColor (String gesturePreviewColor)
+```
+Set the gesture preview background color. 
+
+Parameter | Parameter Description
+-----|:--------
+gesturePreviewColor | gesture preview background color
+
+Return | Return Descriptions | 
+-----|:--------
+Builder | Returned Builder
+
+
+#### setGesturePreviewTextColor
+```Java
+public Builder setGesturePreviewTextColor (String gesturePreviewTextColor)
+```
+Set the gesture preview text color. 
+
+Parameter | Parameter Description
+-----|:--------
+gesturePreviewTextColor | gesture preview text color
+
+Return | Return Descriptions | 
+-----|:--------
+Builder | Returned Builder
 
 
 <br/>
-
-
 
 
 <h3 id="3.2">CustomFunctionalKeyInfo</h3>
