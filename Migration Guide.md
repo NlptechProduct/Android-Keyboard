@@ -64,7 +64,7 @@ Add dependencies:
 ~~~
 dependencies { 
      … … … … …
-     implementation  'com.nlptech.zengine:keyboardkernel:1.3.10'
+     implementation  'com.nlptech.zengine:keyboardkernel:1.3.11'
      … … … … …
 }
 ~~~
