@@ -11,10 +11,12 @@ import com.nlptech.language.IMELanguageWrapper;
 import com.nlptech.language.MultiIMELanguage;
 import com.nlptech.language.VertexInputMethodManager;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class LanguageSettingViewModel extends ViewModel {
@@ -120,8 +122,14 @@ public class LanguageSettingViewModel extends ViewModel {
                 resultChooseList.add(sItem);
             }
         }
-        Collections.sort(resultChooseList, (subtypeIMEWrapper1, subtypeIMEWrapper2) ->
-                subtypeIMEWrapper1.getIMELanguage().getDisplayName().compareToIgnoreCase(subtypeIMEWrapper2.getIMELanguage().getDisplayName()));
+        if (Locale.getDefault().getLanguage().equals(Locale.CHINESE.getLanguage())) {
+            Collections.sort(resultChooseList, (subtypeIMEWrapper1, subtypeIMEWrapper2) ->
+                            Collator.getInstance(Locale.CHINESE).compare(subtypeIMEWrapper1.getIMELanguage().getDisplayName(),
+                                    subtypeIMEWrapper2.getIMELanguage().getDisplayName()));
+        } else {
+            Collections.sort(resultChooseList, (subtypeIMEWrapper1, subtypeIMEWrapper2) ->
+                    subtypeIMEWrapper1.getIMELanguage().getDisplayName().compareToIgnoreCase(subtypeIMEWrapper2.getIMELanguage().getDisplayName()));
+        }
         resultChooseLiveData.setValue(resultChooseList);
         //multiMode
         multiModeLiveData.setValue(isMultiMode);
